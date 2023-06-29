@@ -14,5 +14,6 @@ declare module 'vue' {
     Layout: typeof import('./src/views/Layout/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
   }
 }

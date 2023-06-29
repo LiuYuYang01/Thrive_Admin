@@ -3,9 +3,17 @@
 </script>
 
 <template>
-    <div>layout</div>
-  <RouterView></RouterView>
+  <div class="container">
+    <!-- 侧边导航 -->
+    <div class="sidebar">
+      <Sidebar />
+    </div>
+
+    <!-- 主体内容 -->
+    <div class="main">
+      <RouterView></RouterView>
+    </div>
+  </div>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
