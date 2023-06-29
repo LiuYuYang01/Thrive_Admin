@@ -16,4 +16,15 @@
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.container{
+  display: flex;
+  height: 100vh;
+
+  .sidebar {
+    width: 220px;
+    margin-right: 20px;
+    background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
+  }
+}
+</style>
