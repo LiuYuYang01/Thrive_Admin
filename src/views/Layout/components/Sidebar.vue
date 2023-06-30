@@ -1,5 +1,8 @@
 <script setup lang="ts">
+const navIndex = 1;
 
+import { routes } from '@/routers/index'
+const navList = routes[0].children
 </script>
 
 <template>
@@ -11,24 +14,11 @@
     <!-- 导航列表 -->
     <div class="list">
       <ul>
-        <li class="item">
-          <a href="javascript:;" class="nav">仪表盘</a>
-        </li>
-
-        <li class="item">
-          <a href="javascript:;" class="nav">创作</a>
-        </li>
-
-        <li class="item">
-          <a href="javascript:;" class="nav">网站管理</a>
-        </li>
-
-        <li class="item">
-          <a href="javascript:;" class="nav">系统配置</a>
-        </li>
-
-        <li class="item">
-          <a href="javascript:;" class="nav">主题设置</a>
+        <li class="item" v-for="item in navList" :key="item.path">
+          <a href="javascript:;" class="nav nav-selected">
+            <box-icon :name="item.meta.icon" class="icon" />
+            {{ item.meta.title }}
+          </a>
         </li>
       </ul>
     </div>
@@ -58,15 +48,22 @@
     }
 
     .nav {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       width: 100%;
       height: 100%;
       color: #dadada;
 
-      // 鼠标点击后高亮
-      &:focus {
-        color: #fff;
+      .icon {
+        fill: #fff;
+        margin-top: -15px;
+        margin-right: 10px;
       }
+    }
+
+    // 导航选中效果
+    .nav-selected {
+      color: #fff;
     }
   }
 }
