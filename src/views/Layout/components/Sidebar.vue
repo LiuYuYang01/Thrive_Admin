@@ -1,7 +1,8 @@
 <script setup lang="ts">
-const navIndex = 1;
+const navIndex = ref<number>(0);
 
 import { routes } from '@/routers/index'
+import { ref } from 'vue';
 const navList = routes[0].children
 </script>
 
@@ -14,10 +15,11 @@ const navList = routes[0].children
     <!-- 导航列表 -->
     <div class="list">
       <ul>
-        <li class="item" v-for="item in navList" :key="item.path">
-          <a href="javascript:;" class="nav nav-selected">
-            <box-icon :name="item.meta.icon" class="icon" />
+        <li class="item" v-for="item, index in navList" :key="item.path" @click="navIndex = index">
+          <a href="javascript:;" class="nav" :class="{ nav_active: navIndex === index }">
+            <box-icon :name="item.meta.icon" />
             {{ item.meta.title }}
+            <box-icon name='chevron-down' style="margin-top: -9px;margin-left: 5px;"/>
           </a>
         </li>
       </ul>
@@ -43,8 +45,10 @@ const navList = routes[0].children
     padding-left: 20px;
 
     // 鼠标经过导航高亮
-    &:hover a {
+    &:hover .nav,
+    .nav box-icon {
       color: #fff;
+      fill: #fff;
     }
 
     .nav {
@@ -54,16 +58,20 @@ const navList = routes[0].children
       height: 100%;
       color: #dadada;
 
-      .icon {
-        fill: #fff;
+      box-icon {
+        fill: #dadada;
         margin-top: -15px;
         margin-right: 10px;
       }
     }
 
     // 导航选中效果
-    .nav-selected {
+    .nav_active {
       color: #fff;
+
+      box-icon {
+        fill: #fff;
+      }
     }
   }
 }
