@@ -17,9 +17,13 @@ const navList = routes[0].children
       <ul>
         <li class="item" v-for="item, index in navList" :key="item.path" @click="navIndex = index">
           <a href="javascript:;" class="nav" :class="{ nav_active: navIndex === index }">
-            <box-icon :name="item.meta.icon" />
-            {{ item.meta.title }}
-            <box-icon name='chevron-down' style="margin-top: -9px;margin-left: 5px;"/>
+            <div>
+              <box-icon :name="item.meta.icon" />
+
+              {{ item.meta.title }}
+            </div>
+
+            <box-icon name='chevron-down' class="icon" />
           </a>
         </li>
       </ul>
@@ -42,26 +46,38 @@ const navList = routes[0].children
 
   .item {
     line-height: 50px;
-    padding-left: 20px;
 
     // 鼠标经过导航高亮
-    &:hover .nav,
-    .nav box-icon {
-      color: #fff;
-      fill: #fff;
+    &:hover {
+      .nav {
+        color: #fff;
+      }
+
+      .nav box-icon {
+        fill: #fff;
+      }
     }
 
     .nav {
       display: flex;
       align-items: center;
-      width: 100%;
+      justify-content: space-between;
+      width: 85%;
       height: 100%;
-      color: #dadada;
+      padding: 0 20px;
+      color: #cedce4;
+      font-size: 15px;
 
       box-icon {
-        fill: #dadada;
+        width: 20px;
+        height: 25px;
+        fill: #cedce4;
         margin-top: -15px;
         margin-right: 10px;
+      }
+
+      .icon {
+        margin-top: -9px;
       }
     }
 
