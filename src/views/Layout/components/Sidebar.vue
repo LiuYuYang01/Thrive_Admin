@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 
 // 获取路由列表
 import { routes } from '@/routers/index'
@@ -20,6 +20,8 @@ const toPath = (index: number, path: string, type?: string) => {
 
   router.push(path)
 }
+
+const show = ref<boolean>(true)
 </script>
 
 <template>
@@ -33,19 +35,23 @@ const toPath = (index: number, path: string, type?: string) => {
       <ul>
         <li class="item" v-for="one, one_index in navList" :key="one.path" @click="toPath(one_index, one.path)">
           <!-- 一级导航 -->
-          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }">
+          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }" @click="show = !show">
             <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
 
-            <box-icon name='chevron-down' class="icon" />
+            <box-icon name='chevron-down' class="icon" v-if="one.children" />
           </a>
 
           <!-- 二级导航 -->
-          <dl class="children" v-if="one.children" v-for="two, two_index in one.children" :key="two.path">
-            <dd :class="{ nav_active: active.two === two_index }"
-              @click="toPath(two_index, `${one.path}/${two.path}`, 'two')">
-              {{ two.meta.title }}
-            </dd>
-          </dl>
+          <template v-if="one.children">
+            <el-collapse-transition>
+              <dl class="children" v-show="show">
+                <dd :class="{ nav_active: active.two === two_index }" v-for="two, two_index in one.children"
+                  :key="two.path" @click="toPath(two_index, `${one.path}/${two.path}`, 'two')">
+                  {{ two.meta.title }}
+                </dd>
+              </dl>
+            </el-collapse-transition>
+          </template>
         </li>
       </ul>
     </div>
@@ -120,6 +126,7 @@ const toPath = (index: number, path: string, type?: string) => {
 
     .children {
       padding-left: 55px;
+      transition: all 0.3s;
 
       dd {
         height: 45px;
