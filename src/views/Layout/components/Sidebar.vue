@@ -1,9 +1,25 @@
 <script setup lang="ts">
-const navIndex = ref<number>(0);
+import { reactive } from 'vue';
 
+// 获取路由列表
 import { routes } from '@/routers/index'
-import { ref } from 'vue';
 const navList = routes[0].children
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+// 导航当前选中
+const active = reactive({
+  one: 0,
+  two: 0
+})
+
+// 导航选中及切换效果
+const toPath = (index: number, path: string, type?: string) => {
+  type === 'two' ? active.two = index : active.one = index
+
+  router.push(path)
+}
 </script>
 
 <template>
@@ -15,23 +31,20 @@ const navList = routes[0].children
     <!-- 导航列表 -->
     <div class="list">
       <ul>
-        <li class="item" v-for="item, index in navList" :key="item.path" @click="navIndex = index">
-          <a href="javascript:;" class="nav" :class="{ nav_active: navIndex === index }">
-            <div>
-              <box-icon :name="item.meta.icon" />
-
-              {{ item.meta.title }}
-            </div>
+        <li class="item" v-for="one, one_index in navList" :key="one.path" @click="toPath(one_index, one.path)">
+          <!-- 一级导航 -->
+          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }">
+            <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
 
             <box-icon name='chevron-down' class="icon" />
           </a>
 
-          <dl class="children" v-if="item.path === '/home'">
-            <dd>发布文章</dd>
-            <dd>发布文章</dd>
-            <dd>发布文章</dd>
-            <dd>发布文章</dd>
-            <dd>发布文章</dd>
+          <!-- 二级导航 -->
+          <dl class="children" v-if="one.children" v-for="two, two_index in one.children" :key="two.path">
+            <dd :class="{ nav_active: active.two === two_index }"
+              @click="toPath(two_index, `${one.path}/${two.path}`, 'two')">
+              {{ two.meta.title }}
+            </dd>
           </dl>
         </li>
       </ul>
@@ -64,9 +77,9 @@ const navList = routes[0].children
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 85%;
+      width: 95%;
       height: 100%;
-      padding: 0 20px;
+      padding-left: 20px;
       color: #cedce4;
       font-size: 15px;
       transition: all $move;
@@ -76,11 +89,12 @@ const navList = routes[0].children
         height: 25px;
         fill: #cedce4;
         margin-right: 10px;
-        vertical-align: sub;
+        position: relative;
+        top: 5px;
       }
 
       .icon {
-        margin-top: -9px;
+        margin-top: -13px;
       }
     }
 
@@ -97,10 +111,10 @@ const navList = routes[0].children
 
     // 导航选中效果
     .nav_active {
-      color: #fff;
+      color: #fff !important;
 
       box-icon {
-        fill: #fff;
+        fill: #fff !important;
       }
     }
 

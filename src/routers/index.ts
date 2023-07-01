@@ -17,12 +17,23 @@ export const routes = [
       {
         path: '/home',
         component: () => import('@/views/Home/index.vue'),
-        meta: { title: '仪表盘', icon: "home-smile" }
+        meta: { title: '仪表盘', icon: "home-smile" },
       },
       {
-        path: '/home/2',
-        component: () => import('@/views/Home/index.vue'),
-        meta: { title: '创作', icon: "edit-alt" }
+        path: '/write',
+        meta: { title: '创作', icon: "edit-alt" },
+        children: [
+          {
+            path: "",
+            component: () => import('@/views/Home/index.vue'),
+            meta: { title: '发布文章' }
+          },
+          {
+            path: "",
+            component: () => import('@/views/Home/index.vue'),
+            meta: { title: '发布说说' }
+          }
+        ]
       },
       {
         path: '/home/3',
