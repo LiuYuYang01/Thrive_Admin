@@ -20,22 +20,22 @@ export const routes = [
         meta: { title: '仪表盘', icon: "home-smile" }
       },
       {
-        path: '/home',
+        path: '/home/2',
         component: () => import('@/views/Home/index.vue'),
         meta: { title: '创作', icon: "edit-alt" }
       },
       {
-        path: '/home',
+        path: '/home/3',
         component: () => import('@/views/Home/index.vue'),
         meta: { title: '网站管理', icon: "planet" }
       },
       {
-        path: '/home',
+        path: '/home/4',
         component: () => import('@/views/Home/index.vue'),
         meta: { title: '系统配置', icon: "shield-quarter" }
       },
       {
-        path: '/home',
+        path: '/home/5',
         component: () => import('@/views/Home/index.vue'),
         meta: { title: '主题设置', icon: "palette" }
       }

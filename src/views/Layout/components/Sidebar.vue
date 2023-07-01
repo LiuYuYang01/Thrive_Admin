@@ -25,6 +25,14 @@ const navList = routes[0].children
 
             <box-icon name='chevron-down' class="icon" />
           </a>
+
+          <dl class="children" v-if="item.path === '/home'">
+            <dd>发布文章</dd>
+            <dd>发布文章</dd>
+            <dd>发布文章</dd>
+            <dd>发布文章</dd>
+            <dd>发布文章</dd>
+          </dl>
         </li>
       </ul>
     </div>
@@ -33,6 +41,11 @@ const navList = routes[0].children
 
 <style scoped lang="scss">
 .Sidebar {
+  width: 210px;
+  height: 100vh;
+  margin-right: 20px;
+  background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
+
   .logo {
     padding: 20px 0;
     font-size: 25px;
@@ -47,6 +60,30 @@ const navList = routes[0].children
   .item {
     line-height: 50px;
 
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 85%;
+      height: 100%;
+      padding: 0 20px;
+      color: #cedce4;
+      font-size: 15px;
+      transition: all $move;
+
+      box-icon {
+        width: 20px;
+        height: 25px;
+        fill: #cedce4;
+        margin-right: 10px;
+        vertical-align: sub;
+      }
+
+      .icon {
+        margin-top: -9px;
+      }
+    }
+
     // 鼠标经过导航高亮
     &:hover {
       .nav {
@@ -58,35 +95,29 @@ const navList = routes[0].children
       }
     }
 
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 85%;
-      height: 100%;
-      padding: 0 20px;
-      color: #cedce4;
-      font-size: 15px;
-
-      box-icon {
-        width: 20px;
-        height: 25px;
-        fill: #cedce4;
-        margin-top: -15px;
-        margin-right: 10px;
-      }
-
-      .icon {
-        margin-top: -9px;
-      }
-    }
-
     // 导航选中效果
     .nav_active {
       color: #fff;
 
       box-icon {
         fill: #fff;
+      }
+    }
+
+    .children {
+      padding-left: 55px;
+
+      dd {
+        height: 45px;
+        color: #cedce4;
+        font-size: 14px;
+        transition: $move;
+        cursor: pointer;
+
+        // 鼠标经过导航高亮
+        &:hover {
+          color: #fff;
+        }
       }
     }
   }
