@@ -2,8 +2,17 @@
 import { reactive, ref } from 'vue';
 
 // 获取路由列表
-import { routes } from '@/routers/index'
-const navList = routes[0].children
+import { routes } from '@/routers'
+const navList = ref(routes[0].children)
+
+// 给所有路由设置show属性，默认值为false
+navList.value.forEach(item => {
+  const show = (item.meta as any).show
+
+  // 如果有show属性就略过
+  if (!show) (item.meta as any).show = false
+})
+
 
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -15,19 +24,19 @@ const active = reactive({
 })
 
 
-
 // 导航选中及切换效果
-const toPath = (index: number, path: string, type?: string) => {
-  const list = document.querySelector(".list")
-  console.log(list,666);
-  
+const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
+  if (type === "one") {
+    active.one = index
 
-  type === 'two' ? active.two = index : active.one = index
+    // 点击展开二级导航，再次点击收起
+    navList.value[index].meta.show = !navList.value[index].meta.show
+  } else {
+    active.two = index
+  }
 
   router.push(path)
 }
-
-const show = ref<boolean>(true)
 </script>
 
 <template>
@@ -50,7 +59,7 @@ const show = ref<boolean>(true)
           <!-- 二级导航 -->
           <template v-if="one.children">
             <el-collapse-transition>
-              <dl class="children">
+              <dl class="children" v-show="one.meta.show">
                 <dd :class="{ nav_active: active.two === two_index }" v-for="two, two_index in one.children"
                   :key="two.path" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')">
                   {{ two.meta.title }}
@@ -103,6 +112,7 @@ const show = ref<boolean>(true)
         margin-right: 10px;
         position: relative;
         top: 5px;
+        transition: fill;
       }
 
       .icon {

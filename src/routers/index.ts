@@ -21,7 +21,7 @@ export const routes = [
       },
       {
         path: '/write',
-        meta: { title: '创作', icon: "edit-alt" },
+        meta: { title: '创作', icon: "edit-alt", show: true },
         children: [
           {
             path: "",
