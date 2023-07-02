@@ -14,8 +14,14 @@ const active = reactive({
   two: 0
 })
 
+
+
 // 导航选中及切换效果
 const toPath = (index: number, path: string, type?: string) => {
+  const list = document.querySelector(".list")
+  console.log(list,666);
+  
+
   type === 'two' ? active.two = index : active.one = index
 
   router.push(path)
@@ -33,9 +39,9 @@ const show = ref<boolean>(true)
     <!-- 导航列表 -->
     <div class="list">
       <ul>
-        <li class="item" v-for="one, one_index in navList" :key="one.path" @click="toPath(one_index, one.path)">
+        <li class="item" v-for="one, one_index in navList" :key="one.path" @click.stop="toPath(one_index, one.path)">
           <!-- 一级导航 -->
-          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }" @click="show = !show">
+          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }">
             <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
 
             <box-icon name='chevron-down' class="icon" v-if="one.children" />
@@ -44,9 +50,9 @@ const show = ref<boolean>(true)
           <!-- 二级导航 -->
           <template v-if="one.children">
             <el-collapse-transition>
-              <dl class="children" v-show="show">
+              <dl class="children">
                 <dd :class="{ nav_active: active.two === two_index }" v-for="two, two_index in one.children"
-                  :key="two.path" @click="toPath(two_index, `${one.path}/${two.path}`, 'two')">
+                  :key="two.path" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')">
                   {{ two.meta.title }}
                 </dd>
               </dl>
