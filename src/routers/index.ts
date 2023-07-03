@@ -64,6 +64,11 @@ export const routes = [
       }
     ]
   },
+  {
+    path: "/login",
+    component: () => import("@/views/Login/index.vue"),
+    meta: { title: "登录" }
+  }
 ]
 
 // 路由配置
