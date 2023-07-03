@@ -9,13 +9,20 @@
 
     <!-- 主体内容 -->
     <div class="main">
+      <!-- 顶部 -->
+      <Header />
+
       <RouterView></RouterView>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.container{
+.container {
   display: flex;
+
+  .main {
+    width: 100%;
+  }
 }
 </style>
