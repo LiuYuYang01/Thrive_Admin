@@ -10,6 +10,7 @@ declare module 'vue' {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
     ElRow: typeof import('element-plus/es')['ElRow']
+    Header: typeof import('./src/views/Layout/components/Header.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']
     Home: typeof import('./src/views/Home/index.vue')['default']
     Layout: typeof import('./src/views/Layout/index.vue')['default']
