@@ -7,11 +7,11 @@ const navList = ref(JSON.parse(sessionStorage.getItem("navList") as string) || r
 
 
 // 给所有路由设置show属性，默认值为false
-navList.value.forEach(item => {
-  const show = (item.meta as any).show
+navList.value.forEach((item: { meta: any; }) => {
+  const show = item.meta.show
 
   // 如果有show属性就略过
-  if (!show) (item.meta as any).show = false
+  if (!show) item.meta.show = false
 })
 
 
