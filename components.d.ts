@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Date: typeof import('./src/components/Date/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
     ElRow: typeof import('element-plus/es')['ElRow']
