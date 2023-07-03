@@ -29,7 +29,7 @@ export const routes = [
             meta: { title: '发布文章' }
           },
           {
-            path: "",
+            path: "b",
             component: () => import('@/views/Home/index.vue'),
             meta: { title: '发布说说' }
           }
@@ -43,7 +43,19 @@ export const routes = [
       {
         path: '/home/4',
         component: () => import('@/views/Home/index.vue'),
-        meta: { title: '系统配置', icon: "shield-quarter" }
+        meta: { title: '系统配置', icon: "shield-quarter" },
+        children: [
+          {
+            path: "",
+            component: () => import('@/views/Home/index.vue'),
+            meta: { title: '发布文章1' }
+          },
+          {
+            path: "2",
+            component: () => import('@/views/Home/index.vue'),
+            meta: { title: '发布说说2' }
+          }
+        ]
       },
       {
         path: '/home/5',

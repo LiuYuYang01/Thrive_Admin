@@ -3,7 +3,8 @@ import { reactive, ref } from 'vue';
 
 // 获取路由列表
 import { routes } from '@/routers'
-const navList = ref(routes[0].children)
+const navList = ref(JSON.parse(sessionStorage.getItem("navList") as string) || routes[0].children)
+
 
 // 给所有路由设置show属性，默认值为false
 navList.value.forEach(item => {
@@ -17,22 +18,38 @@ navList.value.forEach(item => {
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
+
+const nav_active = JSON.parse(sessionStorage.getItem("nav_active")!)
+
 // 导航当前选中
-const active = reactive({
-  one: 0,
-  two: 0
+const active = reactive(nav_active || {
+  one: "/home",
+  two: ""
 })
 
 
 // 导航选中及切换效果
 const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
   if (type === "one") {
-    active.one = index
+    active.one = path
+    active.two = path + "/"
+
+    // 保存当前导航选中项
+    sessionStorage.setItem("nav_active", JSON.stringify({ one: path, two: path + "/" }))
 
     // 点击展开二级导航，再次点击收起
     navList.value[index].meta.show = !navList.value[index].meta.show
+    // 将展开的导航记录在会话存储中，这样页面刷新后之前打开的菜单不会被折叠起来
+    sessionStorage.setItem("navList", JSON.stringify(navList.value))
   } else {
-    active.two = index
+    // 二级导航被选中也让一级导航高亮
+    const i = path.lastIndexOf("/")
+
+    active.one = path.slice(0, i)
+    active.two = path
+
+    // 记录当前导航选中项
+    sessionStorage.setItem("nav_active", JSON.stringify({ ...nav_active, two: path }))
   }
 
   router.push(path)
@@ -50,7 +67,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
       <ul>
         <li class="item" v-for="one, one_index in navList" :key="one.path" @click.stop="toPath(one_index, one.path)">
           <!-- 一级导航 -->
-          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one_index }">
+          <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one.path }">
             <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
 
             <box-icon name='chevron-down' class="icon" v-if="one.children" />
@@ -60,8 +77,9 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
           <template v-if="one.children">
             <el-collapse-transition>
               <dl class="children" v-show="one.meta.show">
-                <dd :class="{ nav_active: active.two === two_index }" v-for="two, two_index in one.children"
-                  :key="two.path" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')">
+                <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
+                  v-for="two, two_index in one.children"
+                  @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')">
                   {{ two.meta.title }}
                 </dd>
               </dl>
