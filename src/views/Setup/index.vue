@@ -1,5 +1,6 @@
 <script setup lang="ts">
-
+import { ref } from 'vue';
+const active = ref(0)
 </script>
 
 <template>
@@ -7,7 +8,7 @@
 
   <div class="main">
     <ul class="options">
-      <li class="item active" v-for="item, index in 3">
+      <li class="item" :class="{ active: index === active }" @click="active = index" v-for="item, index in 3">
         <h3>系统配置</h3>
         <p>系统配置描述</p>
       </li>
@@ -33,6 +34,7 @@
       position: relative;
       padding: 10px 0;
       padding-left: 20px;
+      margin: 5px 0;
       transition: all $move;
       cursor: pointer;
 
