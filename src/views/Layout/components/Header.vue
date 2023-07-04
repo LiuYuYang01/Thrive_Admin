@@ -1,5 +1,17 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores'
+import { useRouter } from 'vue-router';
+const store = useUserStore()
+const router = useRouter()
 
+// 退出登录
+const quit = () => {
+    // 清空用户信息
+    store.delUser()
+
+    // 跳转到登录页
+    router.push("/login")
+}
 </script>
 
 <template>
@@ -21,7 +33,7 @@
                     <div class="box">
                         <dl>
                             <dd><box-icon name='user' />个人设置</dd>
-                            <dd><box-icon name='exit' />退出登录</dd>
+                            <dd @click="quit"><box-icon name='exit' />退出登录</dd>
                         </dl>
                     </div>
                 </el-collapse-transition>
