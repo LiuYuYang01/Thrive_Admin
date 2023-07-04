@@ -2,8 +2,10 @@ import axios from 'axios'
 import router from '@/routers'
 import type { Response } from '@/types/Response'
 import { ElNotification } from 'element-plus'
+import { useUserStore } from '@/stores'
 
-export const baseURL = "http://localhost:5000"
+// 配置项目API域名
+export const baseURL = "http://localhost:5000/api"
 
 // 创建 axios 实例
 const instance = axios.create({
@@ -14,22 +16,24 @@ const instance = axios.create({
 })
 
 // 请求拦截
-// instance.interceptors.request.use(
-//     (config) => {
-//         const store = useUserStore()
+instance.interceptors.request.use(
+    (config) => {
+        const store = useUserStore()
+        console.log(store.user,666);
+        
 
-//         // 如果有token就把赋值给请求头
-//         if (store.user?.token) {
-//             config.headers['Authorization'] = `Bearer ${store.user?.token}`
-//         }
+        // 如果有token就把赋值给请求头
+        if (store.user?.token) {
+            config.headers['Authorization'] = `Bearer ${store.user?.token}`
+        }
 
-//         return config
-//     },
-//     (err) => {
-//         console.log(err, 666);
-//         Promise.reject(err)
-//     }
-// )
+        return config
+    },
+    (err) => {
+        console.log(err, 666);
+        Promise.reject(err)
+    }
+)
 
 // 响应拦截
 instance.interceptors.response.use(
@@ -37,7 +41,7 @@ instance.interceptors.response.use(
         // 只要code不等于200, 就相当于响应失败
         if (res.data?.code !== 200) {
             ElNotification({
-                title: 'Error',
+                title: '失败',
                 message: res.data?.message || "未知错误",
                 type: 'error',
             })
@@ -48,19 +52,19 @@ instance.interceptors.response.use(
         return res.data
     },
     err => {
-        // // 如果401相当于认证失败
-        // if (err.response.status === 401) {
-        //     const store = useUserStore()
+        // 如果401相当于认证失败
+        if (err.response.status === 401) {
+            const store = useUserStore()
 
-        //     // 删除用户信息
-        //     store.delUser()
+            // 删除用户信息
+            store.delUser()
 
-        //     // 跳转到登录页
-        //     router.push({
-        //         path: "/login",
-        //         query: { returnUrl: router.currentRoute.value.fullPath }
-        //     })
-        // }
+            // 跳转到登录页
+            router.push({
+                path: "/login",
+                query: { returnUrl: router.currentRoute.value.fullPath }
+            })
+        }
 
         return Promise.reject(err)
     }

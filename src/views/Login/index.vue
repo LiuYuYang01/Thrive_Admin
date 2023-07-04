@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { User, Lock, View } from '@element-plus/icons-vue'
-import { FormInstance, FormRules } from 'element-plus';
+import { ElNotification, FormInstance, FormRules } from 'element-plus';
+import { loginAPI } from '@/api/Login'
+import { useUserStore } from '@/stores'
+
+const store = useUserStore()
 
 interface LoginForm {
   username: string,
@@ -10,8 +14,8 @@ interface LoginForm {
 
 // 登录信息
 const loginInfo = reactive({
-  username: '',
-  password: '',
+  username: 'liuyuyang',
+  password: '123123',
 })
 
 const loginRef = ref()
@@ -32,11 +36,21 @@ const rules = reactive<FormRules<LoginForm>>({
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
 
-  await formEl.validate((valid, fields) => {
+  await formEl.validate(async (valid, fields) => {
     // 校验不通过，则后续的业务逻辑不再执行
     if (!valid) return
 
     // 校验通过
+    const { data, message, token } = await loginAPI(loginInfo)
+
+    ElNotification({
+      title: '成功',
+      message: message,
+      type: 'success',
+    })
+
+    // 将登录的数据保存到本地
+    store.setUser({ ...data, token })
   })
 }
 </script>

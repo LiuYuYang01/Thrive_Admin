@@ -11,6 +11,9 @@ import pinia from '@/stores/index'
 // 引入路由
 import router from './routers'
 
+// 引入Element plus
+import 'element-plus/dist/index.css'
+
 // 引入全局样式
 import '@/styles/index.scss'
 
