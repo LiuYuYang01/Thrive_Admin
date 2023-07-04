@@ -1,7 +1,10 @@
 {
-  "name": "v3",
-  "private": true,
-  "version": "0.0.0",
+  "name": "thrive-ui",
+  "version": "1.0.0",
+  "description": "一个主打极简主义的Vue3 admin 后台管理系统模板",
+  "author": "刘宇阳",
+  "private": false,
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
