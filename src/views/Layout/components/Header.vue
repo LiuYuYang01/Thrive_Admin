@@ -8,8 +8,8 @@
 
         <div class="nav">
             <div class="list">
-                <a href="/">作者博客</a>
-                <a href="/">GitHub</a>
+                <a href="/"><box-icon name='code-alt' />作者博客</a>
+                <a href="/"><box-icon name='github' type='logo' />GitHub</a>
             </div>
 
             <div class="my">
@@ -55,7 +55,7 @@
     .nav {
         display: flex;
         justify-content: space-between;
-        width: 340px;
+        width: 400px;
         margin-right: 60px;
 
         .list {
@@ -63,12 +63,26 @@
             align-items: center;
 
             a {
+                display: flex;
+                align-items: center;
                 padding: 20px;
                 transition: all $move;
 
+                box-icon {
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 5px;
+                    fill: #333;
+                    transition: fill $move;
+                }
+
                 &:hover {
-                    color: #727cf5;
+                    color: $color;
                     background-color: #f9f9f9;
+
+                    box-icon {
+                        fill: $color;
+                    }
                 }
             }
         }
@@ -89,7 +103,7 @@
             }
 
             &:hover .name {
-                color: #727cf5;
+                color: $color;
             }
 
             .box {

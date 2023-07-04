@@ -120,7 +120,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       align-items: center;
       height: 100px;
       color: #fff;
-      background-color: #727cf5;
+      background-color: $color;
 
       h3 {
         font-size: 30px;
