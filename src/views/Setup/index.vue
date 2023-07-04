@@ -4,7 +4,7 @@ const active = ref(0)
 </script>
 
 <template>
-  <div class="title">系统配置</div>
+  <div class="title"><box-icon name='shield-quarter' />系统配置</div>
 
   <div class="main">
     <ul class="options">
@@ -20,12 +20,21 @@ const active = ref(0)
 
 <style scoped lang="scss">
 .title {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
   font-size: 20px;
+
+  box-icon {
+    fill: #333;
+    margin-right: 5px;
+  }
 }
 
 .main {
   display: flex;
-  margin-top: 15px;
 
   .options {
     width: 210px;

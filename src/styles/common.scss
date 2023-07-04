@@ -1,0 +1,14 @@
+// 标题样式
+@mixin title() {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    font-size: 20px;
+
+    box-icon {
+        fill: #333;
+        margin-right: 5px;
+    }
+}
