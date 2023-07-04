@@ -1,11 +1,44 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { User, Lock, View } from '@element-plus/icons-vue'
+import { FormInstance, FormRules } from 'element-plus';
 
-const formLabelAlign = reactive({
-  name: '',
-  region: '',
-  type: '',
+interface LoginForm {
+  username: string,
+  password: string
+}
+
+// 登录信息
+const loginInfo = reactive({
+  username: '',
+  password: '',
 })
+
+const loginRef = ref()
+
+// 登录数据校验
+const rules = reactive<FormRules<LoginForm>>({
+  username: [
+    { required: true, message: "用户不能为空", trigger: "blur" },
+    { min: 6, max: 16, message: "用户名长度限制在6 ~ 16个字符", trigger: "blur" }
+  ],
+  password: [
+    { required: true, message: "密码不能为空", trigger: "blur" },
+    { min: 6, max: 16, message: "密码长度限制在6 ~ 16个字符", trigger: "blur" }
+  ]
+})
+
+// 提交表单
+const submitForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+
+  await formEl.validate((valid, fields) => {
+    // 校验不通过，则后续的业务逻辑不再执行
+    if (!valid) return
+
+    // 校验通过
+  })
+}
 </script>
 
 <template>
@@ -16,19 +49,27 @@ const formLabelAlign = reactive({
         <p>现代化博客管理系统</p>
       </div>
 
-      <el-form label-position="top" label-width="100px" :model="formLabelAlign"
-        style="max-width: 460px;padding: 20px 40px; 0">
-        <el-form-item label="用户名" size="large">
-          <el-input v-model="formLabelAlign.name" />
+      <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" style="padding: 20px 40px;">
+        <el-form-item label="用户名" prop="username" size="large">
+          <el-input v-model="loginInfo.username" :prefix-icon="User" />
         </el-form-item>
 
-        <el-form-item label="密码" size="large">
-          <el-input v-model="formLabelAlign.region" />
-        </el-form-item>
+        <el-form-item label="密码" prop="password" size="large">
+          <el-input v-model="loginInfo.password" :prefix-icon="Lock">
 
+            <!-- 小眼睛图标 -->
+            <template #suffix>
+              <el-icon class="el-input__icon">
+                <a href="javascript:;" style="color: #a8abb2;">
+                  <View />
+                </a>
+              </el-icon>
+            </template>
+          </el-input>
+        </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" size="large" class="submit">登录</el-button>
+          <el-button type="primary" size="large" @click="submitForm(loginRef)" class="submit">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

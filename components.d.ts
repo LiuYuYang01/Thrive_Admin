@@ -12,6 +12,7 @@ declare module 'vue' {
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElRow: typeof import('element-plus/es')['ElRow']
     Header: typeof import('./src/views/Layout/components/Header.vue')['default']
