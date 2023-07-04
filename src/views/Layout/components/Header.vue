@@ -129,16 +129,22 @@
                         color: #666;
                         transition: all $move;
 
-                        &:hover {
-                            padding-left: 15px;
-                            background-color: #f5f5fb;
-                        }
-
                         box-icon {
                             fill: #666;
                             width: 20px;
                             height: 30px;
                             margin-right: 5px;
+                            transition: fill $move;
+                        }
+
+                        &:hover {
+                            padding-left: 15px;
+                            color: $color;
+                            background-color: #f5f5fb;
+
+                            box-icon {
+                                fill: $color;
+                            }
                         }
                     }
                 }

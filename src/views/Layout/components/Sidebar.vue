@@ -93,7 +93,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 
 <style scoped lang="scss">
 .Sidebar {
-  width: 230px;
+  width: 240px;
   height: 100vh;
   margin-right: 20px;
   background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
