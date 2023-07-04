@@ -95,7 +95,6 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 .Sidebar {
   width: 240px;
   height: 100vh;
-  margin-right: 20px;
   background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
   box-shadow: 15px 2px 18px -3px rgba(121, 122, 243,0.1);
 

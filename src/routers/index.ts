@@ -43,21 +43,9 @@ export const routes = [
         meta: { title: '网站管理', icon: "planet" }
       },
       {
-        path: '/home/4',
-        component: () => import('@/views/Home/index.vue'),
-        meta: { title: '系统配置', icon: "shield-quarter" },
-        children: [
-          {
-            path: "",
-            component: () => import('@/views/Home/index.vue'),
-            meta: { title: '发布文章1' }
-          },
-          {
-            path: "2",
-            component: () => import('@/views/Home/index.vue'),
-            meta: { title: '发布说说2' }
-          }
-        ]
+        path: '/setup',
+        component: () => import('@/views/Setup/index.vue'),
+        meta: { title: '系统配置', icon: "shield-quarter" }
       },
       {
         path: '/home/5',
@@ -82,7 +70,7 @@ const router = createRouter({
 // 访问权限控制
 router.beforeEach(to => {
   const store = useUserStore()
-  
+
   // 开启进度条
   NProgress.start()
 
