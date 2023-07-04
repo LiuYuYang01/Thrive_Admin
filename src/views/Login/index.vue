@@ -4,8 +4,10 @@ import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { loginAPI } from '@/api/Login'
 import { useUserStore } from '@/stores'
+import { useRouter } from 'vue-router'
 
 const store = useUserStore()
+const router = useRouter()
 
 interface LoginForm {
   username: string,
@@ -41,7 +43,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!valid) return
 
     // 校验通过
-    const { data, message, token } = await loginAPI(loginInfo)
+    const { data, message } = await loginAPI(loginInfo)
 
     ElNotification({
       title: '成功',
@@ -49,8 +51,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       type: 'success',
     })
 
+    // 登录成功后跳转到首页
+    router.push("/home")
+
     // 将登录的数据保存到本地
-    store.setUser({ ...data, token })
+    store.setUser(data)
   })
 }
 </script>

@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores'
+
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -79,11 +81,20 @@ const router = createRouter({
 
 // 访问权限控制
 router.beforeEach(to => {
+  const store = useUserStore()
+  
   // 开启进度条
   NProgress.start()
 
   // 处理页面标题
   document.title = `Thrive - ${to.meta.title || ''}`
+
+  // 白名单：不需要登录就能访问的页面
+  const wihteList = ["/login"]
+
+  // 如果没有token就意味着没有登录 并且 在没有登录情况下会自动跳转到登录页
+  if (!store.user?.token && !wihteList.includes(to.path)) return "/login"
+  // 如果已登录，则跳转到指定的页面
 
   // 关闭进度条
   NProgress.done()
