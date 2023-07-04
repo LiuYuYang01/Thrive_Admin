@@ -30,7 +30,6 @@ select {
 
 html,
 body {
-    min-height: 100%;
     background-color: #f9f9f9;
 }
 
@@ -61,11 +60,6 @@ img {
 a {
     text-decoration: none;
     color: #333;
-}
-
-table {
-    border-collapse: collapse;
-    table-layout: fixed;
 }
 
 input,
