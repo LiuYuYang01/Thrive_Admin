@@ -38,6 +38,22 @@ export const routes = [
         ]
       },
       {
+        path: '/manage',
+        meta: { title: '管理', icon: "edit-alt" },
+        children: [
+          {
+            path: "",
+            component: () => import('@/views/Swiper/index.vue'),
+            meta: { title: '轮播图' }
+          },
+          {
+            path: "cate",
+            component: () => import('@/views/Cate/index.vue'),
+            meta: { title: '分类导航' }
+          }
+        ]
+      },
+      {
         path: '/setup',
         component: () => import('@/views/Setup/index.vue'),
         meta: { title: '系统配置', icon: "planet" },

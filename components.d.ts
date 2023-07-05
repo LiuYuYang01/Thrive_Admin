@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Cate: typeof import('./src/views/Cate/index.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
@@ -26,5 +27,6 @@ declare module 'vue' {
     Setup: typeof import('./src/views/Setup/index.vue')['default']
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
     Site: typeof import('./src/views/Setup/components/site.vue')['default']
+    Swiper: typeof import('./src/views/Swiper/index.vue')['default']
   }
 }
