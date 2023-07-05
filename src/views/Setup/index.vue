@@ -14,23 +14,15 @@ const active = ref(0)
       </li>
     </ul>
 
-    <div>配置项</div>
+    <div class="config">
+      <RouterView />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .title {
-  display: flex;
-  align-items: center;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
-  font-size: 20px;
-
-  box-icon {
-    fill: #333;
-    margin-right: 5px;
-  }
+  @include title;
 }
 
 .main {
@@ -38,6 +30,8 @@ const active = ref(0)
 
   .options {
     width: 210px;
+    margin-right: 20px;
+    border-right: 1px solid #eee;
 
     .item {
       position: relative;

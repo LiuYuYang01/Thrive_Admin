@@ -38,14 +38,26 @@ export const routes = [
         ]
       },
       {
-        path: '/home/3',
-        component: () => import('@/views/Home/index.vue'),
-        meta: { title: '网站管理', icon: "planet" }
-      },
-      {
         path: '/setup',
         component: () => import('@/views/Setup/index.vue'),
-        meta: { title: '系统配置', icon: "shield-quarter" }
+        meta: { title: '系统配置', icon: "planet" },
+        children: [
+          {
+            path: "",
+            component: () => import('@/views/Setup/components/setup.vue'),
+            meta: { title: '全局配置', hidden: true }
+          },
+          {
+            path: "site",
+            component: () => import('@/views/Setup/components/site.vue'),
+            meta: { title: '网站管理', hidden: true }
+          },
+          {
+            path: "my",
+            component: () => import('@/views/Setup/components/my.vue'),
+            meta: { title: '个人设置', hidden: true }
+          }
+        ]
       },
       {
         path: '/home/5',

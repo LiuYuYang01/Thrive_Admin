@@ -78,8 +78,8 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
             <el-collapse-transition>
               <dl class="children" v-show="one.meta.show">
                 <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
-                  v-for="two, two_index in one.children"
-                  @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')">
+                  v-for="two, two_index in one.children" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')"
+                  :style="{ display: two.meta.hidden ? 'block' : 'none' }">
                   {{ two.meta.title }}
                 </dd>
               </dl>
@@ -96,7 +96,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
   width: 240px;
   height: 100vh;
   background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
-  box-shadow: 15px 2px 18px -3px rgba(121, 122, 243,0.1);
+  box-shadow: 15px 2px 18px -3px rgba(121, 122, 243, 0.1);
 
   .logo {
     padding: 20px 0;

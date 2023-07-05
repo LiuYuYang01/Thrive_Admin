@@ -20,9 +20,11 @@ declare module 'vue' {
     Home: typeof import('./src/views/Home/index.vue')['default']
     Layout: typeof import('./src/views/Layout/index.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
+    My: typeof import('./src/views/Setup/components/my.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Setup: typeof import('./src/views/Setup/index.vue')['default']
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
+    Site: typeof import('./src/views/Setup/components/site.vue')['default']
   }
 }
