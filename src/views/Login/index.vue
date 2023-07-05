@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue'
 import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { loginAPI } from '@/api/Login'
+import { loginAPI } from '@/api/login'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
@@ -20,17 +20,17 @@ const loginInfo = reactive({
   password: '123123',
 })
 
-const loginRef = ref()
+const loginRef = ref<FormInstance>()
 
 // 登录数据校验
 const rules = reactive<FormRules<LoginForm>>({
   username: [
     { required: true, message: "用户不能为空", trigger: "blur" },
-    { min: 6, max: 16, message: "用户名长度限制在6 ~ 16个字符", trigger: "blur" }
+    { min: 6, max: 16, message: "用户名限制在6 ~ 16个字符", trigger: "blur" }
   ],
   password: [
     { required: true, message: "密码不能为空", trigger: "blur" },
-    { min: 6, max: 16, message: "密码长度限制在6 ~ 16个字符", trigger: "blur" }
+    { min: 6, max: 16, message: "密码限制在6 ~ 16个字符", trigger: "blur" }
   ]
 })
 
@@ -70,11 +70,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
       <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" style="padding: 20px 40px;">
         <el-form-item label="用户名" prop="username" size="large">
-          <el-input v-model="loginInfo.username" :prefix-icon="User" />
+          <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名"/>
         </el-form-item>
 
         <el-form-item label="密码" prop="password" size="large">
-          <el-input v-model="loginInfo.password" :prefix-icon="Lock">
+          <el-input v-model="loginInfo.password" :prefix-icon="Lock" placeholder="请输入密码">
 
             <!-- 小眼睛图标 -->
             <template #suffix>

@@ -1,33 +1,60 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { FormInstance, FormRules } from 'element-plus';
 
-const SwiperForm = reactive({
+interface SwiperForm {
+    title: string,
+    description: string,
+    url: string,
+    image: string
+}
+
+const SwiperForm = reactive<SwiperForm>({
     title: '',
     description: '',
     url: '',
     image: ''
+})
+
+const swiperRef = ref<FormInstance>()
+
+const rules = reactive<FormRules<SwiperForm>>({
+    title: [
+        { required: true, message: "轮播图标题不能为空", trigger: "blur" },
+        { min: 5, max: 30, message: "轮播图标题限制在5 ~ 30个字符", trigger: "blur" }
+    ],
+    description: [
+        { required: true, message: "轮播图描述不能为空", trigger: "blur" },
+        { min: 10, max: 50, message: "轮播图描述限制在10 ~ 50个字符", trigger: "blur" }
+    ],
+    url: [
+        { required: true, message: "轮播图链接不能为空", trigger: "blur" },
+    ],
+    image: [
+        { required: true, message: "轮播图不能为空", trigger: "blur" },
+    ]
 })
 </script>
 
 <template>
     <div class="add">
         <!-- 表单 -->
-        <el-form label-position="top" label-width="100px" :model="SwiperForm" style="width: 400px;max-width: 460px"
-            size="large">
-            <el-form-item label="标题">
-                <el-input v-model="SwiperForm.title" />
+        <el-form ref="swiperRef" label-position="top" :model="SwiperForm" :rules="rules"
+            style="width: 400px; max-width: 460px" size="large">
+            <el-form-item label="标题" prop="title">
+                <el-input v-model="SwiperForm.title" placeholder="要么沉沦 要么巅峰!" />
             </el-form-item>
 
-            <el-form-item label="描述">
-                <el-input v-model="SwiperForm.description" />
+            <el-form-item label="描述" prop="description">
+                <el-input v-model="SwiperForm.description" placeholder="Either sink or peak!" />
             </el-form-item>
 
-            <el-form-item label="链接">
-                <el-input v-model="SwiperForm.url" />
+            <el-form-item label="链接" prop="url">
+                <el-input v-model="SwiperForm.url" placeholder="http://liuyuyang.net/" />
             </el-form-item>
 
-            <el-form-item label="图片">
-                <el-input v-model="SwiperForm.image" />
+            <el-form-item label="图片" prop="image">
+                <el-input v-model="SwiperForm.image" placeholder="http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg" />
             </el-form-item>
 
             <el-form-item>
