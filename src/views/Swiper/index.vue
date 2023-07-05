@@ -13,10 +13,12 @@ const handleClick = () => {
 
   <el-tabs v-model="activeName" tab-position="left" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane label="轮播图列表" name="list">
-      <SwiperList/>
+      <SwiperList />
     </el-tab-pane>
-    
-    <el-tab-pane label="新增轮播图" name="add">新增轮播图</el-tab-pane>
+
+    <el-tab-pane label="新增轮播图" name="add">
+      <SwiperAdd />
+    </el-tab-pane>
   </el-tabs>
 </template>
 

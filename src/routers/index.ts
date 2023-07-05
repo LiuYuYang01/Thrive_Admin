@@ -60,17 +60,17 @@ export const routes = [
         children: [
           {
             path: "",
-            component: () => import('@/views/Setup/components/setup.vue'),
+            component: () => import('@/views/Setup/components/Setup.vue'),
             meta: { title: '全局配置', hidden: true }
           },
           {
             path: "site",
-            component: () => import('@/views/Setup/components/site.vue'),
+            component: () => import('@/views/Setup/components/Site.vue'),
             meta: { title: '网站管理', hidden: true }
           },
           {
             path: "my",
-            component: () => import('@/views/Setup/components/my.vue'),
+            component: () => import('@/views/Setup/components/My.vue'),
             meta: { title: '个人设置', hidden: true }
           }
         ]

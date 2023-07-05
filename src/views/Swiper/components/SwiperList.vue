@@ -31,11 +31,11 @@ const image = ref<string>("")
                 </template>
             </el-table-column>
 
-            <el-table-column prop="title" label="标题" />
+            <el-table-column prop="title" label="标题"  width="300"/>
 
             <el-table-column prop="description" label="描述" />
 
-            <el-table-column label="操作" align="center" #default="{ row }">
+            <el-table-column label="操作" align="center" width="200" #default="{ row }">
                 <el-button type="primary">修改</el-button>
 
                 <el-button type="danger">删除</el-button>
