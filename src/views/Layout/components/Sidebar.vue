@@ -32,15 +32,21 @@ const active = reactive(nav_active || {
 const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
   if (type === "one") {
     active.one = path
-    active.two = path + "/"
+    // active.two = path + "/"
 
     // 保存当前导航选中项
-    sessionStorage.setItem("nav_active", JSON.stringify({ one: path, two: path + "/" }))
+    // sessionStorage.setItem("nav_active", JSON.stringify({ one: path, two: path + "/" }))
+    sessionStorage.setItem("nav_active", JSON.stringify({ one: path }))
 
     // 点击展开二级导航，再次点击收起
     navList.value[index].meta.show = !navList.value[index].meta.show
     // 将展开的导航记录在会话存储中，这样页面刷新后之前打开的菜单不会被折叠起来
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
+
+    // 如果一级导航中有二级的，就不让他跳转路由
+    if(navList.value[index].children) return
+
+    router.push(path)
   } else {
     // 二级导航被选中也让一级导航高亮
     const i = path.lastIndexOf("/")
@@ -49,10 +55,10 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     active.two = path
 
     // 记录当前导航选中项
-    sessionStorage.setItem("nav_active", JSON.stringify({ ...nav_active, two: path }))
-  }
+    sessionStorage.setItem("nav_active", JSON.stringify({ ...active, two: path }))
 
-  router.push(path)
+    router.push(path)
+  }
 }
 </script>
 
