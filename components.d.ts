@@ -16,12 +16,15 @@ declare module 'vue' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     Header: typeof import('./src/views/Layout/components/Header.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']
     Home: typeof import('./src/views/Home/index.vue')['default']
     Layout: typeof import('./src/views/Layout/index.vue')['default']
+    List: typeof import('./src/views/Swiper/components/list.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
     My: typeof import('./src/views/Setup/components/my.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -30,6 +33,7 @@ declare module 'vue' {
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
     Site: typeof import('./src/views/Setup/components/site.vue')['default']
     Swiper: typeof import('./src/views/Swiper/index.vue')['default']
+    SwiperList: typeof import('./src/views/Swiper/components/SwiperList.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
   }
 }

@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { TabsPaneContext } from 'element-plus'
 
-const activeName = ref('first')
+const activeName = ref('list')
 
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
+const handleClick = () => {
+  console.log("被选中了")
 }
 </script>
 
 <template>
-  <Title title="轮播图管理" icon="shield-quarter"/>
+  <Title title="轮播图管理" icon="image" />
 
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-    <el-tab-pane label="User" name="first">User</el-tab-pane>
-    <el-tab-pane label="Config" name="second">Config</el-tab-pane>
-    <el-tab-pane label="Role" name="third">Role</el-tab-pane>
-    <el-tab-pane label="Task" name="fourth">Task</el-tab-pane>
+  <el-tabs v-model="activeName" tab-position="left" class="demo-tabs" @tab-click="handleClick">
+    <el-tab-pane label="轮播图列表" name="list">
+      <SwiperList/>
+    </el-tab-pane>
+    
+    <el-tab-pane label="新增轮播图" name="add">新增轮播图</el-tab-pane>
   </el-tabs>
 </template>
 
