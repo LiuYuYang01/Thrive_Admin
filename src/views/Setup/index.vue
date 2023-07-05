@@ -1,6 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 const active = ref(0)
+
+const list = [
+  {
+    title: "系统配置",
+    description: "系统配置描述信息",
+    icon: "shield-quarter",
+    path: "/"
+  },
+  {
+    title: "网站设置",
+    description: "网站设置描述信息",
+    icon: "globe",
+    path: "/site"
+  },
+  {
+    title: "个人设置",
+    description: "个人设置描述信息",
+    icon: "user",
+    path: "/my"
+  }
+]
+
+// 显示指定路由内容
+const toPath = (index: number, path: string) => {
+  active.value = index
+  router.push(`/setup${path}`)
+}
 </script>
 
 <template>
@@ -8,9 +38,10 @@ const active = ref(0)
 
   <div class="main">
     <ul class="options">
-      <li class="item" :class="{ active: index === active }" @click="active = index" v-for="item, index in 3">
-        <h3>系统配置</h3>
-        <p>系统配置描述</p>
+      <li class="item" :class="{ active: index === active }" @click="toPath(index, item.path)"
+        v-for="item, index in list">
+        <h3><box-icon :name="item.icon" />{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
       </li>
     </ul>
 
@@ -43,6 +74,14 @@ const active = ref(0)
 
       h3 {
         font-size: 16px;
+
+        @include icon;
+
+        color: #333;
+
+        box-icon {
+          color: #333;
+        }
       }
 
       p {

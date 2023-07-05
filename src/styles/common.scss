@@ -1,3 +1,4 @@
+
 // 标题样式
 @mixin title() {
     display: flex;
@@ -10,5 +11,21 @@
     box-icon {
         fill: #333;
         margin-right: 5px;
+    }
+}
+
+// 图标样式
+@mixin icon() {
+    display: flex;
+    align-items: center;
+    color: #666;
+    transition: color 0.3s;
+
+    box-icon {
+        fill: #666;
+        width: 20px;
+        height: 30px;
+        margin-right: 5px;
+        transition: fill 0.3s;
     }
 }
