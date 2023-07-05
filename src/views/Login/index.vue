@@ -2,7 +2,7 @@
 import { reactive, ref } from 'vue'
 import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { loginAPI } from '@/api/login'
+import { loginAPI } from '@/api/Login'
 import { useUserStore } from '@/stores'
 import { useRouter } from 'vue-router'
 
@@ -70,7 +70,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
       <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" style="padding: 20px 40px;">
         <el-form-item label="用户名" prop="username" size="large">
-          <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名"/>
+          <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名" />
         </el-form-item>
 
         <el-form-item label="密码" prop="password" size="large">

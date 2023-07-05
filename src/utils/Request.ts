@@ -19,8 +19,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
     (config) => {
         const store = useUserStore()
-        console.log(store.user,666);
-        
 
         // 如果有token就把赋值给请求头
         if (store.user?.token) {
