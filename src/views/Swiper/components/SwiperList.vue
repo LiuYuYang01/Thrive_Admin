@@ -1,38 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { getSwiperAPI } from '@/api/Swiper'
+import { Swiper } from '@/types/Swiper'
 
-const tableData = [
-    {
-        id: 1,
-        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
-        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
-        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
-    },
-    {
-        id: 2,
-        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
-        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
-        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
-    },
-    {
-        id: 3,
-        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
-        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
-        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
-    },
-    {
-        id: 4,
-        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
-        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
-        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
-    },
-    {
-        id: 5,
-        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
-        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
-        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
-    }
-]
+const tableData = ref<Swiper[]>()
+
+// 获取轮播图
+const getSwiperData = async () => {
+    const { data } = await getSwiperAPI()
+    
+    tableData.value = data
+}
+getSwiperData()
 
 const viewImageShow = ref(false)
 const image = ref<string>("")
