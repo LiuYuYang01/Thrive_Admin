@@ -13,6 +13,24 @@ const tableData = [
         image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
         title: '互联网从不缺乏天才，而努力才是最终的入场券！',
         description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
+    },
+    {
+        id: 3,
+        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
+        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
+        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
+    },
+    {
+        id: 4,
+        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
+        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
+        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
+    },
+    {
+        id: 5,
+        image: "http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg",
+        title: '互联网从不缺乏天才，而努力才是最终的入场券！',
+        description: 'The internet never lacks genius, and hard work is the ultimate ticket!',
     }
 ]
 
@@ -27,11 +45,12 @@ const image = ref<string>("")
 
             <el-table-column prop="image" label="图片" width="200">
                 <template #default="{ row }">
-                    <img :src="row.image" title="查看图片" class="image" @click="viewImageShow = !viewImageShow; image = row.image">
+                    <img :src="row.image" title="查看图片" class="image"
+                        @click="viewImageShow = !viewImageShow; image = row.image">
                 </template>
             </el-table-column>
 
-            <el-table-column prop="title" label="标题"  width="300"/>
+            <el-table-column prop="title" label="标题" width="300" />
 
             <el-table-column prop="description" label="描述" />
 
@@ -41,6 +60,10 @@ const image = ref<string>("")
                 <el-button type="danger">删除</el-button>
             </el-table-column>
         </el-table>
+
+        <div class="pagination">
+            <el-pagination background layout="prev, pager, next" :total="50" class="mt-4" />
+        </div>
     </div>
 
     <el-dialog v-model="viewImageShow" title="查看图片" width="30%" center>
@@ -51,6 +74,12 @@ const image = ref<string>("")
 <style scoped lang="scss">
 .list {
     margin-left: 30px;
+
+    .pagination {
+        display: flex;
+        justify-content: end;
+        margin-top: 20px;
+    }
 
     .image {
         height: 100px;
