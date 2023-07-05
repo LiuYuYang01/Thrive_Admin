@@ -79,7 +79,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
               <dl class="children" v-show="one.meta.show">
                 <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
                   v-for="two, two_index in one.children" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')"
-                  :style="{ display: two.meta.hidden ? 'block' : 'none' }">
+                  :style="{ display: two.meta.hidden ? 'none' : 'block' }">
                   {{ two.meta.title }}
                 </dd>
               </dl>
