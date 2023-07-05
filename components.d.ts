@@ -16,6 +16,8 @@ declare module 'vue' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     Header: typeof import('./src/views/Layout/components/Header.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']
     Home: typeof import('./src/views/Home/index.vue')['default']
@@ -28,5 +30,6 @@ declare module 'vue' {
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
     Site: typeof import('./src/views/Setup/components/site.vue')['default']
     Swiper: typeof import('./src/views/Swiper/index.vue')['default']
+    Title: typeof import('./src/components/Title/index.vue')['default']
   }
 }

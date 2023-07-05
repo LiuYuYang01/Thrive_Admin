@@ -34,7 +34,7 @@ const toPath = (index: number, path: string) => {
 </script>
 
 <template>
-  <div class="title"><box-icon name='shield-quarter' />系统配置</div>
+  <Title title="系统配置" icon="shield-quarter"/>
 
   <div class="main">
     <ul class="options">
@@ -52,10 +52,6 @@ const toPath = (index: number, path: string) => {
 </template>
 
 <style scoped lang="scss">
-.title {
-  @include title;
-}
-
 .main {
   display: flex;
 

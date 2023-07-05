@@ -42,7 +42,7 @@ export const routes = [
         meta: { title: '管理', icon: "edit-alt" },
         children: [
           {
-            path: "",
+            path: "swiper",
             component: () => import('@/views/Swiper/index.vue'),
             meta: { title: '轮播图' }
           },
