@@ -4,7 +4,7 @@ import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { Swiper } from '@/types/Swiper'
 import { addSwiperAPI } from '@/api/Swiper'
 
-const swiperForm = reactive<Swiper>({
+const swiperForm = ref<Swiper>({
     title: '',
     description: '',
     url: '',
@@ -40,7 +40,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         if (!valid) return
 
         // 校验通过
-        const { message } = await addSwiperAPI(swiperForm)
+        const { message } = await addSwiperAPI(swiperForm.value)
 
         ElNotification({
             title: '成功',

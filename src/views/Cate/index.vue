@@ -20,14 +20,6 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
-const cateForm = ref<Cate>({
-  name: "",
-  mark: "",
-  url: "",
-  icon: "",
-  children: []
-})
-
 const cateList = ref<Cate[]>()
 
 // 获取分类列表
@@ -45,19 +37,21 @@ const defaultProps = {
   label: 'name',
 }
 
-const cateFormShow = ref(true)
+// 控制新增分类表单是否显示
+const cateFormShow = ref(false)
 </script>
 
 <template>
   <Title title="分类导航" icon="category-alt" />
 
   <el-row justify="center" style="width: 660px; margin-bottom: 10px;">
-    <el-button key="primary" type="primary" text>新增一级分类</el-button>
+    <el-button key="primary" type="primary" text @click="cateFormShow = !cateFormShow">新增一级分类</el-button>
   </el-row>
 
+  <!-- 分类列表 -->
   <div class="cate">
     <el-tree :data="cateList" :props="defaultProps" @node-click="handleNodeClick" v-loading="loading"
-      :element-loading-svg="svg" class="custom-loading-svg" style="width: 650px;">
+      :element-loading-svg="svg" class="custom-loading-svg" :default-expand-all="true" style="width: 650px;">
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span class="name">{{ node.label }}</span>
@@ -84,30 +78,8 @@ const cateFormShow = ref(true)
     <img src="@/assets/svg/cate.svg" class="image">
   </div>
 
-  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;">
-    <el-form label-position="top" :model="cateForm" size="large">
-      <el-form-item label="名称">
-        <el-input v-model="cateForm.name" />
-      </el-form-item>
-
-      <el-form-item label="标识">
-        <el-input v-model="cateForm.mark" />
-      </el-form-item>
-
-      <el-form-item label="图标">
-        <el-input v-model="cateForm.icon" />
-      </el-form-item>
-
-      <el-form-item label="链接">
-        <el-input v-model="cateForm.icon" />
-      </el-form-item>
-
-      <el-form-item style="margin-bottom: -5px;">
-        <el-button @click="cateFormShow = false">取消</el-button>
-        <el-button type="primary" @click="cateFormShow = false">确定</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+  <!-- 新增分类 -->
+  <CateAdd v-model="cateFormShow" @getData="getCateDate" />
 </template>
 
 <style scoped lang="scss">
@@ -137,10 +109,5 @@ const cateFormShow = ref(true)
       height: 15px;
     }
   }
-}
-
-::v-deep(.el-form-item__content) {
-  display: flex;
-  justify-content: end;
 }
 </style>
