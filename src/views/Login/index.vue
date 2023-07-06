@@ -68,12 +68,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         <p>现代化博客管理系统</p>
       </div>
 
-      <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" style="padding: 20px 40px;">
-        <el-form-item label="用户名" prop="username" size="large">
+      <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" size="large"
+        style="padding: 20px 40px;">
+        <el-form-item label="用户名" prop="username">
           <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名" />
         </el-form-item>
 
-        <el-form-item label="密码" prop="password" size="large">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="loginInfo.password" :prefix-icon="Lock" placeholder="请输入密码">
 
             <!-- 小眼睛图标 -->

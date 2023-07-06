@@ -20,6 +20,14 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
+const cateForm = ref<Cate>({
+  name: "",
+  mark: "",
+  url: "",
+  icon: "",
+  children: []
+})
+
 const cateList = ref<Cate[]>()
 
 // 获取分类列表
@@ -36,12 +44,14 @@ const defaultProps = {
   children: 'children',
   label: 'name',
 }
+
+const cateFormShow = ref(true)
 </script>
 
 <template>
   <Title title="分类导航" icon="category-alt" />
 
-  <el-row justify="center" style="width: 660px;">
+  <el-row justify="center" style="width: 660px; margin-bottom: 10px;">
     <el-button key="primary" type="primary" text>新增一级分类</el-button>
   </el-row>
 
@@ -73,6 +83,31 @@ const defaultProps = {
 
     <img src="@/assets/svg/cate.svg" class="image">
   </div>
+
+  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;">
+    <el-form label-position="top" :model="cateForm" size="large">
+      <el-form-item label="名称">
+        <el-input v-model="cateForm.name" />
+      </el-form-item>
+
+      <el-form-item label="标识">
+        <el-input v-model="cateForm.mark" />
+      </el-form-item>
+
+      <el-form-item label="图标">
+        <el-input v-model="cateForm.icon" />
+      </el-form-item>
+
+      <el-form-item label="链接">
+        <el-input v-model="cateForm.icon" />
+      </el-form-item>
+
+      <el-form-item style="margin-bottom: -5px;">
+        <el-button @click="cateFormShow = false">取消</el-button>
+        <el-button type="primary" @click="cateFormShow = false">确定</el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -102,5 +137,10 @@ const defaultProps = {
       height: 15px;
     }
   }
+}
+
+::v-deep(.el-form-item__content) {
+  display: flex;
+  justify-content: end;
 }
 </style>
