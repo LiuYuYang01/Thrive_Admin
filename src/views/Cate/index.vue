@@ -1,44 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { getCateAPI } from '@/api/Cate'
-import { Cate } from '@/types/Cate'
-
-const handleNodeClick = (data: Cate) => {
-  console.log(data)
-}
-
-// Loading加载效果
-const loading = ref(true)
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `
-
-const cateList = ref<Cate[]>()
-
-// 获取分类列表
-const getCateDate = async () => {
-  const { data } = await getCateAPI()
-  cateList.value = data
-
-  loading.value = false
-}
-getCateDate()
-
 // 配置属性名
 const defaultProps = {
   children: 'children',
   label: 'name',
 }
 
-// 控制新增分类表单是否显示
-const cateFormShow = ref(false)
+// 获取分类逻辑
+import { getCateDate, cateList, loading, svg } from './logic/getCate'
+getCateDate()
+
+// 新增分类逻辑
+import { cateFormShow, cateRef, cateForm, rules, submit } from './logic/addCate'
 </script>
 
 <template>
@@ -50,8 +22,8 @@ const cateFormShow = ref(false)
 
   <!-- 分类列表 -->
   <div class="cate">
-    <el-tree :data="cateList" :props="defaultProps" @node-click="handleNodeClick" v-loading="loading"
-      :element-loading-svg="svg" class="custom-loading-svg" :default-expand-all="true" style="width: 650px;">
+    <el-tree :data="cateList" :props="defaultProps" v-loading="loading" :element-loading-svg="svg"
+      class="custom-loading-svg" :default-expand-all="true" style="width: 650px;">
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span class="name">{{ node.label }}</span>
@@ -79,7 +51,30 @@ const cateFormShow = ref(false)
   </div>
 
   <!-- 新增分类 -->
-  <CateAdd v-model="cateFormShow" @getData="getCateDate" />
+  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;">
+    <el-form ref="cateRef" :rules="rules" label-position="top" :model="cateForm" size="large">
+      <el-form-item label="名称" prop="name">
+        <el-input v-model="cateForm.name" placeholder="大前端" />
+      </el-form-item>
+
+      <el-form-item label="标识" prop="mark">
+        <el-input v-model="cateForm.mark" placeholder="dqd" />
+      </el-form-item>
+
+      <el-form-item label="图标" prop="icon">
+        <el-input v-model="cateForm.icon" placeholder="🎉" />
+      </el-form-item>
+
+      <el-form-item label="链接" prop="url">
+        <el-input v-model="cateForm.url" placeholder="https://liuyuyang.net/" />
+      </el-form-item>
+
+      <el-form-item style="margin-bottom: -5px;">
+        <el-button @click="cateFormShow = false">取消</el-button>
+        <el-button type="primary" @click="submit(cateRef)">确定</el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -109,5 +104,10 @@ const cateFormShow = ref(false)
       height: 15px;
     }
   }
+}
+
+::v-deep(.el-form-item__content) {
+  display: flex;
+  justify-content: end;
 }
 </style>
