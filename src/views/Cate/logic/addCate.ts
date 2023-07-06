@@ -7,6 +7,14 @@ import { getCateDate } from './getCate'
 // 控制新增分类的表单是否显示
 export const cateFormShow = ref(false)
 
+const cateId = ref<number | undefined>(undefined)
+
+// 弹出新增分类框，并且根据id决定新增一级还是二级分类
+export const addCate = (id?: number) => {
+    cateFormShow.value = true
+    cateId.value = id
+}
+
 // 新增表单框实例
 export const cateRef = ref<FormInstance>()
 
@@ -40,8 +48,12 @@ export const submit = async (formEl: FormInstance | undefined) => {
         // 校验不通过，则后续的业务逻辑不再执行
         if (!valid) return
 
+        // 通过id来判断新增一级还是二级分类
+        // 如果有id就是新增一级，没有就二级
+        const { message } = cateId ? await addCateAPI(cateForm.value, cateId.value) : await addCateAPI(cateForm.value)
+
         // 校验通过
-        const { message } = await addCateAPI(cateForm.value)
+        // const { message } = await addCateAPI(cateForm.value)
 
         ElNotification({
             title: '成功',
@@ -50,17 +62,20 @@ export const submit = async (formEl: FormInstance | undefined) => {
         })
 
         // 重置表单数据
-        cateForm.value = {
-            name: "",
-            mark: "",
-            url: "",
-            icon: "",
-            children: []
-        }
+        formEl.resetFields()
 
         // 关闭新增分类表单框
         cateFormShow.value = false
         // 获取最新数据
         getCateDate()
     })
+}
+
+// 关闭弹框时处理的逻辑
+export const close = () => {
+    // 关闭新增分类弹框
+    cateFormShow.value = false
+
+    // 将表单校验初始化
+    cateRef.value?.resetFields()
 }

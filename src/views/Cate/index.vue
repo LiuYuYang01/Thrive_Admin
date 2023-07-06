@@ -1,29 +1,23 @@
 <script setup lang="ts">
-// 配置属性名
-const defaultProps = {
-  children: 'children',
-  label: 'name',
-}
-
 // 获取分类逻辑
 import { getCateDate, cateList, loading, svg } from './logic/getCate'
 getCateDate()
 
 // 新增分类逻辑
-import { cateFormShow, cateRef, cateForm, rules, submit } from './logic/addCate'
+import { cateFormShow, addCate, cateRef, cateForm, rules, submit, close } from './logic/addCate'
 </script>
 
 <template>
   <Title title="分类导航" icon="category-alt" />
 
   <el-row justify="center" style="width: 660px; margin-bottom: 10px;">
-    <el-button key="primary" type="primary" text @click="cateFormShow = !cateFormShow">新增一级分类</el-button>
+    <el-button key="primary" type="primary" text @click="addCate(undefined)">新增一级分类</el-button>
   </el-row>
 
   <!-- 分类列表 -->
   <div class="cate">
-    <el-tree :data="cateList" :props="defaultProps" v-loading="loading" :element-loading-svg="svg"
-      class="custom-loading-svg" :default-expand-all="true" style="width: 650px;">
+    <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
+      :element-loading-svg="svg" class="custom-loading-svg" :default-expand-all="true" style="width: 650px;">
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span class="name">{{ node.label }}</span>
@@ -36,7 +30,7 @@ import { cateFormShow, cateRef, cateForm, rules, submit } from './logic/addCate'
 
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item v-if="data.children">新增</el-dropdown-item>
+                  <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
                   <el-dropdown-item>修改</el-dropdown-item>
                   <el-dropdown-item>删除</el-dropdown-item>
                 </el-dropdown-menu>
@@ -51,7 +45,7 @@ import { cateFormShow, cateRef, cateForm, rules, submit } from './logic/addCate'
   </div>
 
   <!-- 新增分类 -->
-  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;">
+  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
     <el-form ref="cateRef" :rules="rules" label-position="top" :model="cateForm" size="large">
       <el-form-item label="名称" prop="name">
         <el-input v-model="cateForm.name" placeholder="大前端" />
@@ -70,7 +64,7 @@ import { cateFormShow, cateRef, cateForm, rules, submit } from './logic/addCate'
       </el-form-item>
 
       <el-form-item style="margin-bottom: -5px;">
-        <el-button @click="cateFormShow = false">取消</el-button>
+        <el-button @click="close">取消</el-button>
         <el-button type="primary" @click="submit(cateRef)">确定</el-button>
       </el-form-item>
     </el-form>
