@@ -2,7 +2,7 @@ import { ref, reactive } from 'vue';
 import { addCateAPI } from '@/api/Cate'
 import { Cate } from '@/types/Cate'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { getCateDate } from './getCate'
+import { getCateData } from './getCate'
 
 // 控制新增分类的表单是否显示
 export const cateFormShow = ref(false)
@@ -52,9 +52,6 @@ export const submit = async (formEl: FormInstance | undefined) => {
         // 如果有id就是新增一级，没有就二级
         const { message } = cateId ? await addCateAPI(cateForm.value, cateId.value) : await addCateAPI(cateForm.value)
 
-        // 校验通过
-        // const { message } = await addCateAPI(cateForm.value)
-
         ElNotification({
             title: '成功',
             message: message,
@@ -67,7 +64,7 @@ export const submit = async (formEl: FormInstance | undefined) => {
         // 关闭新增分类表单框
         cateFormShow.value = false
         // 获取最新数据
-        getCateDate()
+        getCateData()
     })
 }
 

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 // 获取分类逻辑
-import { getCateDate, cateList, loading, svg } from './logic/getCate'
-getCateDate()
+import { getCateData, cateList, loading, svg } from './logic/getCate'
+getCateData()
 
 // 新增分类逻辑
 import { cateFormShow, addCate, cateRef, cateForm, rules, submit, close } from './logic/addCate'
+
+// 删除分类逻辑
+import { delCate } from './logic/delCate'
 </script>
 
 <template>
@@ -32,7 +35,7 @@ import { cateFormShow, addCate, cateRef, cateForm, rules, submit, close } from '
                 <el-dropdown-menu>
                   <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
                   <el-dropdown-item>修改</el-dropdown-item>
-                  <el-dropdown-item>删除</el-dropdown-item>
+                  <el-dropdown-item @click="delCate(data.id)">删除</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>

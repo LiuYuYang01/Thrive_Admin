@@ -19,9 +19,10 @@ export const svg = `
 export const cateList = ref<Cate[]>()
 
 // 获取分类列表
-export const getCateDate = async () => {
-    const { data } = await getCateAPI()
-    cateList.value = data
+export const getCateData = async () => {
+  const { data } = await getCateAPI()
+  cateList.value = data
 
-    loading.value = false
+  loading.value = false
+  console.log(data, 666);
 }
