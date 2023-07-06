@@ -3,12 +3,26 @@ import { ref } from 'vue'
 import { getSwiperAPI } from '@/api/Swiper'
 import { Swiper } from '@/types/Swiper'
 
+// Loading加载效果
+const loading = ref(true)
+const svg = `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `
+
 const tableData = ref<Swiper[]>()
 
 // 获取轮播图
 const getSwiperData = async () => {
     const { data } = await getSwiperAPI()
-    
+    loading.value = false
+
     tableData.value = data
 }
 getSwiperData()
@@ -19,7 +33,8 @@ const image = ref<string>("")
 
 <template>
     <div class="list">
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData" style="width: 100%" v-loading="loading" :element-loading-svg="svg"
+            class="custom-loading-svg" element-loading-svg-view-box="-10, -10, 50, 50">
             <el-table-column prop="id" label="ID" width="80" />
 
             <el-table-column prop="image" label="图片" width="200">

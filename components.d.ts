@@ -39,4 +39,7 @@ declare module 'vue' {
     SwiperList: typeof import('./src/views/Swiper/components/SwiperList.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }
