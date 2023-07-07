@@ -35,7 +35,8 @@ import { delCate } from './logic/delCate'
                 <el-dropdown-menu>
                   <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
                   <el-dropdown-item>修改</el-dropdown-item>
-                  <el-dropdown-item @click="delCate(data.id)">删除</el-dropdown-item>
+                  <el-dropdown-item
+                    @click="delCate(data.id, data?.children?.length)">删除</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>

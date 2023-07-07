@@ -5,7 +5,7 @@ import { Cate } from '@/types/Cate'
 export const addCateAPI = (data: Cate, cid?: number) => cid ? Request<Cate>("POST", "/cate", { ...data, cid }) : Request<Cate>("POST", "/cate", data)
 
 // 删除分类
-export const delCateAPI = (id: number) => Request<Cate>("DELETE", `/cate/${id}`)
+export const delCateAPI = (id: number, level: string) => Request<Cate>("DELETE", `/cate/${id}`, { level })
 
 // 修改分类
 export const editCateAPI = (data: Cate, id: number) => Request<Cate>("PUT", `/cate/${id}`, data)

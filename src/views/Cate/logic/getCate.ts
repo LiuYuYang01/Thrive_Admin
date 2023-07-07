@@ -24,5 +24,4 @@ export const getCateData = async () => {
   cateList.value = data
 
   loading.value = false
-  console.log(data, 666);
 }
