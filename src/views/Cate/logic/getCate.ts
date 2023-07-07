@@ -21,7 +21,7 @@ export const cateList = ref<Cate[]>()
 // 获取分类列表
 export const getCateData = async () => {
   const { data } = await getCateAPI()
-  cateList.value = data
+  cateList.value = data as Cate[]
 
   loading.value = false
 }

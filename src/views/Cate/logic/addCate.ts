@@ -1,19 +1,12 @@
 import { ref, reactive } from 'vue';
-import { addCateAPI } from '@/api/Cate'
+import { addCateAPI, editCateAPI, getCateAPI } from '@/api/Cate'
 import { Cate } from '@/types/Cate'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { getCateData } from './getCate'
+import { number } from 'echarts';
 
 // 控制新增分类的表单是否显示
 export const cateFormShow = ref(false)
-
-const cateId = ref<number | undefined>(undefined)
-
-// 弹出新增分类框，并且根据id决定新增一级还是二级分类
-export const addCate = (id?: number) => {
-    cateFormShow.value = true
-    cateId.value = id
-}
 
 // 新增表单框实例
 export const cateRef = ref<FormInstance>()
@@ -24,7 +17,6 @@ export const cateForm = ref<Cate>({
     mark: "",
     url: "",
     icon: "",
-    children: []
 })
 
 // 约束表单数据
@@ -40,6 +32,29 @@ export const rules = reactive<FormRules<Omit<Cate, "id" | "icon" | "children">>>
     url: [{ required: true, message: '分类链接不能为空' }],
 })
 
+const addId = ref<number | undefined>(undefined)
+const emitId = ref<number>()
+const emitLevel = ref<any>()
+
+// 弹出新增分类框，并且根据id决定新增一级还是二级分类
+export const addCate = (id: number | undefined) => {
+    cateFormShow.value = true
+    addId.value = id
+}
+
+// 编辑分类
+export const editCate = async (id: number | undefined, level: any) => {
+    cateFormShow.value = true
+
+    emitLevel.value = level
+
+    const { data } = await getCateAPI(id)
+    const { name, mark, icon, url } = data as Cate
+    cateForm.value = { name, mark, icon, url }
+
+    emitId.value = id
+}
+
 // 表单校验
 export const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -48,15 +63,29 @@ export const submit = async (formEl: FormInstance | undefined) => {
         // 校验不通过，则后续的业务逻辑不再执行
         if (!valid) return
 
-        // 通过id来判断新增一级还是二级分类
-        // 如果有id就是新增一级，没有就二级
-        const { message } = cateId ? await addCateAPI(cateForm.value, cateId.value) : await addCateAPI(cateForm.value)
+        if (emitId.value) {
+            // 编辑分类
+            emitLevel.value = emitLevel.value >= 0 ? 'one' : 'two'
 
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success',
-        })
+            const { message } = await editCateAPI(cateForm.value, emitId.value as number, emitLevel.value)
+
+            ElNotification({
+                title: '成功',
+                message: message,
+                type: 'success',
+            })
+        } else {
+            // 新增分类
+            // 通过id来判断新增一级还是二级分类
+            // 如果没有id就是新增一级，有就二级
+            const { message } = addId ? await addCateAPI(cateForm.value, addId.value) : await addCateAPI(cateForm.value)
+
+            ElNotification({
+                title: '成功',
+                message: message,
+                type: 'success',
+            })
+        }
 
         // 重置表单数据
         formEl.resetFields()

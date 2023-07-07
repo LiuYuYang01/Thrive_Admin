@@ -8,7 +8,7 @@ export const addCateAPI = (data: Cate, cid?: number) => cid ? Request<Cate>("POS
 export const delCateAPI = (id: number, level: string) => Request<Cate>("DELETE", `/cate/${id}`, { level })
 
 // 修改分类
-export const editCateAPI = (data: Cate, id: number) => Request<Cate>("PUT", `/cate/${id}`, data)
+export const editCateAPI = (data: Cate, id: number, level: string) => Request<Cate>("PUT", `/cate/${id}`, { ...data, level })
 
 // 获取分类
-export const getCateAPI = () => Request<Cate[]>("GET", "/cate")
+export const getCateAPI = (id?: number) => id ? Request<Cate>("GET", `/cate/${id}`) : Request<Cate[]>("GET", "/cate")

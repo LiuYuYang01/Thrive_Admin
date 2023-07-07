@@ -5,5 +5,5 @@ export interface Cate {
     url: string,
     icon: string,
     cid?: string,
-    children: Omit<Cate, "icon" | "cid">[]
+    children?: Omit<Cate, "icon" | "cid">[]
 }
