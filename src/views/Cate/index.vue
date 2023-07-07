@@ -3,7 +3,7 @@
 import { getCateData, cateList, loading, svg } from './logic/getCate'
 getCateData()
 
-// 新增分类逻辑
+// 新增、编辑分类逻辑
 import { cateFormShow, addCate, editCate, cateRef, cateForm, rules, submit, close } from './logic/addCate'
 
 // 删除分类逻辑
@@ -19,8 +19,7 @@ import { delCate } from './logic/delCate'
 
   <!-- 分类列表 -->
   <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
-    :element-loading-svg="svg" class="custom-loading-svg cate" :default-expand-all="true"
-    style="height: 70vh; padding: 0 20px; overflow: overlay;">
+    :element-loading-svg="svg" class="custom-loading-svg cate" :default-expand-all="true">
     <template #default="{ node, data }">
       <span class="custom-tree-node">
         <span class="name">{{ node.label }}</span>
@@ -34,7 +33,7 @@ import { delCate } from './logic/delCate'
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
-                <el-dropdown-item @click="editCate(data.id, data?.children?.length)">编辑</el-dropdown-item>
+                <el-dropdown-item @click="editCate(data, data?.children?.length)">编辑</el-dropdown-item>
                 <el-dropdown-item @click="delCate(data.id, data?.children?.length)">删除</el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -73,6 +72,9 @@ import { delCate } from './logic/delCate'
 
 <style scoped lang="scss">
 .cate {
+  height: 70vh;
+  padding: 0 20px;
+  overflow: overlay;
 
   .image {
     width: 40%;

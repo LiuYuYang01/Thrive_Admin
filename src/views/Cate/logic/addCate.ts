@@ -43,16 +43,14 @@ export const addCate = (id: number | undefined) => {
 }
 
 // 编辑分类
-export const editCate = async (id: number | undefined, level: any) => {
+export const editCate = async (data: Cate | undefined, level: any) => {
     cateFormShow.value = true
 
+    emitId.value = data?.id
     emitLevel.value = level
 
-    const { data } = await getCateAPI(id)
     const { name, mark, icon, url } = data as Cate
     cateForm.value = { name, mark, icon, url }
-
-    emitId.value = id
 }
 
 // 表单校验
