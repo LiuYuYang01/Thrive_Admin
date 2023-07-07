@@ -3,7 +3,7 @@ import { delCateAPI } from "@/api/Cate";
 import { getCateData } from './getCate'
 
 export const delCate = async (id: number, level: any) => {
-    level = level >= 1 || level === 0 ? 'one' : 'two'
+    level = level >= 0 ? 'one' : 'two'
 
     // 根据level决定删除一级还是二级分类
     const { code, message } = await delCateAPI(id, level)
