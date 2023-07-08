@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { loginAPI } from '@/api/Login'

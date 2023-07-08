@@ -1,9 +1,7 @@
-import { ref, reactive } from 'vue';
 import { addCateAPI, editCateAPI, getCateAPI } from '@/api/Cate'
 import { Cate } from '@/types/Cate'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { getCateData } from './getCate'
-import { number } from 'echarts';
 
 // 控制新增分类的表单是否显示
 export const cateFormShow = ref(false)

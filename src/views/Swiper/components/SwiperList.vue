@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { getSwiperAPI } from '@/api/Swiper'
 import { Swiper } from '@/types/Swiper'
 

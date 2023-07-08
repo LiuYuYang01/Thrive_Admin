@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import { getCateAPI } from '@/api/Cate'
 import { Cate } from '@/types/Cate'
 

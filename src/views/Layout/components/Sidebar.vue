@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-
 // 获取路由列表
 import { routes } from '@/routers'
 const navList = ref(JSON.parse(sessionStorage.getItem("navList") as string) || routes[0].children)

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { View, Edit, Delete } from '@element-plus/icons-vue'
 import { getArticleAPI } from '@/api/Article'
 import { Article } from '@/types/Article'
@@ -8,7 +7,7 @@ const ArticleData = ref<Article[]>()
 
 // 获取文章列表
 const getArticleData = async () => {
-    const {data} = await getArticleAPI()
+    const { data } = await getArticleAPI()
 
     ArticleData.value = data as Article[]
 }
@@ -18,15 +17,15 @@ getArticleData()
 <template>
     <Title title="文章管理" icon="notepad" />
 
-    <el-table :data="ArticleData" height="95%" style="width: 100%">
-        <el-table-column prop="id" label="ID" width="180" />
-        <el-table-column prop="title" label="标题" width="180" />
-        <el-table-column prop="sketch" label="简述" width="180" />
-        <el-table-column prop="cate" label="分类" width="180" />
-        <el-table-column prop="tag" label="标签" width="180" />
-        <el-table-column prop="view" label="浏览量" width="180" />
-        <el-table-column prop="count" label="评论数量" width="180" />
-        <el-table-column prop="date" label="发布时间" width="180" />
+    <el-table :data="ArticleData" style="width: 100%">
+        <el-table-column prop="id" label="ID" width="80" align="center" />
+        <el-table-column prop="title" label="标题" width="180" align="center" />
+        <el-table-column prop="sketch" label="简述" width="300" align="sketch" class="briefly" />
+        <el-table-column prop="cate" label="分类" width="130" align="center" />
+        <el-table-column prop="tag" label="标签" width="230" align="center" />
+        <el-table-column prop="view" label="浏览量" width="100" align="center" />
+        <el-table-column prop="count" label="评论数量" width="100" align="center" />
+        <el-table-column prop="date" label="发布时间" width="180" align="center" />
 
         <el-table-column fixed="right" label="操作" align="center" width="150">
             <template #default>
@@ -39,7 +38,12 @@ getArticleData()
 </template>
 
 <style scoped lang="scss">
-::v-deep(.el-table td.el-table__cell) {
-    border-right: none !important;
+.el-table :deep(.el-table_1_column_3 .cell) {
+    display: -webkit-box !important;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 </style>

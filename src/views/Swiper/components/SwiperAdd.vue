@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { Swiper } from '@/types/Swiper'
 import { addSwiperAPI } from '@/api/Swiper'
