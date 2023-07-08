@@ -11,7 +11,7 @@ import { delCate } from './logic/delCate'
 </script>
 
 <template>
-  <Title title="分类导航" icon="category-alt" />
+  <Title title="分类管理" icon="category-alt" />
 
   <el-row justify="center" style="margin-bottom: 10px;">
     <el-button key="primary" type="primary" text @click="addCate(undefined)">新增一级分类</el-button>

@@ -42,6 +42,11 @@ export const routes = [
         meta: { title: '管理', icon: "edit-alt" },
         children: [
           {
+            path: "article",
+            component: () => import('@/views/Article/index.vue'),
+            meta: { title: '文章' }
+          },
+          {
             path: "swiper",
             component: () => import('@/views/Swiper/index.vue'),
             meta: { title: '轮播图' }

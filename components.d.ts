@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Article: typeof import('./src/views/Article/index.vue')['default']
     Cate: typeof import('./src/views/Cate/index.vue')['default']
     CateAdd: typeof import('./src/views/Cate/components/CateAdd.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
