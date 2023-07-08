@@ -3,7 +3,7 @@ import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { loginAPI } from '@/api/Login'
 import { useUserStore } from '@/stores'
-import { useRouter } from 'vue-router'
+
 
 const store = useUserStore()
 const router = useRouter()

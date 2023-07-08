@@ -13,7 +13,7 @@ navList.value.forEach((item: { meta: any; }) => {
 })
 
 
-import { useRouter } from 'vue-router'
+// 
 const router = useRouter()
 
 
@@ -42,7 +42,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
 
     // 如果一级导航中有二级的，就不让他跳转路由
-    if(navList.value[index].children) return
+    if (navList.value[index].children) return
 
     router.push(path)
   } else {
@@ -62,7 +62,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 
 <template>
   <div class="Sidebar">
-    <div class="logo">
+    <div class="logo" @click="router.push('/')">
       <a href="javascript:;">Thrive</a>
     </div>
 
@@ -103,13 +103,15 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
   box-shadow: 15px 2px 18px -3px rgba(121, 122, 243, 0.1);
 
   .logo {
-    padding: 20px 0;
     font-size: 25px;
     font-weight: 900;
     text-align: center;
 
     a {
       color: #fff;
+      padding: 20px 0;
+      width: 100%;
+      display: inline-block;
     }
   }
 
