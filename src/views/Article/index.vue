@@ -1,29 +1,8 @@
 <script setup lang="ts">
 import { View, Edit, Delete } from '@element-plus/icons-vue'
-import { getArticleAPI } from '@/api/Article'
-import { Article } from '@/types/Article'
-
-const loading = ref(true)
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `
-
-const ArticleData = ref<Article[]>()
 
 // 获取文章列表
-const getArticleData = async () => {
-    const { data } = await getArticleAPI()
-
-    ArticleData.value = data as Article[]
-    loading.value = false
-}
+import { getArticleData, ArticleData, loading, svg } from './logic/getArticle'
 getArticleData()
 </script>
 
