@@ -9,7 +9,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     Article: typeof import('./src/views/Article/index.vue')['default']
     Cate: typeof import('./src/views/Cate/index.vue')['default']
-    CateAdd: typeof import('./src/views/Cate/components/CateAdd.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
@@ -32,7 +31,6 @@ declare module 'vue' {
     Hello: typeof import('./src/components/Hello.vue')['default']
     Home: typeof import('./src/views/Home/index.vue')['default']
     Layout: typeof import('./src/views/Layout/index.vue')['default']
-    List: typeof import('./src/views/Swiper/components/list.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
     My: typeof import('./src/views/Setup/components/My.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

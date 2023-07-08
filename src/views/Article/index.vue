@@ -3,6 +3,18 @@ import { View, Edit, Delete } from '@element-plus/icons-vue'
 import { getArticleAPI } from '@/api/Article'
 import { Article } from '@/types/Article'
 
+const loading = ref(true)
+const svg = `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `
+
 const ArticleData = ref<Article[]>()
 
 // 获取文章列表
@@ -10,6 +22,7 @@ const getArticleData = async () => {
     const { data } = await getArticleAPI()
 
     ArticleData.value = data as Article[]
+    loading.value = false
 }
 getArticleData()
 </script>
@@ -17,7 +30,8 @@ getArticleData()
 <template>
     <Title title="文章管理" icon="notepad" />
 
-    <el-table :data="ArticleData" style="width: 100%">
+    <el-table :data="ArticleData" v-loading="loading" :element-loading-svg="svg" class="custom-loading-svg"
+        element-loading-svg-view-box="-10, -10, 50, 50">
         <el-table-column prop="id" label="ID" width="80" align="center" />
         <el-table-column prop="title" label="标题" width="180" align="center" />
         <el-table-column prop="sketch" label="简述" width="300" align="sketch" class="briefly" />
