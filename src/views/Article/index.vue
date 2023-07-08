@@ -1,39 +1,24 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { View, Edit, Delete } from '@element-plus/icons-vue'
+import { getArticleAPI } from '@/api/Article'
+import { Article } from '@/types/Article'
 
-const tableData = [
-    {
-        date: '2016-05-06',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-07',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-04',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-07',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]
+const ArticleData = ref<Article[]>()
+
+// 获取文章列表
+const getArticleData = async () => {
+    const {data} = await getArticleAPI()
+
+    ArticleData.value = data as Article[]
+}
+getArticleData()
 </script>
 
 <template>
     <Title title="文章管理" icon="notepad" />
 
-    <el-table :data="tableData" height="95%" style="width: 100%">
+    <el-table :data="ArticleData" height="95%" style="width: 100%">
         <el-table-column prop="id" label="ID" width="180" />
         <el-table-column prop="title" label="标题" width="180" />
         <el-table-column prop="sketch" label="简述" width="180" />

@@ -8,4 +8,4 @@ export const addSwiperAPI = (data: Swiper) => Request<Swiper>("POST", "/swiper",
 export const getSwiperAPI = () => Request<Swiper[]>("GET", "/swiper")
 
 // 获取轮播图 [有id就获取单个，没有id就获取全部]
-// export const getSwiperAPI = (id?: Swiper) => id ? Request<Swiper>("GET", `/swiper/${id}`) : Request<Swiper>("GET", `/swiper`)
+// export const getSwiperAPI = (id?: number) => id ? Request<Swiper>("GET", `/swiper/${id}`) : Request<Swiper>("GET", `/swiper`)
