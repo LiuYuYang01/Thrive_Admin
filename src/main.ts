@@ -17,7 +17,11 @@ import 'element-plus/dist/index.css'
 // 引入全局样式
 import '@/styles/index.scss'
 
+import VueMarkdownEditor from '@/utils/Edit'
+
 const app = createApp(App)
+
+app.use(VueMarkdownEditor);
 
 app.use(pinia)
 app.use(router)
