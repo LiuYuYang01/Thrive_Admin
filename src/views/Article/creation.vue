@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const text = ref("Hello")
+import { Edit } from '@element-plus/icons-vue'
+
+const ArticleData = ref({
+  title: "",
+  content: "",
+  cate: ""
+})
 </script>
 
 <template>
@@ -7,10 +13,16 @@ const text = ref("Hello")
 
   <div class="main">
     <div class="edit">
-      <v-md-editor v-model="text" height="600px"></v-md-editor>
+      <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
+        style="margin-bottom: 20px;" class="w-50 m-2" />
+
+      <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
     </div>
 
-    <div class="sidebar">12131FF</div>
+    <div class="sidebar">
+      {{ ArticleData.cate }}
+      <ArticleCate v-model="ArticleData.cate" />
+    </div>
   </div>
 </template>
 
@@ -21,13 +33,16 @@ const text = ref("Hello")
   padding: 0 50px;
 
   .edit {
-    width: 70%;
-    margin-right: 10%;
+    width: 1000px;
   }
 
   .sidebar {
-    width: 20%;
-    background-color: yellow;
+    width: 250px;
+  }
+
+  .v-md-editor {
+    border: 1px solid #eee;
+    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
   }
 }
 </style>
