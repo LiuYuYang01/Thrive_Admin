@@ -27,7 +27,7 @@ export const routes = [
         children: [
           {
             path: "",
-            component: () => import('@/views/Home/index.vue'),
+            component: () => import('@/views/Article/creation.vue'),
             meta: { title: '发布文章' }
           },
           {
@@ -44,17 +44,17 @@ export const routes = [
           {
             path: "article",
             component: () => import('@/views/Article/index.vue'),
-            meta: { title: '文章' }
-          },
-          {
-            path: "swiper",
-            component: () => import('@/views/Swiper/index.vue'),
-            meta: { title: '轮播图' }
+            meta: { title: '文章管理' }
           },
           {
             path: "cate",
             component: () => import('@/views/Cate/index.vue'),
-            meta: { title: '分类导航' }
+            meta: { title: '分类管理' }
+          },
+          {
+            path: "swiper",
+            component: () => import('@/views/Swiper/index.vue'),
+            meta: { title: '轮播图管理' }
           }
         ]
       },
