@@ -52,6 +52,11 @@ export const routes = [
             meta: { title: '分类管理' }
           },
           {
+            path: "tag",
+            component: () => import('@/views/Tag/index.vue'),
+            meta: { title: '标签管理' }
+          },
+          {
             path: "swiper",
             component: () => import('@/views/Swiper/index.vue'),
             meta: { title: '轮播图管理' }
