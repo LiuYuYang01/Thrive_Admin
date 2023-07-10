@@ -25,7 +25,7 @@ watch(date, data => {
 
 <template>
     <div class="ArticleDate">
-        <div class="title"><box-icon name='time-five' />选择时间</div>
+        <div class="title"><box-icon name='time-five' />时间</div>
 
         <el-input class="w-50 m-2" size="large" :placeholder="time">
             <template #append>
@@ -44,8 +44,9 @@ watch(date, data => {
         padding: 10px 15px;
 
         @include title;
-        margin-bottom: 10px;
         font-size: 16px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
     }
 
     :deep .el-input {

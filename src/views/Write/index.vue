@@ -5,6 +5,7 @@ const ArticleData = ref({
     title: "",
     content: "",
     cate: "",
+    tag: "",
     date: new Date()
 })
 </script>
@@ -29,6 +30,9 @@ const ArticleData = ref({
 
             <!-- 日期 -->
             <ArticleDate v-model="ArticleData.date" />
+
+            <!-- 标签 -->
+            <ArticleTag v-model="ArticleData.tag" />
         </div>
     </div>
 </template>
