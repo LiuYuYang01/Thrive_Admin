@@ -2,7 +2,13 @@
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
 
+const emit = defineEmits<{ (e: "update:modelValue", data: Date): void }>()
+
 const date = ref(new Date())
+
+watch(date, (data: Date) => {
+    emit("update:modelValue", data)
+})
 </script>
 
 <template>
