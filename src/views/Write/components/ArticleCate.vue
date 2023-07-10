@@ -14,7 +14,7 @@ const handleCheckChange = (data: any) => {
 </script>
 
 <template>
-    <div class="cate">
+    <div class="ArticleCate">
         <div class="title">分类列表</div>
 
         <div class="list">
@@ -26,11 +26,8 @@ const handleCheckChange = (data: any) => {
 </template>
 
 <style scoped lang="scss">
-.cate {
+.ArticleCate {
     overflow: hidden;
-    border-radius: $round;
-    background-color: #fff;
-    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
 
     .title {
         display: flex;
@@ -44,7 +41,6 @@ const handleCheckChange = (data: any) => {
 
     .list {
         padding: 20px;
-        border: 1px solid #eee;
     }
 }
 </style>

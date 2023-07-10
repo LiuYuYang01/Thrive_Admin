@@ -45,6 +45,18 @@ const ArticleData = ref({
 
     .sidebar {
         width: 250px;
+
+        div {
+            border: 1px solid #eee;
+            border-radius: $round;
+            background-color: #fff;
+            box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+            margin-bottom: 20px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 
     .v-md-editor {
