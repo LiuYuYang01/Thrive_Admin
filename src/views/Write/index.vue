@@ -13,13 +13,17 @@ const ArticleData = ref({
 
     <div class="main">
         <div class="edit">
+            <!-- 标题 -->
             <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
                 style="margin-bottom: 20px;" class="w-50 m-2" />
 
+            <!-- 内容 -->
             <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
         </div>
 
+        <!-- 侧边栏 -->
         <div class="sidebar">
+            <!-- 分类 -->
             <ArticleCate v-model="ArticleData.cate" />
         </div>
     </div>
