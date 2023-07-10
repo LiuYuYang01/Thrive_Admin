@@ -42,7 +42,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!valid) return
 
     // 校验通过
-    const { data, message } = await loginAPI(loginInfo)
+    const { code, data, message } = await loginAPI(loginInfo)
+
+    if (code !== 200) return
 
     ElNotification({
       title: '成功',
