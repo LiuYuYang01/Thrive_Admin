@@ -7,11 +7,9 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AddArticle: typeof import('./src/views/Article/addArticle.vue')['default']
     Article: typeof import('./src/views/Article/index.vue')['default']
-    ArticleCate: typeof import('./src/views/Article/components/ArticleCate.vue')['default']
+    ArticleCate: typeof import('./src/views/Write/components/ArticleCate.vue')['default']
     Cate: typeof import('./src/views/Cate/index.vue')['default']
-    Creation: typeof import('./src/views/Article/creation.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
@@ -45,6 +43,7 @@ declare module 'vue' {
     SwiperAdd: typeof import('./src/views/Swiper/components/SwiperAdd.vue')['default']
     SwiperList: typeof import('./src/views/Swiper/components/SwiperList.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
+    Write: typeof import('./src/views/Write/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

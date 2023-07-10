@@ -27,7 +27,7 @@ export const routes = [
         children: [
           {
             path: "",
-            component: () => import('@/views/Article/creation.vue'),
+            component: () => import('@/views/Write/index.vue'),
             meta: { title: '发布文章' }
           },
           {
