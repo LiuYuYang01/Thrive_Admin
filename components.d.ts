@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Article: typeof import('./src/views/Article/index.vue')['default']
     ArticleCate: typeof import('./src/views/Write/components/ArticleCate.vue')['default']
+    ArticleDate: typeof import('./src/views/Write/components/ArticleDate.vue')['default']
     Cate: typeof import('./src/views/Cate/index.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']

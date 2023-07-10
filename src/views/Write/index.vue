@@ -4,7 +4,8 @@ import { Edit } from '@element-plus/icons-vue'
 const ArticleData = ref({
     title: "",
     content: "",
-    cate: ""
+    cate: "",
+    date: new Date()
 })
 </script>
 
@@ -25,6 +26,9 @@ const ArticleData = ref({
         <div class="sidebar">
             <!-- 分类 -->
             <ArticleCate v-model="ArticleData.cate" />
+
+            <!-- 日期 -->
+            <ArticleDate v-model="ArticleData.date" />
         </div>
     </div>
 </template>
