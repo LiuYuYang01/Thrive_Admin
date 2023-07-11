@@ -23,3 +23,11 @@
         ),
     )
 );
+
+.el-input {
+    .el-input-group__append {
+        color: #fff;
+        background-color: #727cf5;
+        box-shadow: none;
+    }
+}

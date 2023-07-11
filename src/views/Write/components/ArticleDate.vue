@@ -51,14 +51,8 @@ watch(date, data => {
     }
 
     :deep .el-input {
-        padding: 0 15px;
-        margin-bottom: 10px;
-
-        .el-input-group__append {
-            color: #fff;
-            background-color: $color;
-            box-shadow: none;
-        }
+        margin: 10px 0px 20px;
+        padding: 0 20px;
     }
 
     :deep .vc-bordered {
