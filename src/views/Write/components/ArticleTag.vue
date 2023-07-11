@@ -26,7 +26,7 @@ const TagSelect = () => {
     if (isExist) return query.value = ""
 
     // 标签不能为空
-    if(!query.value.trim()) return
+    if (!query.value.trim()) return
 
     TagList.value.push(query.value)
 
@@ -57,6 +57,9 @@ const addTagData = async () => {
     restaurants.value = TagData.value
 }
 
+// 删除标签
+const delTagData = (data: string) => TagList.value.splice(TagList.value.findIndex(item => item === data), 1)
+
 onMounted(async () => {
     await getTagData()
 
@@ -78,7 +81,9 @@ onMounted(async () => {
         </el-row>
 
         <div class="list">
-            <span class="item" v-for="item in TagList" :key="item">{{ item }}</span>
+            <!-- 渲染选择的标签列表 -->
+            <span class="item" v-for="item in TagList" :key="item" @click="delTagData(item)">{{ item }}</span>
+            <!-- <span class="item" v-for="item in 5" :key="item">大前端</span> -->
         </div>
     </div>
 </template>
@@ -103,12 +108,35 @@ onMounted(async () => {
         }
 
         .item {
+            overflow: hidden;
+            position: relative;
             display: inline-block;
             padding: 2px 5px;
             margin: 2px;
             color: #fff;
             font-size: 14px;
             border-radius: $round;
+
+            // 鼠标经过后显示删除按钮
+            &::before {
+                content: "删除";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                font-size: 0;
+                background-color: transparent;
+                transition: background-color $move;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            &:hover::before {
+                font-size: 14px;
+                padding-top: 2px;
+                background-color: #F56C6C !important;
+            }
         }
 
         .item:nth-of-type(1) {
@@ -135,10 +163,11 @@ onMounted(async () => {
             background-color: #6cb3f2;
         }
 
-        .item:nth-of-type(n+7){
+        .item:nth-of-type(n+7) {
             color: #666;
             background-color: #fff;
             border: 1px solid #eee;
         }
     }
-}</style>
+}
+</style>
