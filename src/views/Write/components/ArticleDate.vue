@@ -47,6 +47,7 @@ watch(date, data => {
         font-size: 16px;
         padding-bottom: 10px;
         margin-bottom: 10px;
+        justify-content: center;
     }
 
     :deep .el-input {
