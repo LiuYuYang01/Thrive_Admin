@@ -1,7 +1,8 @@
 <script setup lang="ts">
-defineProps<{ TagList: string[] }>()
+import { Tag } from '@/types/Tag'
+import { getTagAPI } from '@/api/Tag'
 
-onMounted(() => {
+const run = () => {
     var radius = 120;
     var dtr = Math.PI / 180;
     var d = 300;
@@ -29,47 +30,45 @@ onMounted(() => {
     var aA: string | any[] | HTMLCollectionOf<HTMLAnchorElement> | null = null;
     var oDiv: HTMLElement | null = null;
 
-    window.onload = function () {
-        var i = 0;
-        var oTag = null;
+    var i = 0;
+    var oTag = null;
 
-        oDiv = document.getElementById('tagsList');
+    oDiv = document.getElementById('tagsList');
 
-        aA = oDiv.getElementsByTagName('a');
+    aA = oDiv.getElementsByTagName('a');
 
-        for (i = 0; i < aA.length; i++) {
-            oTag = {};
+    for (i = 0; i < aA.length; i++) {
+        oTag = {};
 
-            oTag.offsetWidth = aA[i].offsetWidth;
-            oTag.offsetHeight = aA[i].offsetHeight;
+        oTag.offsetWidth = aA[i].offsetWidth;
+        oTag.offsetHeight = aA[i].offsetHeight;
 
-            mcList.push(oTag);
-        }
+        mcList.push(oTag);
+    }
 
-        sineCosine(0, 0, 0);
+    sineCosine(0, 0, 0);
 
-        positionAll();
+    positionAll();
 
-        oDiv.onmouseover = function () {
-            active = true;
-        };
-
-        oDiv.onmouseout = function () {
-            active = false;
-        };
-
-        oDiv.onmousemove = function (ev) {
-            var oEvent = window.event || ev;
-
-            mouseX = oEvent.clientX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
-            mouseY = oEvent.clientY - (oDiv.offsetTop + oDiv.offsetHeight / 2);
-
-            mouseX /= 5;
-            mouseY /= 5;
-        };
-
-        setInterval(update, 30);
+    oDiv.onmouseover = function () {
+        active = true;
     };
+
+    oDiv.onmouseout = function () {
+        active = false;
+    };
+
+    oDiv.onmousemove = function (ev) {
+        var oEvent = window.event || ev;
+
+        mouseX = oEvent.clientX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
+        mouseY = oEvent.clientY - (oDiv.offsetTop + oDiv.offsetHeight / 2);
+
+        mouseX /= 5;
+        mouseY /= 5;
+    };
+
+    setInterval(update, 30);
 
     function update() {
         var a;
@@ -220,12 +219,25 @@ onMounted(() => {
         sc = Math.sin(c * dtr);
         cc = Math.cos(c * dtr);
     }
-})
+}
+
+const TagList = ref<Tag[]>([])
+
+// 获取标签列表
+const getTagData = async () => {
+    const { data } = await getTagAPI()
+    TagList.value = data as Tag[]
+
+    nextTick(()=>{
+        run()
+    })
+}
+getTagData()
 </script>
 
 <template>
     <div id="tagsList">
-        <a href="javascript:;" :title="item" v-for="item in TagList">{{ item }}</a>
+        <a href="javascript:;" :title="name" v-for="{ name } in TagList">{{ name }}</a>
     </div>
 </template>
 

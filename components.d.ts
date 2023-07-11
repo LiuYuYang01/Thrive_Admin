@@ -45,7 +45,7 @@ declare module 'vue' {
     SwiperAdd: typeof import('./src/views/Swiper/components/SwiperAdd.vue')['default']
     SwiperList: typeof import('./src/views/Swiper/components/SwiperList.vue')['default']
     Tag: typeof import('./src/views/Tag/index.vue')['default']
-    Tags: typeof import('./src/components/Tags/index.vue')['default']
+    Tags3D: typeof import('./src/views/Tag/components/Tags3D.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
     Write: typeof import('./src/views/Write/index.vue')['default']
   }

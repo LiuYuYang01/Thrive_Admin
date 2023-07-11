@@ -3,7 +3,9 @@
 </script>
 
 <template>
-    <Tags :TagList="['大前端', 'Nodejs', 'Python']" />
+    <div class="tag">
+        <Tags3D />
+    </div>
 </template>
 
 <style scoped lang="scss"></style>
