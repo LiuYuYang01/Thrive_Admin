@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Tag } from '@/types/Tag'
-import { getTagAPI } from '@/api/Tag'
+import { TagList, getTagData } from '../logic/getTag'
 
 const run = () => {
     var radius = 250;
@@ -221,18 +220,13 @@ const run = () => {
     }
 }
 
-const TagList = ref<Tag[]>([])
-
-// 获取标签列表
-const getTagData = async () => {
-    const { data } = await getTagAPI()
-    TagList.value = data as Tag[]
-
+const fn = () => {
     nextTick(() => {
         run()
     })
 }
-getTagData()
+
+getTagData(fn)
 </script>
 
 <template>

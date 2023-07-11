@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Select } from '@element-plus/icons-vue'
+import { Select, Delete } from '@element-plus/icons-vue'
 import { Tag } from '@/types/Tag';
 import { query, querySearch, restaurants } from '../logic/QueryTag'
 import { getTagAPI, addTagAPI } from '@/api/Tag'
@@ -57,7 +57,7 @@ const addTagData = async () => {
     restaurants.value = TagData.value
 }
 
-// 删除标签
+// 删除选择的标签
 const delTagData = (data: string) => TagList.value.splice(TagList.value.findIndex(item => item === data), 1)
 
 onMounted(async () => {
@@ -71,9 +71,11 @@ onMounted(async () => {
     <div class="ArticleTag">
         <div class="title"><box-icon name='purchase-tag' />标签</div>
 
-        <el-row justify="center" style="margin: 20px 20px 10px;">
+        <el-row justify="center" class="query">
             <el-autocomplete v-model="query" ref="AutocompleteRef" size="large" :fetch-suggestions="querySearch"
                 placeholder="添加标签" value-key="name" class="inline-input w-50" @keyup.enter="addTagData" @select="TagSelect">
+
+                <!-- 手动添加按钮 -->
                 <template #append>
                     <el-button :icon="Select" @click="addTagData" />
                 </template>
@@ -98,6 +100,10 @@ onMounted(async () => {
         padding-bottom: 10px;
         margin-bottom: 0;
         justify-content: center;
+    }
+
+    .query {
+        margin: 20px 20px 10px;
     }
 
     .list {
