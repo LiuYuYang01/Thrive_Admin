@@ -3,7 +3,7 @@ import { Tag } from '@/types/Tag'
 import { getTagAPI } from '@/api/Tag'
 
 const run = () => {
-    var radius = 120;
+    var radius = 250;
     var dtr = Math.PI / 180;
     var d = 300;
     var mcList: {}[] = [];
@@ -228,7 +228,7 @@ const getTagData = async () => {
     const { data } = await getTagAPI()
     TagList.value = data as Tag[]
 
-    nextTick(()=>{
+    nextTick(() => {
         run()
     })
 }
@@ -243,10 +243,14 @@ getTagData()
 
 <style scoped lang="scss">
 #tagsList {
-    position: relative;
-    width: 450px;
-    height: 450px;
-    margin: 150px auto 0;
+    position: absolute;
+    // top: 10%;
+    left: 50%;
+    transform: translate(-50%);
+    // width: 800px;
+    // height: 500px;
+    width: 100%;
+    height: 100%;
 }
 
 #tagsList a {
