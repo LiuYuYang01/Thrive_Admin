@@ -2,9 +2,10 @@
 import { addTagAPI, delTagAPI, editTagAPI } from '@/api/Tag'
 import { TagList, getTagData } from './logic/getTag'
 import { ElNotification, FormInstance, FormRules } from 'element-plus'
+import { Tag } from '@/types/Tag';
 const TagRef = ref<FormInstance>()
 
-const TagData = ref({
+const TagData = ref<Tag>({
     name: ""
 })
 
@@ -31,6 +32,15 @@ const delTagData = async (id: number) => {
     getTagData()
 }
 
+// 新增 / 编辑 标签切换
+const title = ref<string>("新增标签");
+
+// 编辑标签
+const editTagData = (data: Tag) => {
+    TagData.value = { ...data }
+    title.value = "编辑标签"
+}
+
 // 提交表单
 const submit = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
@@ -39,20 +49,33 @@ const submit = async (formEl: FormInstance | undefined) => {
         // 校验不通过，则后续的业务逻辑不再执行
         if (!valid) return
 
-        const { code, message } = await addTagAPI(TagData.value)
+        const fn = (code: number, message: string) => {
+            if (code !== 200) return
 
-        if (code !== 200) return
+            // 初始化数据
+            TagData.value.name = ""
 
-        // 初始化数据
-        TagData.value.name = ""
+            ElNotification({
+                title: '成功',
+                message: message,
+                type: 'success',
+            })
 
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success',
-        })
+            getTagData()
+        }
 
-        getTagData()
+        // 有id就是编辑，没有就是新增
+        if (TagData.value.id) {
+            const { code, message } = await editTagAPI(TagData.value.id, TagData.value)
+
+            title.value = "新增标签"
+
+            fn(code, message)
+        } else {
+            const { code, message } = await addTagAPI(TagData.value)
+
+            fn(code, message)
+        }
     })
 }
 </script>
@@ -75,7 +98,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 
                             <el-table-column label="操作" align="center">
                                 <template #default="{ row }">
-                                    <el-button size="small">编辑</el-button>
+                                    <el-button size="small" @click="editTagData(row)">编辑</el-button>
                                     <el-button size="small" type="danger" @click="delTagData(row.id)">删除</el-button>
                                 </template>
                             </el-table-column>
@@ -91,8 +114,9 @@ const submit = async (formEl: FormInstance | undefined) => {
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button type="primary" @click="submit(TagRef!)" size="large"
-                                    style="width: 100%;">新增标签</el-button>
+                                <el-button type="primary" @click="submit(TagRef!)" size="large" style="width: 100%;">{{
+                                    title
+                                }}</el-button>
                             </el-form-item>
                         </el-form>
 
