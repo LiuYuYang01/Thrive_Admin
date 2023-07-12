@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElNotification } from 'element-plus'
 import { Select, Delete } from '@element-plus/icons-vue'
 import { Tag } from '@/types/Tag';
 import { query, querySearch, restaurants } from '../logic/QueryTag'
@@ -46,7 +47,14 @@ const addTagData = async () => {
     if (isExist) {
         TagSelect()
     } else {
-        await addTagAPI({ name: query.value })
+        const { code, message } = await addTagAPI({ name: query.value })
+        if (code !== 200) return
+
+        ElNotification({
+            title: '成功',
+            message: message,
+            type: 'success',
+        })
 
         TagSelect()
     }
