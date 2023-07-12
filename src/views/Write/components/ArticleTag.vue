@@ -40,6 +40,12 @@ const TagSelect = () => {
 
 // 添加标签
 const addTagData = async () => {
+    if (!query.value.trim()) return ElNotification({
+        title: '失败',
+        message: "标签不能为空",
+        type: 'error',
+    })
+
     // 添加前先判断需要添加的标签是否存在，如果存在就没必要再添加了
     const isExist = TagData.value.find((item: Tag) => item.name.toLocaleLowerCase() === query.value.toLocaleLowerCase())
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { ElNotification, FormInstance, FormRules } from 'element-plus'
 import { addTagAPI, delTagAPI, editTagAPI } from '@/api/Tag'
 import { TagList, getTagData } from './logic/getTag'
-import { ElNotification, FormInstance, FormRules } from 'element-plus'
 import { Tag } from '@/types/Tag';
 const TagRef = ref<FormInstance>()
 
@@ -16,6 +16,9 @@ const rules = reactive<FormRules>({
         { min: 2, max: 10, message: "标签限制在2 ~ 10个字符", trigger: "blur" }
     ]
 })
+
+// 新增 / 编辑 标签切换
+const title = ref<string>("新增标签");
 
 // 删除标签
 const delTagData = async (id: number) => {
@@ -32,9 +35,6 @@ const delTagData = async (id: number) => {
     getTagData()
 }
 
-// 新增 / 编辑 标签切换
-const title = ref<string>("新增标签");
-
 // 编辑标签
 const editTagData = (data: Tag) => {
     TagData.value = { ...data }
@@ -49,11 +49,12 @@ const submit = async (formEl: FormInstance | undefined) => {
         // 校验不通过，则后续的业务逻辑不再执行
         if (!valid) return
 
+        // 逻辑复用
         const fn = (code: number, message: string) => {
             if (code !== 200) return
 
             // 初始化数据
-            TagData.value.name = ""
+            TagData.value = { id: undefined, name: "" }
 
             ElNotification({
                 title: '成功',
