@@ -39,13 +39,19 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     // 将展开的导航记录在会话存储中，这样页面刷新后之前打开的菜单不会被折叠起来
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
 
-    // 如果一级导航中有二级的，就不让他跳转路由
-    const r = navList.value[index].children
-    // 如果所有二级属性都为：hidden: true，那么允许一级导航跳转
-    const f = r.every((item: any) => item.meta.hidden)
-    if (!f) return
 
-    router.push(path)
+    
+    // 如果一级导航中有二级的或者所有hidden属性为true，就不让他跳转路由
+    const r = navList.value[index].children
+
+    if (r) {
+      // 如果所有二级属性都为：hidden: true，那么允许一级导航跳转
+      const f = r?.every((item: any) => item.meta.hidden)
+
+      f ? router.push(path) : 0
+    } else {
+      router.push(path)
+    }
   } else {
     // 二级导航被选中也让一级导航高亮
     const i = path.lastIndexOf("/")
@@ -61,9 +67,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 }
 
 // 导航下拉图标是否显示隐藏
-const isIcon = (one: any) => {
-  return !one.children?.every((item: any) => item.meta.hidden)
-}
+const isIcon = (one: any) => one.children && !one.children?.every((item: any) => item.meta.hidden)
 </script>
 
 <template>
