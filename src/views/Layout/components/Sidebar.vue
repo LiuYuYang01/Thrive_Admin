@@ -13,7 +13,6 @@ navList.value.forEach((item: { meta: any; }) => {
 })
 
 
-// 
 const router = useRouter()
 
 
@@ -33,7 +32,6 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     // active.two = path + "/"
 
     // 保存当前导航选中项
-    // sessionStorage.setItem("nav_active", JSON.stringify({ one: path, two: path + "/" }))
     sessionStorage.setItem("nav_active", JSON.stringify({ one: path }))
 
     // 点击展开二级导航，再次点击收起
@@ -42,7 +40,10 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
 
     // 如果一级导航中有二级的，就不让他跳转路由
-    if (navList.value[index].children) return
+    const r = navList.value[index].children
+    // 如果所有二级属性都为：hidden: true，那么允许一级导航跳转
+    const f = r.every((item: any) => item.meta.hidden)
+    if (!f) return
 
     router.push(path)
   } else {
@@ -57,6 +58,11 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 
     router.push(path)
   }
+}
+
+// 导航下拉图标是否显示隐藏
+const isIcon = (one: any) => {
+  return !one.children?.every((item: any) => item.meta.hidden)
 }
 </script>
 
@@ -74,18 +80,21 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
           <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one.path }">
             <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
 
-            <box-icon name='chevron-down' class="icon" v-if="one.children" />
+            <box-icon name='chevron-down' class="icon" v-if="isIcon(one)" />
           </a>
 
           <!-- 二级导航 -->
           <template v-if="one.children">
             <el-collapse-transition>
               <dl class="children" v-show="one.meta.show">
-                <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
-                  v-for="two, two_index in one.children" @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')"
-                  :style="{ display: two.meta.hidden ? 'none' : 'block' }">
-                  {{ two.meta.title }}
-                </dd>
+
+                <template v-for="two, two_index in one.children">
+                  <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
+                    @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')" v-if="!two.meta.hidden">
+                    {{ two.meta.title }}
+                  </dd>
+                </template>
+
               </dl>
             </el-collapse-transition>
           </template>
@@ -99,7 +108,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 .Sidebar {
   width: 240px;
   height: 100vh;
-  // background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
+  // background-image: linear-grsadient(135deg, #8f75da 0%, #727cf5 60%);
   background-color: #3e4656;
   box-shadow: 15px 2px 18px -3px rgba(121, 122, 243, 0.1);
 

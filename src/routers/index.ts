@@ -23,7 +23,7 @@ export const routes = [
       },
       {
         path: '/write',
-        meta: { title: '创作', icon: "edit-alt", show: true },
+        meta: { title: '创作', icon: "edit-alt" },
         children: [
           {
             path: "",
@@ -39,7 +39,7 @@ export const routes = [
       },
       {
         path: '/manage',
-        meta: { title: '管理', icon: "edit-alt" },
+        meta: { title: '管理', icon: "edit-alt", show: true },
         children: [
           {
             path: "article",
