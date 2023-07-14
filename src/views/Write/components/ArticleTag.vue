@@ -5,6 +5,9 @@ import { Tag } from '@/types/Tag';
 import { query, querySearch, restaurants } from '../logic/QueryTag'
 import { getTagAPI, addTagAPI } from '@/api/Tag'
 
+const props = defineProps<{ modelValue: string }>()
+const emit = defineEmits<{ (e: "update:modelValue", data: string): void }>()
+
 const TagData = ref<any>()
 
 // 标签搜索框实例
@@ -30,6 +33,9 @@ const TagSelect = () => {
     if (!query.value.trim()) return
 
     TagList.value.push(query.value)
+
+    // 子向父传值
+    emit("update:modelValue", TagList.value.join(","))
 
     // 清空内容
     query.value = ""
