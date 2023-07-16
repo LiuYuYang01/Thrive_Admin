@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { Swiper } from '@/types/Swiper'
-import { addSwiperAPI } from '@/api/Swiper'
+import { addSwiperAPI, editSwiperAPI, getSwiperAPI } from '@/api/Swiper'
 
-const swiperForm = ref<Swiper>({
+const props = defineProps<{ data: any }>()
+
+const SwiperData = ref<Swiper>({
     title: '',
     description: '',
     url: '',
     image: ''
 })
 
-const swiperRef = ref<FormInstance>()
+// 数据回显
+watch(props.data, async swiper => {
+    if (swiper.title === "修改轮播图") {
+        const { data } = await getSwiperAPI(swiper.id)
+
+        SwiperData.value = data as Swiper
+    }
+})
+
+// 轮播图实例
+const SwiperRef = ref<FormInstance>()
 
 // 数据校验
 const rules = reactive<FormRules<Swiper>>({
@@ -31,48 +43,66 @@ const rules = reactive<FormRules<Swiper>>({
 })
 
 // 提交表单
-const submitForm = async (formEl: FormInstance | undefined) => {
+const SubmitForm = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
 
     await formEl.validate(async (valid, fields) => {
         // 校验不通过，则后续的业务逻辑不再执行
         if (!valid) return
 
-        // 校验通过
-        const { message } = await addSwiperAPI(swiperForm.value)
+        // 有id就是修改，没有就是添加
+        if (SwiperData.value.id) {
+            // 编辑轮播图
+            const { title, description, url, image } = SwiperData.value
+            const { code, message } = await editSwiperAPI(props.data.id, { title, description, url, image })
 
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success',
-        })
+            if (code !== 200) return
+
+            ElNotification({
+                title: '成功',
+                message: message,
+                type: 'success',
+            })
+        } else {
+            // 新增轮播图
+            const { code, message } = await addSwiperAPI(SwiperData.value)
+
+            if (code !== 200) return
+
+            ElNotification({
+                title: '成功',
+                message: message,
+                type: 'success',
+            })
+        }
     })
 }
 </script>
 
 <template>
-    <div class="add">
+    <div class="manage">
         <!-- 表单 -->
-        <el-form ref="swiperRef" label-position="top" :model="swiperForm" :rules="rules"
+        <el-form ref="SwiperRef" label-position="top" :model="SwiperData" :rules="rules"
             style="width: 400px; max-width: 460px" size="large">
             <el-form-item label="标题" prop="title">
-                <el-input v-model="swiperForm.title" placeholder="要么沉沦 要么巅峰!" />
+                <el-input v-model="SwiperData.title" placeholder="要么沉沦 要么巅峰!" />
             </el-form-item>
 
             <el-form-item label="描述" prop="description">
-                <el-input v-model="swiperForm.description" placeholder="Either sink or peak!" />
+                <el-input v-model="SwiperData.description" placeholder="Either sink or peak!" />
             </el-form-item>
 
             <el-form-item label="链接" prop="url">
-                <el-input v-model="swiperForm.url" placeholder="http://liuyuyang.net/" />
+                <el-input v-model="SwiperData.url" placeholder="http://liuyuyang.net/" />
             </el-form-item>
 
             <el-form-item label="图片" prop="image">
-                <el-input v-model="swiperForm.image" placeholder="http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg" />
+                <el-input v-model="SwiperData.image" placeholder="http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg" />
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" style="width: 100%;" @click="submitForm(swiperRef)">新增轮播图</el-button>
+                <el-button type="primary" style="width: 100%;" @click="SubmitForm(SwiperRef)">{{ props.data.title
+                }}</el-button>
             </el-form-item>
         </el-form>
 
