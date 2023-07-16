@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { getSwiperAPI } from '@/api/Swiper'
+import { getSwiperAPI, delSwiperAPI } from '@/api/Swiper'
 import { Swiper } from '@/types/Swiper'
+import {ElNotification} from 'element-plus'
 
 // Loading加载效果
 const loading = ref(true)
@@ -15,24 +16,47 @@ const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
-const tableData = ref<Swiper[]>()
+const SwiperData = ref<Swiper[]>()
 
 // 获取轮播图
 const getSwiperData = async () => {
     const { data } = await getSwiperAPI()
     loading.value = false
 
-    tableData.value = data
+    SwiperData.value = data as Swiper[]
 }
 getSwiperData()
 
+// 是否查看轮播图
 const viewImageShow = ref(false)
 const image = ref<string>("")
+
+// 修改轮播图
+const editSwiperData = () => {
+    console.log("修改轮播图")
+}
+
+// 删除轮播图
+const delSwiperData = async (id: number) => {
+    console.log(id);
+
+    const { code, message } = await delSwiperAPI(id)
+
+    if (code !== 200) return
+
+    ElNotification({
+        title: '成功',
+        message: message,
+        type: 'success',
+    })
+
+    getSwiperData()
+}
 </script>
 
 <template>
     <div class="list">
-        <el-table :data="tableData" style="width: 100%" v-loading="loading" :element-loading-svg="svg"
+        <el-table :data="SwiperData" style="width: 100%" v-loading="loading" :element-loading-svg="svg"
             class="custom-loading-svg" element-loading-svg-view-box="-10, -10, 50, 50">
             <el-table-column prop="id" label="ID" width="80" />
 
@@ -48,9 +72,9 @@ const image = ref<string>("")
             <el-table-column prop="description" label="描述" />
 
             <el-table-column label="操作" align="center" width="200" #default="{ row }">
-                <el-button type="primary">修改</el-button>
+                <el-button type="primary" @click="editSwiperData">修改</el-button>
 
-                <el-button type="danger">删除</el-button>
+                <el-button type="danger" @click="delSwiperData(row.id)">删除</el-button>
             </el-table-column>
         </el-table>
 
