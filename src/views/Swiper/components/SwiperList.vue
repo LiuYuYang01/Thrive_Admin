@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { getSwiperAPI, delSwiperAPI } from '@/api/Swiper'
 import { Swiper } from '@/types/Swiper'
-import {ElNotification} from 'element-plus'
+import { ElNotification } from 'element-plus'
+
+const emit = defineEmits<{ (e: "update:modelValue", data: string): () => void, (e: "editSwiper", title: string, id: number): () => void }>()
 
 // Loading加载效果
 const loading = ref(true)
@@ -32,14 +34,13 @@ const viewImageShow = ref(false)
 const image = ref<string>("")
 
 // 修改轮播图
-const editSwiperData = () => {
-    console.log("修改轮播图")
+const editSwiperData = (data: Swiper) => {
+    emit("update:modelValue", "operate")
+    emit("editSwiper", "修改轮播图", data.id!)
 }
 
 // 删除轮播图
 const delSwiperData = async (id: number) => {
-    console.log(id);
-
     const { code, message } = await delSwiperAPI(id)
 
     if (code !== 200) return
@@ -56,6 +57,7 @@ const delSwiperData = async (id: number) => {
 
 <template>
     <div class="list">
+        <!-- 轮播图列表 -->
         <el-table :data="SwiperData" style="width: 100%" v-loading="loading" :element-loading-svg="svg"
             class="custom-loading-svg" element-loading-svg-view-box="-10, -10, 50, 50">
             <el-table-column prop="id" label="ID" width="80" />
@@ -72,20 +74,22 @@ const delSwiperData = async (id: number) => {
             <el-table-column prop="description" label="描述" />
 
             <el-table-column label="操作" align="center" width="200" #default="{ row }">
-                <el-button type="primary" @click="editSwiperData">修改</el-button>
+                <el-button type="primary" @click="editSwiperData(row)">修改</el-button>
 
                 <el-button type="danger" @click="delSwiperData(row.id)">删除</el-button>
             </el-table-column>
         </el-table>
 
+        <!-- 分页 -->
         <div class="pagination">
             <el-pagination background layout="prev, pager, next" :total="50" class="mt-4" />
         </div>
-    </div>
 
-    <el-dialog v-model="viewImageShow" title="查看图片" width="30%" center>
-        <img :src="image" alt="" style="width: 100%; border-radius: 5px;">
-    </el-dialog>
+        <!-- 查看轮播图 -->
+        <el-dialog v-model="viewImageShow" title="查看图片" width="30%" center>
+            <img :src="image" alt="" style="width: 100%; border-radius: 5px;">
+        </el-dialog>
+    </div>
 </template>
 
 <style scoped lang="scss">
