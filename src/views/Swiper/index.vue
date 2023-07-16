@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const activeName = ref('list')
-
-import { loading, svg, SwiperList, getSwiperData, viewImageShow, image, editSwiperData, delSwiperData } from './logic/getSwiper'
+import { loading, svg, SwiperList, getSwiperData, viewImageShow, image, delSwiperData } from './logic/getSwiper'
 getSwiperData()
 
-import { SwiperForm, SubmitForm, rules, SwiperRef } from './logic/addSwiper'
+import { editSwiperData, SwiperForm, SubmitForm, rules, activeName, SwiperRef } from './logic/addSwiper'
 </script>
 
 <template>
@@ -46,6 +44,7 @@ import { SwiperForm, SubmitForm, rules, SwiperRef } from './logic/addSwiper'
         </el-dialog>
       </el-tab-pane>
 
+      <!-- <el-tab-pane :label="SwiperForm.id ? '编辑轮播图' : '新增轮播图'" name="operate" class="manage"> -->
       <el-tab-pane label="新增轮播图" name="operate" class="manage">
         <el-form ref="SwiperRef" label-position="top" :model="SwiperForm" :rules="rules"
           style="width: 400px; max-width: 460px" size="large">
@@ -66,7 +65,8 @@ import { SwiperForm, SubmitForm, rules, SwiperRef } from './logic/addSwiper'
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" style="width: 100%;" @click="SubmitForm(SwiperRef)">新增轮播图</el-button>
+            <el-button type="primary" style="width: 100%;" @click="SubmitForm(SwiperRef)">{{ SwiperForm.id ? '编辑轮播图' :
+              '新增轮播图' }}</el-button>
           </el-form-item>
         </el-form>
 

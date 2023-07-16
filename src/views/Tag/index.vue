@@ -3,6 +3,7 @@ import { ElNotification, FormInstance, FormRules } from 'element-plus'
 import { addTagAPI, delTagAPI, editTagAPI } from '@/api/Tag'
 import { TagList, getTagData } from './logic/getTag'
 import { Tag } from '@/types/Tag';
+
 const TagRef = ref<FormInstance>()
 
 const TagData = ref<Tag>({
@@ -54,7 +55,7 @@ const submit = async (formEl: FormInstance | undefined) => {
             if (code !== 200) return
 
             // 初始化数据
-            TagData.value = { id: undefined, name: "" }
+            TagRef.value?.resetFields()
 
             ElNotification({
                 title: '成功',

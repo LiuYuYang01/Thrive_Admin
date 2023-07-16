@@ -3,8 +3,6 @@ import { getSwiperAPI, delSwiperAPI } from '@/api/Swiper'
 import { Swiper } from '@/types/Swiper'
 import { ElNotification } from 'element-plus'
 
-export const SwiperList = ref<Swiper[]>()
-
 // Loading加载效果
 export const loading = ref(true)
 export const svg = `
@@ -18,6 +16,8 @@ export const svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
+export const SwiperList = ref<Swiper[]>()
+
 // 获取轮播图
 export const getSwiperData = async () => {
   const { data } = await getSwiperAPI()
@@ -29,11 +29,6 @@ export const getSwiperData = async () => {
 // 是否查看轮播图
 export const viewImageShow = ref(false)
 export const image = ref<string>("")
-
-// 修改轮播图
-export const editSwiperData = (data: Swiper) => {
-
-}
 
 // 删除轮播图
 export const delSwiperData = async (id: number) => {

@@ -63,7 +63,9 @@ export const submit = async (formEl: FormInstance | undefined) => {
             // 编辑分类
             emitLevel.value = emitLevel.value >= 0 ? 'one' : 'two'
 
-            const { message } = await editCateAPI(cateForm.value, emitId.value as number, emitLevel.value)
+            const { code, message } = await editCateAPI(cateForm.value, emitId.value as number, emitLevel.value)
+
+            if (code !== 200) return
 
             ElNotification({
                 title: '成功',
@@ -74,7 +76,9 @@ export const submit = async (formEl: FormInstance | undefined) => {
             // 新增分类
             // 通过id来判断新增一级还是二级分类
             // 如果没有id就是新增一级，有就二级
-            const { message } = addId ? await addCateAPI(cateForm.value, addId.value) : await addCateAPI(cateForm.value)
+            const { code, message } = addId ? await addCateAPI(cateForm.value, addId.value) : await addCateAPI(cateForm.value)
+
+            if (code !== 200) return
 
             ElNotification({
                 title: '成功',
