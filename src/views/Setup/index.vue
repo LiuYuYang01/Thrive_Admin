@@ -32,7 +32,7 @@ const toPath = (index: number, path: string) => {
 </script>
 
 <template>
-  <Title title="系统配置" icon="shield-quarter"/>
+  <Title title="系统配置" icon="shield-quarter" />
 
   <div class="main">
     <ul class="options">
@@ -112,6 +112,10 @@ const toPath = (index: number, path: string) => {
         height: 100%;
       }
     }
+  }
+
+  .config {
+    width: 100%;
   }
 }
 </style>

@@ -44,8 +44,7 @@ import { editSwiperData, SwiperForm, SubmitForm, rules, activeName, SwiperRef } 
         </el-dialog>
       </el-tab-pane>
 
-      <!-- <el-tab-pane :label="SwiperForm.id ? '编辑轮播图' : '新增轮播图'" name="operate" class="manage"> -->
-      <el-tab-pane label="新增轮播图" name="operate" class="manage">
+      <el-tab-pane :label="SwiperForm.id ? '编辑轮播图' : '新增轮播图'" name="operate" class="manage">
         <el-form ref="SwiperRef" label-position="top" :model="SwiperForm" :rules="rules"
           style="width: 400px; max-width: 460px" size="large">
           <el-form-item label="标题" prop="title">
