@@ -1,34 +1,41 @@
 <script setup lang="ts">
 const router = useRouter()
 
-const active = ref(0)
+// 当前的路由地址
+const path = router.currentRoute.value.path
+
+const active = ref<string>(path)
 
 const list = [
   {
     title: "系统配置",
     description: "系统配置描述信息",
     icon: "shield-quarter",
-    path: "/"
+    path: "/setup/"
   },
   {
     title: "网站设置",
     description: "网站设置描述信息",
     icon: "globe",
-    path: "/site"
+    path: "/setup/site"
   },
   {
     title: "个人设置",
     description: "个人设置描述信息",
     icon: "user",
-    path: "/my"
+    path: "/setup/my"
   }
 ]
 
 // 显示指定路由内容
-const toPath = (index: number, path: string) => {
-  active.value = index
-  router.push(`/setup${path}`)
+const toPath = (path: string) => {
+  active.value = path
+  router.push(path)
 }
+
+onBeforeRouteUpdate(to => {
+  active.value = to.path
+})
 </script>
 
 <template>
@@ -36,8 +43,7 @@ const toPath = (index: number, path: string) => {
 
   <div class="main">
     <ul class="options">
-      <li class="item" :class="{ active: index === active }" @click="toPath(index, item.path)"
-        v-for="item, index in list">
+      <li class="item" :class="{ active: item.path === active }" @click="toPath(item.path)" v-for="item, index in list">
         <h3><box-icon :name="item.icon" />{{ item.title }}</h3>
         <p>{{ item.description }}</p>
       </li>
