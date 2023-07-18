@@ -33,6 +33,7 @@ const toPath = (path: string) => {
   router.push(path)
 }
 
+// 监听路由变化
 onBeforeRouteUpdate(to => {
   active.value = to.path
 })

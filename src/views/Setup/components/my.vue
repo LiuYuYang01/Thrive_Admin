@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { FormRules } from 'element-plus';
-import { My } from '@/types/My';
+import { FormInstance, FormRules, ElNotification } from 'element-plus';
+import { getUserAPI, editUserAPI } from '@/api/User'
+import { User, UserInfo } from '@/types/User';
 
-const myForm = ref<My>({
+const myForm = ref<UserInfo>({
   name: '',
   qq: '',
   avatar: '',
@@ -12,8 +13,15 @@ const myForm = ref<My>({
 
 const myRef = ref()
 
+// 获取用户信息
+const getUserData = async () => {
+  const { data } = await getUserAPI(1)
+  myForm.value = (data as User).userInfo
+}
+getUserData()
+
 // 数据校验
-const rules = reactive<FormRules<My>>({
+const rules = reactive<FormRules<UserInfo>>({
   name: [
     { required: true, message: "名称不能为空", trigger: "blur" },
     { min: 2, max: 10, message: "名称限制在2 ~ 10个字符", trigger: "blur" }
@@ -30,12 +38,29 @@ const rules = reactive<FormRules<My>>({
   ],
   introduce: [
     { required: true, message: "介绍不能为空", trigger: "blur" },
-    { min: 10, max: 50, message: "介绍限制在10 ~ 50个字符", trigger: "blur" }
+    { max: 50, message: "介绍限制最多50个字符", trigger: "blur" }
   ]
 })
 
-const onSubmit = () => {
-  console.log("提交");
+// 提交表单
+const submit = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+
+  await formEl.validate(async (valid, fields) => {
+    // 校验不通过，则后续的业务逻辑不再执行
+    if (!valid) return
+
+    // 编辑分类
+    const { code, message } = await editUserAPI(1, myForm.value)
+
+    if (code !== 200) return
+
+    ElNotification({
+      title: '成功',
+      message: message,
+      type: 'success',
+    })
+  })
 }
 </script>
 
@@ -65,7 +90,7 @@ const onSubmit = () => {
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" style="width: 100%;">保存</el-button>
+        <el-button type="primary" @click="submit(myRef)" style="width: 100%;">保存</el-button>
       </el-form-item>
     </el-form>
   </div>

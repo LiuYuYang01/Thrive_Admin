@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { loginAPI } from '@/api/Login'
+import { loginAPI } from '@/api/User'
 import { useUserStore } from '@/stores'
 
 
