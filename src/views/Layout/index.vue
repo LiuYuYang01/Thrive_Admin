@@ -12,7 +12,7 @@
       <!-- 顶部 -->
       <Header />
 
-      <div class="page">
+      <div class="page" id="page">
         <RouterView></RouterView>
       </div>
     </div>

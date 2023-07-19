@@ -35,7 +35,7 @@ const toPath = (path: string) => {
 
 // 监听路由变化
 onBeforeRouteUpdate(to => {
-  active.value = to.path
+  active.value = to.path 
 })
 </script>
 

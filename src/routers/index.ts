@@ -66,7 +66,7 @@ export const routes = [
       {
         path: '/setup',
         component: () => import('@/views/Setup/index.vue'),
-        meta: { title: '系统配置', icon: "planet" },
+        meta: { title: '配置', icon: "planet" },
         children: [
           {
             path: "",
@@ -111,6 +111,9 @@ router.beforeEach(to => {
 
   // 开启进度条
   NProgress.start()
+
+  const dom = document.querySelector(".container .main #page")
+  nextTick(() => dom && to.path === "/home" ? dom?.classList.remove('page') : dom?.classList.add('page'))
 
   // 处理页面标题
   document.title = `Thrive - ${to.meta.title || ''}`
