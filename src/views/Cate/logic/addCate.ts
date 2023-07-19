@@ -27,7 +27,7 @@ export const rules = reactive<FormRules<Omit<Cate, "id" | "icon" | "children">>>
         { required: true, message: '分类标识不能为空' },
         { min: 1, max: 10, message: '分类标识限制为 1 ~ 10 个字符' }
     ],
-    url: [{ required: true, message: '分类链接不能为空' }],
+    url: [{ max: 300, message: '分类链接不能为空' }],
 })
 
 const addId = ref<number | undefined>(undefined)

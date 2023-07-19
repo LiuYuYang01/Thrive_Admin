@@ -31,7 +31,7 @@ const quit = () => {
                 <el-collapse-transition>
                     <div class="box">
                         <dl>
-                            <dd><box-icon name='user' @click="router.push('/setup/my')" />个人设置</dd>
+                            <dd @click="router.push('/setup/my')"><box-icon name='user' />个人设置</dd>
                             <dd @click="quit"><box-icon name='exit' />退出登录</dd>
                         </dl>
                     </div>

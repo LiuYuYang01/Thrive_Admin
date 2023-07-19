@@ -58,7 +58,7 @@ import { delCate } from './logic/delCate'
         <el-input v-model="cateForm.icon" placeholder="🎉" />
       </el-form-item>
 
-      <el-form-item label="链接" prop="url">
+      <el-form-item label="链接（选填）" prop="url">
         <el-input v-model="cateForm.url" placeholder="https://liuyuyang.net/" />
       </el-form-item>
 
