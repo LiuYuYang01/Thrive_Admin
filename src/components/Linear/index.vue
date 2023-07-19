@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import * as echarts from 'echarts';
 import { onMounted } from 'vue';
+import * as echarts from 'echarts';
 
 onMounted(() => {
-    var chartDom = document.getElementById('main');
+    var chartDom = document.getElementById('Linear');
     var myChart = echarts.init(chartDom);
 
     var xData = function () {
         var data = [];
         for (var i = 12; i < 20; i = i + 1) {
-            data.push('03/' + i);
+            data.push('03-' + i);
         }
         return data;
     }();
@@ -156,12 +156,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="main"></div>
+    <div id="Linear"></div>
 </template>
 
 <style scoped lang="scss">
-#main {
-    width: 850px;
+#Linear {
+    width: 930px;
     height: 400px;
     margin-top: 10px;
 
