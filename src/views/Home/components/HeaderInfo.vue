@@ -25,10 +25,7 @@ import { EditPen } from '@element-plus/icons-vue'
   display: flex;
   align-items: center;
   height: 140px;
-  border: 1px solid #eee;
-  border-radius: $round;
-  background-color: #fff;
-  margin: 20px;
+  @include container;
 
   .avatar {
     width: 90px;

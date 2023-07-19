@@ -3,7 +3,15 @@
 </script>
 
 <template>
-    <HeaderInfo />
+    <div class="home">
+        <HeaderInfo />
+
+        <Linear />
+    </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.home {
+    margin: 20px;
+}
+</style>

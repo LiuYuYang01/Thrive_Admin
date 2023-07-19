@@ -1,3 +1,4 @@
+@use "./var.scss" as *;
 
 // 标题样式
 @mixin title() {
@@ -28,4 +29,12 @@
         margin-right: 5px;
         transition: fill 0.3s;
     }
+}
+
+// 容器样式
+@mixin container {
+    border: 1px solid #eee;
+    border-radius: $round;
+    background-color: #fff;
+    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
 }
