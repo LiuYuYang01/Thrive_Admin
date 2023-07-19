@@ -4,7 +4,7 @@ import * as echarts from 'echarts';
 
 onMounted(() => {
     var chartDom = document.getElementById('Linear');
-    var myChart = echarts.init(chartDom);
+    var myChart = echarts.init(chartDom as HTMLElement);
 
     var xData = function () {
         var data = [];
@@ -156,15 +156,26 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="Linear"></div>
+    <div class="statistics">
+        <div class="title"><box-icon name='line-chart' />今日浏览量</div>
+        <div id="Linear"></div>
+    </div>
 </template>
 
 <style scoped lang="scss">
-#Linear {
-    width: 930px;
-    height: 400px;
-    margin-top: 10px;
-
+.statistics {
+    display: flex;
+    flex-direction: column;
     @include container;
+
+    .title {
+        @include title;
+        padding: 15px;
+    }
+
+    #Linear {
+        width: 1145px;
+        height: 400px;
+    }
 }
 </style>

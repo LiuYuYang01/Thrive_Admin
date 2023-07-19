@@ -6,9 +6,9 @@
     <div class="home">
         <HeaderInfo />
 
-        <div class="chart">
+        <div class="box">
             <Linear />
-            <Columnar />
+            <Recording />
         </div>
     </div>
 </template>
@@ -17,8 +17,11 @@
 .home {
     margin: 20px;
 
-    .chart{
+    .box {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 10px;
     }
 }
 </style>
