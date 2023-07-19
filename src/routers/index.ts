@@ -112,9 +112,6 @@ router.beforeEach(to => {
   // 开启进度条
   NProgress.start()
 
-  const dom = document.querySelector(".container .main #page")
-  nextTick(() => dom && to.path === "/home" ? dom?.classList.remove('page') : dom?.classList.add('page'))
-
   // 处理页面标题
   document.title = `Thrive - ${to.meta.title || ''}`
 

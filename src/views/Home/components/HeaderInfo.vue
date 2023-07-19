@@ -27,6 +27,8 @@ import { EditPen } from '@element-plus/icons-vue'
   height: 140px;
   border: 1px solid #eee;
   border-radius: $round;
+  background-color: #fff;
+  margin: 20px;
 
   .avatar {
     width: 90px;
