@@ -86,6 +86,11 @@ export const routes = [
         ]
       },
       {
+        path: '/work',
+        component: () => import('@/views/Work/index.vue'),
+        meta: { title: '工作室', icon: "desktop" }
+      },
+      {
         path: '/home/5',
         component: () => import('@/views/Home/index.vue'),
         meta: { title: '主题设置', icon: "palette" }
