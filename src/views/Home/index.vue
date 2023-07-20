@@ -23,16 +23,6 @@ const colors = [
 
             <div class="list">
                 <div class="item">
-                    <h4>信息</h4>
-
-                    <ul>
-                        <li>系统名称：Window10</li>
-                        <li>开机时间：2023-07-20 14:18:48</li>
-                        <li>已不间断运行：303天</li>
-                    </ul>
-                </div>
-
-                <div class="item">
                     <h4>CPU</h4>
 
                     <el-row justify="center"><el-progress type="dashboard" :percentage="cpuPercentage"
@@ -56,12 +46,23 @@ const colors = [
                 <div class="item">
                     <h4>容量</h4>
 
-                    <el-progress :percentage="100" :stroke-width="15" :color="colors" striped striped-flow :duration="10" />
+                    <el-progress :percentage="diskPercentage" :stroke-width="10" :color="colors" striped striped-flow
+                        :duration="10" />
 
                     <ul class="capacity">
                         <li>总容量：500G</li>
                         <li>可用容量：270G</li>
                         <li>剩余量：230G</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <h4>信息</h4>
+
+                    <ul>
+                        <li>系统名称：Window10</li>
+                        <li>开机时间：2023-07-20 14:18:48</li>
+                        <li>已不间断运行：303天</li>
                     </ul>
                 </div>
             </div>
@@ -101,7 +102,7 @@ const colors = [
             .item {
                 flex: 1;
                 height: 170px;
-                padding: 10px;
+                padding: 10px 20px;
 
                 h4 {
                     margin-bottom: 10px;
@@ -114,8 +115,8 @@ const colors = [
                     }
                 }
 
-                .capacity{
-                    li{
+                .capacity {
+                    li {
                         margin-top: 10px;
                     }
                 }
