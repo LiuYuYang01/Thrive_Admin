@@ -111,9 +111,9 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
 <style scoped lang="scss">
 .Sidebar {
   width: 240px;
-  height: 100vh;
-  // background-image: linear-grsadient(135deg, #8f75da 0%, #727cf5 60%);
-  background-color: #3e4656;
+  // height: 100vh;
+  background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
+  // background-color: #3e4656;
   box-shadow: 15px 2px 18px -3px rgba(121, 122, 243, 0.1);
 
   .logo {

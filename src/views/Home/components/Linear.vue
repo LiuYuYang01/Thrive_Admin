@@ -164,6 +164,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .statistics {
+    width: 79%;
     display: flex;
     flex-direction: column;
     @include container;
@@ -174,7 +175,6 @@ onMounted(() => {
     }
 
     #Linear {
-        width: 1145px;
         height: 400px;
     }
 }

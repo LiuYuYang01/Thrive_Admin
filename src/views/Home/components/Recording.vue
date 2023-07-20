@@ -34,14 +34,13 @@ const timeline = [
 
 <style scoped lang="scss">
 .recording {
-  width: 300px;
+  width: 20%;
   @include container;
 
   .title {
     @include title;
     padding: 15px;
     margin-bottom: 15px;
-    font-size: 16px;
   }
 }
 </style>
