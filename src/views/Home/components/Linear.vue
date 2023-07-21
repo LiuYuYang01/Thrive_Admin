@@ -32,34 +32,30 @@ onMounted(() => {
             smooth: true, //是否平滑曲线显示
             showSymbol: false, //是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示
             areaStyle: {
-                normal: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: color[i]
-                    }, {
-                        offset: 0.8,
-                        color: 'rgba(255,255,255,0)'
-                    }], false),
-                    shadowColor: 'rgba(255,255,255, 0.1)',
-                    shadowBlur: 2,
-                    opacity: 0.3,
-                }
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: color[i]
+                }, {
+                    offset: 0.8,
+                    color: 'rgba(255,255,255,0)'
+                }], false),
+                shadowColor: 'rgba(255,255,255, 0.1)',
+                shadowBlur: 2,
+                opacity: 0.3,
             },
             itemStyle: {
-                normal: {
-                    color: color[i],
-                    lineStyle: {
-                        width: 2,
-                        type: 'solid' //'dotted'虚线 'solid'实线
-                    },
-                    borderColor: color[i], //图形的描边颜色。支持的格式同 color
-                    borderWidth: 8, //描边线宽。为 0 时无描边。[ default: 0 ]
-                    barBorderRadius: 0,
-                    label: {
-                        show: false,
-                    },
-                    opacity: 0.5,
-                }
+                color: color[i],
+                lineStyle: {
+                    width: 2,
+                    type: 'solid' //'dotted'虚线 'solid'实线
+                },
+                borderColor: color[i], //图形的描边颜色。支持的格式同 color
+                borderWidth: 8, //描边线宽。为 0 时无描边。[ default: 0 ]
+                barBorderRadius: 0,
+                label: {
+                    show: false,
+                },
+                opacity: 0.5,
             },
             data: data[i],
 
@@ -132,12 +128,10 @@ onMounted(() => {
             },
             axisLabel: {
                 inside: false,
-                textStyle: {
-                    color: '#666',
-                    //x轴字颜色
-                    fontWeight: 'normal',
-                    fontSize: '12',
-                },
+                color: '#666',
+                //x轴字颜色
+                fontWeight: 'normal',
+                fontSize: '12',
             },
             data: xData,
         }],
