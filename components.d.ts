@@ -37,6 +37,7 @@ declare module 'vue' {
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     Header: typeof import('./src/views/Layout/components/Header.vue')['default']
     HeaderInfo: typeof import('./src/views/Home/components/HeaderInfo.vue')['default']
