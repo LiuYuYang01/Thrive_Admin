@@ -19,4 +19,5 @@ export interface SystemParame {
     memory: Memory;
     name: string;
     run: number;
+    ip: number
 }

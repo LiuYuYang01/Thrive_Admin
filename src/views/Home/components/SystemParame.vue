@@ -3,6 +3,7 @@
 import moment from 'moment';
 import { SystemParame } from '@/types/System'
 
+// 系统配置信息
 const Percentage = ref<SystemParame>({
     cpu: 0,
     memory: {
@@ -19,7 +20,8 @@ const Percentage = ref<SystemParame>({
     },
     name: "加载中...",
     run: 0,
-    boot_time: ""
+    boot_time: "",
+    ip: 0
 })
 
 const colors = [
@@ -35,6 +37,9 @@ import { getSystemParameAPI } from '@/api/System'
 const getSystemParameData = async () => {
     const { data } = await getSystemParameAPI()
     Percentage.value = data
+
+    // 每3秒钟更新一次最新的系统配置信息
+    setTimeout(getSystemParameData, 3000)
 }
 getSystemParameData()
 </script>
@@ -82,9 +87,10 @@ getSystemParameData()
             <h4>信息</h4>
 
             <ul>
+                <li>IP：{{ Percentage.ip }}</li>
                 <li>系统名称：{{ Percentage.name }}</li>
-                <li>开机时间：{{ moment(Percentage.boot_time).format('YYYY-MM-DD HH:mm:ss') }}</li>
                 <li>已不间断运行：{{ Percentage.run }}天</li>
+                <li>开机时间：{{ moment(Percentage.boot_time).format('YYYY-MM-DD HH:mm:ss') }}</li>
             </ul>
         </div>
     </div>
@@ -106,7 +112,7 @@ getSystemParameData()
         ul {
             li {
                 font-size: 14px;
-                margin-top: 20px;
+                margin-top: 13px;
             }
         }
 
