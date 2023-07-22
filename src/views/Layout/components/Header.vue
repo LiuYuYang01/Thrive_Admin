@@ -3,6 +3,9 @@ import { useUserStore } from '@/stores'
 const store = useUserStore()
 const router = useRouter()
 
+// 从pinia中获取用户信息
+store.getUser()
+
 // 退出登录
 const quit = () => {
     // 清空用户信息
@@ -25,9 +28,9 @@ const quit = () => {
             </div>
 
             <div class="my">
-                <img src="https://q1.qlogo.cn/g?b=qq&amp;nk=3311118881&amp;s=640" alt="">
+                <img :src="store.user?.userInfo.avatar || 'https://q1.qlogo.cn/g?b=qq&amp;nk=3311118881&amp;s=640'" alt="">
 
-                <div class="name">YuYang</div>
+                <div class="name">{{ store.user?.userInfo.name || '未命名' }}</div>
 
                 <el-collapse-transition>
                     <div class="box">
@@ -66,7 +69,7 @@ const quit = () => {
     .nav {
         display: flex;
         justify-content: space-between;
-        width: 500px;
+        width: 450px;
         margin-right: 60px;
 
         .list {

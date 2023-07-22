@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FormInstance, FormRules, ElNotification } from 'element-plus';
-import { getUserAPI, editUserAPI } from '@/api/User'
+import { editUserAPI } from '@/api/User'
 import { User, UserInfo } from '@/types/User';
 
 const myForm = ref<UserInfo>({
@@ -13,16 +13,16 @@ const myForm = ref<UserInfo>({
 
 const myRef = ref()
 
-// 获取用户信息
-// const getUserData = async () => {
-//   const { data } = await getUserAPI(1)
-//   myForm.value = (data as User).userInfo
-// }
-// getUserData()
-
+// 从pinia中获取用户信息
 import { useUserStore } from '@/stores'
 const store = useUserStore()
-store.getUser()
+
+// 获取用户信息
+const getUserData = async () => {
+  await store.getUser()
+  myForm.value = store.user?.userInfo as UserInfo
+}
+getUserData()
 
 // 数据校验
 const rules = reactive<FormRules<UserInfo>>({
@@ -54,16 +54,8 @@ const submit = async (formEl: FormInstance | undefined) => {
     // 校验不通过，则后续的业务逻辑不再执行
     if (!valid) return
 
-    // 编辑分类
-    const { code, message } = await editUserAPI(1, myForm.value)
-
-    if (code !== 200) return
-
-    ElNotification({
-      title: '成功',
-      message: message,
-      type: 'success',
-    })
+    // 编辑用户信息
+    store.setUser(myForm.value)
   })
 }
 </script>
