@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { Edit } from '@element-plus/icons-vue'
+import { Article } from '@/types/Article'
+import { Edit, Picture, Tickets } from '@element-plus/icons-vue'
 
-const ArticleData = ref({
+const ArticleData = ref<Article>({
     title: "",
+    sketch: "",
     content: "",
+    cover: "",
     cate: "",
     tag: "",
     date: new Date()
@@ -21,6 +24,12 @@ const ArticleData = ref({
 
             <!-- 内容 -->
             <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
+
+            <el-input v-model="ArticleData.title" size="large" :prefix-icon="Picture" placeholder="文章封面"
+                style="margin: 20px 0;" />
+
+            <el-input v-model="ArticleData.title" type="textarea" maxlength="100" show-word-limit size="large"
+                placeholder="文章简述" class="sketch" />
         </div>
 
         <!-- 侧边栏 -->
@@ -45,6 +54,14 @@ const ArticleData = ref({
 
     .edit {
         width: 1000px;
+
+        .sketch {
+            margin-bottom: 20px;
+
+            :deep textarea {
+                height: 100px !important;
+            }
+        }
     }
 
     .sidebar {

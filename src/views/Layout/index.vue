@@ -42,7 +42,6 @@ onBeforeRouteUpdate(to => {
       right: 0;
       padding: 20px;
       margin: 20px;
-
       border-radius: $round;
       background-color: #fff;
       box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);

@@ -6,7 +6,7 @@ export interface Article {
     cover: string,
     cate: string,
     tag: string,
-    view: number
-    count: number,
-    date: string,
+    view?: number
+    count?: number,
+    date: Date,
 }
