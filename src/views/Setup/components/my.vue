@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { FormInstance, FormRules, ElNotification } from 'element-plus';
-import { editUserAPI } from '@/api/User'
 import { User, UserInfo } from '@/types/User';
 
 const myForm = ref<UserInfo>({
@@ -20,7 +19,7 @@ const store = useUserStore()
 // 获取用户信息
 const getUserData = async () => {
   await store.getUser()
-  myForm.value = store.user?.userInfo as UserInfo
+  myForm.value = store.userInfo as UserInfo
 }
 getUserData()
 
@@ -55,7 +54,7 @@ const submit = async (formEl: FormInstance | undefined) => {
     if (!valid) return
 
     // 编辑用户信息
-    store.setUser(myForm.value)
+    store.setUser(myForm.value, "edit")
   })
 }
 </script>

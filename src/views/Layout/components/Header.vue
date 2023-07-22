@@ -28,9 +28,9 @@ const quit = () => {
             </div>
 
             <div class="my">
-                <img :src="store.user?.userInfo.avatar || 'https://q1.qlogo.cn/g?b=qq&amp;nk=3311118881&amp;s=640'" alt="">
+                <img :src="store.user?.avatar || 'https://q1.qlogo.cn/g?b=qq&amp;nk=3311118881&amp;s=640'" alt="">
 
-                <div class="name">{{ store.user?.userInfo.name || '未命名' }}</div>
+                <div class="name">{{ store.userInfo?.name || '未命名' }}</div>
 
                 <el-collapse-transition>
                     <div class="box">
@@ -69,7 +69,7 @@ const quit = () => {
     .nav {
         display: flex;
         justify-content: space-between;
-        width: 450px;
+        width: 500px;
         margin-right: 60px;
 
         .list {

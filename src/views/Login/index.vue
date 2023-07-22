@@ -51,7 +51,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     router.push("/home")
 
     // 将登录的数据保存到本地
-    store.setUser(data)
+    store.setUser(data, "login")
   })
 }
 </script>
