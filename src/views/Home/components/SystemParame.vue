@@ -24,6 +24,19 @@ const Percentage = ref<SystemParame>({
     ip: 0
 })
 
+// 加载效果
+const loading = ref<boolean>(false)
+const svg = `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `
+
 const colors = [
     { color: '#5cb87a', percentage: 20 },
     { color: '#1989fa', percentage: 40 },
@@ -35,90 +48,117 @@ const colors = [
 // 获取系统信息
 import { getSystemParameAPI } from '@/api/System'
 const getSystemParameData = async () => {
+    loading.value = true
+
     const { data } = await getSystemParameAPI()
     Percentage.value = data
 
-    // 每3秒钟更新一次最新的系统配置信息
-    setTimeout(getSystemParameData, 3000)
+    loading.value = false
 }
 getSystemParameData()
 </script>
 
 <template>
-    <div class="list">
-        <div class="item">
-            <h4>CPU</h4>
-
-            <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.cpu" :color="colors" /></el-row>
+    <div class="system custom-loading-svg" v-loading="loading" :element-loading-svg="svg"
+        element-loading-svg-view-box="-10, -10, 50, 50">
+        <div class="title">
+            <div><box-icon name='tachometer' />系统信息</div>
+            <div style="cursor: pointer;" @click="getSystemParameData"><box-icon name='refresh' /></div>
         </div>
 
-        <div class="item">
-            <h4>内存</h4>
+        <div class="list">
+            <div class="item">
+                <h4>CPU</h4>
 
-            <el-tooltip
-                :content="`内存：${Percentage.memory.memoryTotal} 已使用：${Percentage.memory.memoryUsed} 剩余：${Percentage.memory.memoryAvailable}`"
-                placement="bottom">
-                <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.memory.memoryPercent"
+                <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.cpu"
                         :color="colors" /></el-row>
-            </el-tooltip>
-        </div>
+            </div>
 
-        <div class="item">
-            <h4>磁盘</h4>
+            <div class="item">
+                <h4>内存</h4>
 
-            <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.disk.diskPercent"
-                    :color="colors" /></el-row>
-        </div>
+                <el-tooltip
+                    :content="`内存：${Percentage.memory.memoryTotal} 已使用：${Percentage.memory.memoryUsed} 剩余：${Percentage.memory.memoryAvailable}`"
+                    placement="bottom">
+                    <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.memory.memoryPercent"
+                            :color="colors" /></el-row>
+                </el-tooltip>
+            </div>
 
-        <div class="item">
-            <h4>容量</h4>
+            <div class="item">
+                <h4>磁盘</h4>
 
-            <el-progress :percentage="Percentage.disk.diskPercent" :stroke-width="10" :color="colors" striped striped-flow
-                :duration="10" />
+                <el-row justify="center"><el-progress type="dashboard" :percentage="Percentage.disk.diskPercent"
+                        :color="colors" /></el-row>
+            </div>
 
-            <ul class="capacity">
-                <li>总容量：{{ Percentage.disk.diskTotal }}G</li>
-                <li>可用容量：{{ Percentage.disk.diskUsed }}G</li>
-                <li>剩余量：{{ Percentage.disk.diskFree }}G</li>
-            </ul>
-        </div>
+            <div class="item">
+                <h4>容量</h4>
 
-        <div class="item">
-            <h4>信息</h4>
+                <el-progress :percentage="Percentage.disk.diskPercent" :stroke-width="10" :color="colors" striped
+                    striped-flow :duration="10" />
 
-            <ul>
-                <li>IP：{{ Percentage.ip }}</li>
-                <li>系统名称：{{ Percentage.name }}</li>
-                <li>已不间断运行：{{ Percentage.run }}天</li>
-                <li>开机时间：{{ moment(Percentage.boot_time).format('YYYY-MM-DD HH:mm:ss') }}</li>
-            </ul>
+                <ul class="capacity">
+                    <li>总容量：{{ Percentage.disk.diskTotal }}G</li>
+                    <li>可用容量：{{ Percentage.disk.diskUsed }}G</li>
+                    <li>剩余量：{{ Percentage.disk.diskFree }}G</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <h4>信息</h4>
+
+                <ul>
+                    <li>IP：{{ Percentage.ip }}</li>
+                    <li>系统名称：{{ Percentage.name }}</li>
+                    <li>已不间断运行：{{ Percentage.run }}天</li>
+                    <li>开机时间：{{ moment(Percentage.boot_time).format('YYYY-MM-DD HH:mm:ss') }}</li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.list {
-    display: flex;
+.system {
+    @include container;
+    margin-top: 10px;
 
-    .item {
-        flex: 1;
-        height: 170px;
-        padding: 10px 20px;
+    .title {
+        @include title;
+        justify-content: space-between;
+        padding: 15px;
+        margin-bottom: 0;
 
-        h4 {
-            margin-bottom: 10px;
+        div {
+            display: flex;
+            align-items: center;
         }
+    }
 
-        ul {
-            li {
-                font-size: 14px;
-                margin-top: 13px;
+    .list {
+        display: flex;
+
+        .item {
+            flex: 1;
+            height: 170px;
+            padding: 10px 20px;
+
+            h4 {
+                margin-bottom: 10px;
             }
-        }
 
-        .capacity {
-            li {
-                margin-top: 10px;
+            ul {
+                li {
+                    font-size: 14px;
+                    margin-top: 13px;
+                }
+            }
+
+            .capacity {
+                li {
+                    margin-top: 10px;
+                }
             }
         }
     }
