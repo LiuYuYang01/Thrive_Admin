@@ -40,6 +40,7 @@ onBeforeRouteUpdate(to => {
       bottom: 0;
       left: 0;
       right: 0;
+      // min-height: 600px;
       padding: 20px;
       margin: 20px;
 
