@@ -1,3 +1,8 @@
+export interface LoginForm {
+    username: string,
+    password: string
+}
+
 export interface account {
     username: string,
     password: string,

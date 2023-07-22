@@ -14,11 +14,15 @@ const myForm = ref<UserInfo>({
 const myRef = ref()
 
 // 获取用户信息
-const getUserData = async () => {
-  const { data } = await getUserAPI(1)
-  myForm.value = (data as User).userInfo
-}
-getUserData()
+// const getUserData = async () => {
+//   const { data } = await getUserAPI(1)
+//   myForm.value = (data as User).userInfo
+// }
+// getUserData()
+
+import { useUserStore } from '@/stores'
+const store = useUserStore()
+store.getUser()
 
 // 数据校验
 const rules = reactive<FormRules<UserInfo>>({

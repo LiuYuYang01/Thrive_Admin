@@ -3,18 +3,13 @@ import { User, Lock, View } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { loginAPI } from '@/api/User'
 import { useUserStore } from '@/stores'
-
+import { LoginForm } from '@/types/User'
 
 const store = useUserStore()
 const router = useRouter()
 
-interface LoginForm {
-  username: string,
-  password: string
-}
-
 // 登录信息
-const loginInfo = reactive({
+const loginInfo = reactive<LoginForm>({
   username: 'liuyuyang',
   password: '123123',
 })
