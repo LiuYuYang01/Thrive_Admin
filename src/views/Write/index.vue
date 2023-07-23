@@ -14,41 +14,43 @@ const ArticleData = ref<Article>({
 </script>
 
 <template>
-    <Title title="创作" icon="edit-alt" />
+    <div class="page">
+        <Title title="创作" icon="edit-alt" />
 
-    <div class="main">
-        <div class="edit">
-            <!-- 标题 -->
-            <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
-                style="margin-bottom: 20px;" class="w-50 m-2" />
+        <div class="main">
+            <div class="edit">
+                <!-- 标题 -->
+                <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
+                    style="margin-bottom: 20px;" class="w-50 m-2" />
 
-            <!-- 内容 -->
-            <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
+                <!-- 内容 -->
+                <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
 
-            <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面"
-                style="margin: 20px 0;" />
+                <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面"
+                    style="margin: 20px 0;" />
 
-            <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
-                placeholder="文章简述" class="sketch" />
-        </div>
+                <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
+                    placeholder="文章简述" class="sketch" />
+            </div>
 
-        <!-- 侧边栏 -->
-        <div class="sidebar">
-            <!-- 分类 -->
-            <ArticleCate v-model="ArticleData.cate" />
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <!-- 分类 -->
+                <ArticleCate v-model="ArticleData.cate" />
 
-            <!-- 日期 -->
-            <ArticleDate v-model="ArticleData.date" />
+                <!-- 日期 -->
+                <ArticleDate v-model="ArticleData.date" />
 
-            <!-- 标签 -->
-            <ArticleTag v-model="ArticleData.tag" />
+                <!-- 标签 -->
+                <ArticleTag v-model="ArticleData.tag" />
 
-            <!-- 操作 -->
-            <div class="operate">
-                <!-- 草稿 -->
-                <div class="draft">保存草稿</div>
-                <!-- 发布 -->
-                <div class="publish">发布文章</div>
+                <!-- 操作 -->
+                <div class="operate">
+                    <!-- 草稿 -->
+                    <div class="draft">保存草稿</div>
+                    <!-- 发布 -->
+                    <div class="publish">发布文章</div>
+                </div>
             </div>
         </div>
     </div>

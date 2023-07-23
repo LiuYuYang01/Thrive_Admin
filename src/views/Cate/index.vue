@@ -11,63 +11,65 @@ import { delCate } from './logic/delCate'
 </script>
 
 <template>
-  <Title title="分类管理" icon="category-alt" />
+  <div class="page">
+    <Title title="分类管理" icon="category-alt" />
 
-  <el-row justify="center" style="margin-bottom: 10px;">
-    <el-button key="primary" type="primary" text @click="addCate(undefined)">新增一级分类</el-button>
-  </el-row>
+    <el-row justify="center" style="margin-bottom: 10px;">
+      <el-button key="primary" type="primary" text @click="addCate(undefined)">新增一级分类</el-button>
+    </el-row>
 
-  <!-- 分类列表 -->
-  <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
-    :element-loading-svg="svg" class="custom-loading-svg cate" :default-expand-all="true">
-    <template #default="{ node, data }">
-      <span class="custom-tree-node">
-        <span class="name">{{ node.label }}</span>
+    <!-- 分类列表 -->
+    <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
+      :element-loading-svg="svg" class="custom-loading-svg cate" :default-expand-all="true">
+      <template #default="{ node, data }">
+        <span class="custom-tree-node">
+          <span class="name">{{ node.label }}</span>
 
-        <span>
-          <el-dropdown size="small">
-            <span class="el-dropdown-link">
-              操作<box-icon name='chevron-down' />
-            </span>
+          <span>
+            <el-dropdown size="small">
+              <span class="el-dropdown-link">
+                操作<box-icon name='chevron-down' />
+              </span>
 
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
-                <el-dropdown-item @click="editCate(data, data?.children?.length)">编辑</el-dropdown-item>
-                <el-dropdown-item @click="delCate(data.id, data?.children?.length)">删除</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
+                  <el-dropdown-item @click="editCate(data, data?.children?.length)">编辑</el-dropdown-item>
+                  <el-dropdown-item @click="delCate(data.id, data?.children?.length)">删除</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </span>
         </span>
-      </span>
-    </template>
-  </el-tree>
+      </template>
+    </el-tree>
 
-  <!-- 新增分类 -->
-  <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
-    <el-form ref="cateRef" :rules="rules" label-position="top" :model="cateForm" size="large">
-      <el-form-item label="名称" prop="name">
-        <el-input v-model="cateForm.name" placeholder="大前端" />
-      </el-form-item>
+    <!-- 新增分类 -->
+    <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
+      <el-form ref="cateRef" :rules="rules" label-position="top" :model="cateForm" size="large">
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="cateForm.name" placeholder="大前端" />
+        </el-form-item>
 
-      <el-form-item label="标识" prop="mark">
-        <el-input v-model="cateForm.mark" placeholder="dqd" />
-      </el-form-item>
+        <el-form-item label="标识" prop="mark">
+          <el-input v-model="cateForm.mark" placeholder="dqd" />
+        </el-form-item>
 
-      <el-form-item label="图标" prop="icon">
-        <el-input v-model="cateForm.icon" placeholder="🎉" />
-      </el-form-item>
+        <el-form-item label="图标" prop="icon">
+          <el-input v-model="cateForm.icon" placeholder="🎉" />
+        </el-form-item>
 
-      <el-form-item label="链接（选填）" prop="url">
-        <el-input v-model="cateForm.url" placeholder="https://liuyuyang.net/" />
-      </el-form-item>
+        <el-form-item label="链接（选填）" prop="url">
+          <el-input v-model="cateForm.url" placeholder="https://liuyuyang.net/" />
+        </el-form-item>
 
-      <el-form-item style="margin-bottom: -5px;">
-        <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="submit(cateRef)">确定</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+        <el-form-item style="margin-bottom: -5px;">
+          <el-button @click="close">取消</el-button>
+          <el-button type="primary" @click="submit(cateRef)">确定</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+  </div>
 </template>
 
 <style scoped lang="scss">

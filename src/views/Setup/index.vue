@@ -35,23 +35,25 @@ const toPath = (path: string) => {
 
 // 监听路由变化
 onBeforeRouteUpdate(to => {
-  active.value = to.path 
+  active.value = to.path
 })
 </script>
 
 <template>
-  <Title title="系统配置" icon="shield-quarter" />
+  <div class="page">
+    <Title title="系统配置" icon="shield-quarter" />
 
-  <div class="main">
-    <ul class="options">
-      <li class="item" :class="{ active: item.path === active }" @click="toPath(item.path)" v-for="item, index in list">
-        <h3><box-icon :name="item.icon" />{{ item.title }}</h3>
-        <p>{{ item.description }}</p>
-      </li>
-    </ul>
+    <div class="main">
+      <ul class="options">
+        <li class="item" :class="{ active: item.path === active }" @click="toPath(item.path)" v-for="item, index in list">
+          <h3><box-icon :name="item.icon" />{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </li>
+      </ul>
 
-    <div class="config">
-      <RouterView />
+      <div class="config">
+        <RouterView />
+      </div>
     </div>
   </div>
 </template>

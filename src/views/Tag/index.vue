@@ -83,7 +83,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 </script>
 
 <template>
-    <div class="tag">
+    <div class="page">
         <el-tabs tab-position="left" class="demo-tabs">
             <el-tab-pane label="标签墙">
                 <Tags3D />
@@ -131,9 +131,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 </template>
 
 <style scoped lang="scss">
-.tag {
-    height: 100%;
-
+.page {
     .title {
         @include title;
     }
