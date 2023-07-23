@@ -169,7 +169,7 @@ onMounted(() => {
     }
 
     #Linear {
-        height: 400px;
+        height: 348px;
     }
 }
 </style>

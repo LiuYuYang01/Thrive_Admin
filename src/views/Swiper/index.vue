@@ -6,7 +6,7 @@ import { editSwiperData, SwiperForm, SubmitForm, rules, activeName, SwiperRef } 
 </script>
 
 <template>
-  <div class="swiper">
+  <div class="page">
     <Title title="轮播图管理" icon="image" />
 
     <el-tabs v-model="activeName" tab-position="left" class="demo-tabs">

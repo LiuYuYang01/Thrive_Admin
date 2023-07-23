@@ -17,7 +17,7 @@ const ArticleData = ref<Article>({
     <div class="page">
         <Title title="创作" icon="edit-alt" />
 
-        <div class="main">
+        <div class="job">
             <div class="edit">
                 <!-- 标题 -->
                 <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
@@ -57,79 +57,84 @@ const ArticleData = ref<Article>({
 </template>
 
 <style scoped lang="scss">
-.main {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 50px;
+.page {
+    position: relative;
+    top: 0;
 
-    .edit {
-        width: 1000px;
+    .job {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 50px;
 
-        .sketch {
-            margin-bottom: 20px;
+        .edit {
+            width: 1000px;
 
-            :deep textarea {
-                height: 100px !important;
-            }
-        }
-    }
+            .sketch {
+                margin-bottom: 20px;
 
-    .sidebar {
-        width: 250px;
-
-        >div {
-            border: 1px solid #eee;
-            border-radius: $round;
-            background-color: #fff;
-            box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
-            margin-bottom: 20px;
-
-            &:last-child {
-                margin-bottom: 0;
+                :deep textarea {
+                    height: 100px !important;
+                }
             }
         }
 
-        .operate {
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            border-radius: $round;
+        .sidebar {
+            width: 250px;
 
-            div {
-                width: 50%;
-                height: 45px;
-                line-height: 45px;
-                text-align: center;
-                color: #fff;
-                cursor: pointer;
-            }
-
-            .draft {
-                background-color: $color;
-            }
-
-            .publish {
-                background-color: #49b984;
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 45px;
-                height: 45px;
+            >div {
+                border: 1px solid #eee;
+                border-radius: $round;
                 background-color: #fff;
-                border-radius: 50%;
+                box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+                margin-bottom: 20px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+
+            .operate {
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                justify-content: space-between;
+                border-radius: $round;
+
+                div {
+                    width: 50%;
+                    height: 45px;
+                    line-height: 45px;
+                    text-align: center;
+                    color: #fff;
+                    cursor: pointer;
+                }
+
+                .draft {
+                    background-color: $color;
+                }
+
+                .publish {
+                    background-color: #49b984;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 45px;
+                    height: 45px;
+                    background-color: #fff;
+                    border-radius: 50%;
+                }
             }
         }
-    }
 
-    .v-md-editor {
-        border: 1px solid #eee;
-        box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+        .v-md-editor {
+            border: 1px solid #eee;
+            box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+        }
     }
 }
 </style>
