@@ -25,10 +25,10 @@ const ArticleData = ref<Article>({
             <!-- 内容 -->
             <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
 
-            <el-input v-model="ArticleData.title" size="large" :prefix-icon="Picture" placeholder="文章封面"
+            <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面"
                 style="margin: 20px 0;" />
 
-            <el-input v-model="ArticleData.title" type="textarea" maxlength="100" show-word-limit size="large"
+            <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
                 placeholder="文章简述" class="sketch" />
         </div>
 
@@ -42,6 +42,14 @@ const ArticleData = ref<Article>({
 
             <!-- 标签 -->
             <ArticleTag v-model="ArticleData.tag" />
+
+            <!-- 操作 -->
+            <div class="operate">
+                <!-- 草稿 -->
+                <div class="draft">保存草稿</div>
+                <!-- 发布 -->
+                <div class="publish">发布文章</div>
+            </div>
         </div>
     </div>
 </template>
@@ -67,7 +75,7 @@ const ArticleData = ref<Article>({
     .sidebar {
         width: 250px;
 
-        div {
+        >div {
             border: 1px solid #eee;
             border-radius: $round;
             background-color: #fff;
@@ -76,6 +84,43 @@ const ArticleData = ref<Article>({
 
             &:last-child {
                 margin-bottom: 0;
+            }
+        }
+
+        .operate {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            border-radius: $round;
+
+            div {
+                width: 50%;
+                height: 45px;
+                line-height: 45px;
+                text-align: center;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .draft {
+                background-color: $color;
+            }
+
+            .publish {
+                background-color: #49b984;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 45px;
+                height: 45px;
+                background-color: #fff;
+                border-radius: 50%;
             }
         }
     }
