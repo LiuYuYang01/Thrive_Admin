@@ -6,6 +6,8 @@ export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
+  const ElMessage: typeof import('element-plus/es')['ElMessage']
+  const ElMessageBox: typeof import('element-plus/es')['ElMessageBox']
   const ElNotification: typeof import('element-plus/es')['ElNotification']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']

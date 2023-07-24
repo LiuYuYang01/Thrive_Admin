@@ -285,6 +285,8 @@
     "watchTriggerable": true,
     "watchWithFilter": true,
     "whenever": true,
-    "ElNotification": true
+    "ElNotification": true,
+    "ElMessage": true,
+    "ElMessageBox": true
   }
 }
