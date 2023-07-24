@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Article } from '@/types/Article'
-import { Edit, Picture, Tickets } from '@element-plus/icons-vue'
+import { Edit, Picture, Setting } from '@element-plus/icons-vue'
 
+// 文章数据
 const ArticleData = ref<Article>({
     title: "",
     sketch: "",
@@ -11,6 +12,21 @@ const ArticleData = ref<Article>({
     tag: "",
     date: new Date()
 })
+
+import { addArticleAPI } from '@/api/Article'
+
+// 发布文章
+const publish = async (draft?: number) => {
+    const { code, message } = await addArticleAPI(ArticleData.value)
+
+    if (code !== 200) return
+
+    ElNotification({
+        title: '成功',
+        message: message,
+        type: 'success',
+    })
+}
 </script>
 
 <template>
@@ -26,11 +42,21 @@ const ArticleData = ref<Article>({
                 <!-- 内容 -->
                 <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
 
-                <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面"
-                    style="margin: 20px 0;" />
+                <el-collapse class="extend">
+                    <el-collapse-item name="1">
+                        <template #title>
+                            <el-icon class="header-icon" style="margin-right: 5px;">
+                                <Setting />
+                            </el-icon>扩展设置
+                        </template>
 
-                <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
-                    placeholder="文章简述" class="sketch" />
+                        <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面（选填）"
+                            style="margin: 10px 0 15px;" />
+
+                        <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
+                            placeholder="文章简述（选填）" class="sketch" />
+                    </el-collapse-item>
+                </el-collapse>
             </div>
 
             <!-- 侧边栏 -->
@@ -47,9 +73,9 @@ const ArticleData = ref<Article>({
                 <!-- 操作 -->
                 <div class="operate">
                     <!-- 草稿 -->
-                    <div class="draft">保存草稿</div>
+                    <div class="draft" @click="publish(1)">保存草稿</div>
                     <!-- 发布 -->
-                    <div class="publish">发布文章</div>
+                    <div class="publish" @click="publish()">发布文章</div>
                 </div>
             </div>
         </div>
@@ -68,6 +94,20 @@ const ArticleData = ref<Article>({
 
         .edit {
             width: 1000px;
+
+            :deep .el-collapse-item__content {
+                padding-bottom: 0px !important;
+            }
+
+            .extend {
+                :deep .el-collapse-item__header {
+                    font-size: 18px;
+                    height: 30px;
+                    margin: 10px 0;
+                    margin-left: 10px;
+                    border-bottom: none;
+                }
+            }
 
             .sketch {
                 margin-bottom: 20px;
