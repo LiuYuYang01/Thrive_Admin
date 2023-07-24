@@ -21,19 +21,25 @@ const rules = reactive<FormRules>({
 // 新增 / 编辑 标签切换
 const title = ref<string>("新增标签");
 
+import { whetherToDelete } from '@/utils/Message'
+
 // 删除标签
 const delTagData = async (id: number) => {
-    const { code, message } = await delTagAPI(id)
+    async function fn() {
+        const { code, message } = await delTagAPI(id)
 
-    if (code !== 200) return
+        if (code !== 200) return
 
-    ElNotification({
-        title: '成功',
-        message: message,
-        type: 'success',
-    })
+        ElNotification({
+            title: '成功',
+            message: message,
+            type: 'success',
+        })
 
-    getTagData()
+        getTagData()
+    }
+
+    whetherToDelete(fn, "标签")
 }
 
 // 编辑标签

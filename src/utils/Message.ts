@@ -1,4 +1,4 @@
-export function whetherToDelete(cb, text) {
+export function whetherToDelete(cb: () => {}, text: string) {
     ElMessageBox.confirm(
         `你确定要删除该${text}吗`,
         '警告',
