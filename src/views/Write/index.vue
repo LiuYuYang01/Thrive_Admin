@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { addArticleAPI } from '@/api/Article'
 import { Article } from '@/types/Article'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
 
@@ -13,10 +14,22 @@ const ArticleData = ref<Article>({
     date: new Date()
 })
 
-import { addArticleAPI } from '@/api/Article'
+// 文章数据校验规则
+const rules = {
+    title: [
+        { required: true, message: '标题不能为空', trigger: 'blur' },
+        { max: 50, message: '标题最大限制在50个字符', trigger: 'blur' },
+    ]
+}
+
+const router = useRouter()
 
 // 发布文章
-const publish = async (draft?: number) => {
+const publish = async () => {
+    if (!ArticleData.value.title) return ElNotification({ title: '警告', message: '标题不能为空', type: 'error' })
+    if (!ArticleData.value.content) return ElNotification({ title: '警告', message: '内容不能为空', type: 'error' })
+    if (!ArticleData.value.cate) return ElNotification({ title: '警告', message: '分类不能为空', type: 'error' })
+
     const { code, message } = await addArticleAPI(ArticleData.value)
 
     if (code !== 200) return
@@ -26,6 +39,20 @@ const publish = async (draft?: number) => {
         message: message,
         type: 'success',
     })
+
+    // 初始化数据
+    ArticleData.value = {
+        title: "",
+        sketch: "",
+        content: "",
+        cover: "",
+        cate: "",
+        tag: "",
+        date: new Date()
+    }
+
+    // 跳转到文章列表
+    router.push("/manage/article")
 }
 </script>
 
@@ -35,11 +62,14 @@ const publish = async (draft?: number) => {
 
         <div class="job">
             <div class="edit">
-                <!-- 标题 -->
-                <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！"
-                    style="margin-bottom: 20px;" class="w-50 m-2" />
+                <el-form ref="TagRef" :rules="rules" :model="ArticleData">
+                    <el-form-item prop="title">
+                        <!-- 文章标题 -->
+                        <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！" />
+                    </el-form-item>
+                </el-form>
 
-                <!-- 内容 -->
+                <!-- 文章内容 -->
                 <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
 
                 <el-collapse class="extend">
@@ -70,13 +100,8 @@ const publish = async (draft?: number) => {
                 <!-- 标签 -->
                 <ArticleTag v-model="ArticleData.tag" />
 
-                <!-- 操作 -->
-                <div class="operate">
-                    <!-- 草稿 -->
-                    <div class="draft" @click="publish(1)">保存草稿</div>
-                    <!-- 发布 -->
-                    <div class="publish" @click="publish()">发布文章</div>
-                </div>
+                <!-- 发布 -->
+                <div class="publish" @click="publish">发布文章</div>
             </div>
         </div>
     </div>
@@ -133,41 +158,14 @@ const publish = async (draft?: number) => {
                 }
             }
 
-            .operate {
-                position: relative;
-                overflow: hidden;
-                display: flex;
-                justify-content: space-between;
+            .publish {
+                height: 45px;
+                line-height: 45px;
+                text-align: center;
+                color: #fff;
+                cursor: pointer;
                 border-radius: $round;
-
-                div {
-                    width: 50%;
-                    height: 45px;
-                    line-height: 45px;
-                    text-align: center;
-                    color: #fff;
-                    cursor: pointer;
-                }
-
-                .draft {
-                    background-color: $color;
-                }
-
-                .publish {
-                    background-color: #49b984;
-                }
-
-                &::after {
-                    content: "";
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 45px;
-                    height: 45px;
-                    background-color: #fff;
-                    border-radius: 50%;
-                }
+                background-color: #49b984;
             }
         }
 
