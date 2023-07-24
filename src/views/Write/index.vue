@@ -24,6 +24,18 @@ const rules = {
 
 const router = useRouter()
 
+// 保存文章
+const save = () => {
+    // 保存文章到本地
+    localStorage.setItem("article", JSON.stringify(ArticleData.value))
+
+    ElNotification({
+        title: '成功',
+        message: '文章保存成功',
+        type: 'success',
+    })
+}
+
 // 发布文章
 const publish = async () => {
     if (!ArticleData.value.title) return ElNotification({ title: '警告', message: '标题不能为空', type: 'error' })
@@ -100,8 +112,12 @@ const publish = async () => {
                 <!-- 标签 -->
                 <ArticleTag v-model="ArticleData.tag" />
 
-                <!-- 发布 -->
-                <div class="publish" @click="publish">发布文章</div>
+                <div class="operate">
+                    <!-- 发布 -->
+                    <div @click="publish">发布文章</div>
+                    <!-- 保存文章 -->
+                    <div style="background-color: #727cf5; margin-top: 10px;" @click="save">保存文章</div>
+                </div>
             </div>
         </div>
     </div>
@@ -128,7 +144,7 @@ const publish = async () => {
                 :deep .el-collapse-item__header {
                     font-size: 18px;
                     height: 30px;
-                    margin: 10px 0;
+                    margin: 15px 0 10px;
                     margin-left: 10px;
                     border-bottom: none;
                 }
@@ -158,14 +174,20 @@ const publish = async () => {
                 }
             }
 
-            .publish {
-                height: 45px;
-                line-height: 45px;
-                text-align: center;
-                color: #fff;
-                cursor: pointer;
-                border-radius: $round;
-                background-color: #49b984;
+            .operate {
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+
+                >div {
+                    height: 45px;
+                    line-height: 45px;
+                    text-align: center;
+                    color: #fff;
+                    cursor: pointer;
+                    border-radius: $round;
+                    background-color: #49b984;
+                }
             }
         }
 
