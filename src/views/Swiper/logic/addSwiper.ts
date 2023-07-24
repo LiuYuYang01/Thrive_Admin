@@ -1,6 +1,6 @@
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { Swiper } from '@/types/Swiper'
-import { addSwiperAPI, editSwiperAPI, getSwiperAPI } from '@/api/Swiper'
+import { addSwiperAPI, editSwiperAPI, getSwiperAPI, delSwiperAPI } from '@/api/Swiper'
 import { getSwiperData } from './getSwiper'
 
 // tabs切换
@@ -39,6 +39,27 @@ export const editSwiperData = (data: Swiper) => {
     SwiperForm.value = data
 
     activeName.value = "operate"
+}
+
+import { whetherToDelete } from '@/utils/Message'
+
+// 删除轮播图
+export const delSwiperData = async (id: number) => {
+    async function fn() {
+        const { code, message } = await delSwiperAPI(id)
+
+        if (code !== 200) return
+
+        ElNotification({
+            title: '成功',
+            message: message,
+            type: 'success',
+        })
+
+        getSwiperData()
+    }
+
+    whetherToDelete(fn, "轮播图")
 }
 
 // 提交表单

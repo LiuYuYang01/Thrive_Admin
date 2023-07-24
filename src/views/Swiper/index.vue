@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { loading, svg, SwiperList, getSwiperData, viewImageShow, image, delSwiperData } from './logic/getSwiper'
+import { loading, svg, SwiperList, getSwiperData, viewImageShow, image } from './logic/getSwiper'
 getSwiperData()
 
-import { editSwiperData, SwiperForm, SubmitForm, rules, activeName, SwiperRef } from './logic/addSwiper'
+import { editSwiperData, delSwiperData, SwiperForm, SubmitForm, rules, activeName, SwiperRef } from './logic/addSwiper'
 </script>
 
 <template>

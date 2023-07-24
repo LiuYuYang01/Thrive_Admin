@@ -1,4 +1,4 @@
-import { getSwiperAPI, delSwiperAPI } from '@/api/Swiper'
+import { getSwiperAPI } from '@/api/Swiper'
 
 import { Swiper } from '@/types/Swiper'
 import { ElNotification } from 'element-plus'
@@ -29,18 +29,3 @@ export const getSwiperData = async () => {
 // 是否查看轮播图
 export const viewImageShow = ref(false)
 export const image = ref<string>("")
-
-// 删除轮播图
-export const delSwiperData = async (id: number) => {
-  const { code, message } = await delSwiperAPI(id)
-
-  if (code !== 200) return
-
-  ElNotification({
-    title: '成功',
-    message: message,
-    type: 'success',
-  })
-
-  getSwiperData()
-}
