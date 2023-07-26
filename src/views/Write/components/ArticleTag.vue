@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ElNotification } from 'element-plus'
-import { Select, Delete } from '@element-plus/icons-vue'
+import { Select } from '@element-plus/icons-vue'
 import { Tag } from '@/types/Tag';
 import { query, querySearch, restaurants } from '../logic/QueryTag'
 import { getTagAPI, addTagAPI } from '@/api/Tag'
 
 const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits<{ (e: "update:modelValue", data: string): void }>()
+console.log(props.modelValue,999);
 
 const TagData = ref<any>()
 

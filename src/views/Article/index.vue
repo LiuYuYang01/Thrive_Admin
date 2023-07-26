@@ -36,7 +36,6 @@ const router = useRouter()
 
             <el-table-column fixed="right" label="操作" align="center" width="150">
                 <template #default="{ row }">
-                    <el-button circle size="small" :icon="View" />
                     <el-button circle type="primary" size="small" :icon="Edit"
                         @click="router.push(`/write?id=${row.id}`)" />
                     <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)" />

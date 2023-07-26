@@ -39,7 +39,6 @@ const submit = async () => {
     // 编辑文章
     if (id.value) {
         ArticleData.value.date = moment(ArticleData.value.date).format('YYYY-MM-DD HH:mm:ss') as any
-        console.log(ArticleData.value,555);
 
         // 编辑数据
         const { code, message } = await editArticleAPI(id.value, ArticleData.value)
