@@ -5,6 +5,9 @@ import { View, Edit, Delete } from '@element-plus/icons-vue'
 // 获取文章列表
 import { getArticleData, ArticleData, loading, svg } from './logic/getArticle'
 getArticleData()
+
+// 删除文章
+import { delArticleData } from './logic/delArticle'
 </script>
 
 <template>
@@ -27,10 +30,10 @@ getArticleData()
             </el-table-column>
 
             <el-table-column fixed="right" label="操作" align="center" width="150">
-                <template #default>
+                <template #default="{ row }">
                     <el-button circle size="small" :icon="View"></el-button>
                     <el-button circle type="primary" size="small" :icon="Edit"></el-button>
-                    <el-button circle type="danger" size="small" :icon="Delete"></el-button>
+                    <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)"></el-button>
                 </template>
             </el-table-column>
         </el-table>

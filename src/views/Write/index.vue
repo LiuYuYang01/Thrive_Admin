@@ -27,7 +27,7 @@ const router = useRouter()
 // 保存文章
 const save = () => {
     // 保存文章到本地
-    localStorage.setItem("article", JSON.stringify(ArticleData.value))
+    localStorage.setItem("article", JSON.stringify({ ...ArticleData.value, cate: "" }))
 
     ElNotification({
         title: '成功',
@@ -62,6 +62,9 @@ const publish = async () => {
         tag: "",
         date: new Date()
     }
+
+    // 清空本地的数据
+    localStorage.removeItem('article');
 
     // 跳转到文章列表
     router.push("/manage/article")

@@ -2,7 +2,7 @@ import { ElNotification } from 'element-plus';
 import { delCateAPI } from "@/api/Cate";
 import { getCateData } from './getCate'
 
-import { whetherToDelete } from '@/utils/Message'
+import { whetherToDelete } from '@/utils/ConfirmMessage'
 
 export const delCate = async (id: number, level: any) => {
     level = level >= 0 ? 'one' : 'two'

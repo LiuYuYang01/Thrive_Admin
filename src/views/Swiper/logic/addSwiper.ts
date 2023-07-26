@@ -41,7 +41,7 @@ export const editSwiperData = (data: Swiper) => {
     activeName.value = "operate"
 }
 
-import { whetherToDelete } from '@/utils/Message'
+import {whetherToDelete} from '@/utils/ConfirmMessage'
 
 // 删除轮播图
 export const delSwiperData = async (id: number) => {
