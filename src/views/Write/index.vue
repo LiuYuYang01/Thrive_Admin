@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { addArticleAPI } from '@/api/Article'
+import moment from 'moment'
 import { Article } from '@/types/Article'
+import { addArticleAPI, editArticleAPI, getArticleAPI } from '@/api/Article'
+import { getArticleData } from '@/views/Article/logic/getArticle'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
 
 // 文章数据
@@ -14,15 +16,82 @@ const ArticleData = ref<Article>(localStorage.getItem("article") ? JSON.parse(lo
     date: new Date()
 })
 
-// 文章数据校验规则
-const rules = {
-    title: [
-        { required: true, message: '标题不能为空', trigger: 'blur' },
-        { max: 50, message: '标题最大限制在50个字符', trigger: 'blur' },
-    ]
-}
-
 const router = useRouter()
+const id = ref<number>(+router.currentRoute.value.query.id!)
+
+// 数据回显
+const ArticleDataEcho = async () => {
+    if (!id.value) return
+
+    // 获取指定的文章
+    const { data } = await getArticleAPI(id.value)
+
+    // 解构数据
+    let { title, sketch, content, cover, cate, tag, date } = data as Article
+
+    // 赋值数据
+    ArticleData.value = { ...ArticleData.value, title, sketch, content, cover, cate, tag, date }
+}
+ArticleDataEcho()
+
+// 编辑/发布文章
+const submit = async () => {
+    // 编辑文章
+    if (id.value) {
+        ArticleData.value.date = moment(ArticleData.value.date).format('YYYY-MM-DD HH:mm:ss') as any
+        console.log(ArticleData.value,555);
+
+        // 编辑数据
+        const { code, message } = await editArticleAPI(id.value, ArticleData.value)
+
+        if (code !== 200) return
+
+        ElNotification({
+            title: '成功',
+            message: message,
+            type: 'success'
+        })
+
+        // 清空本地的数据
+        localStorage.removeItem('article');
+    }
+    // 发布文章
+    else {
+        if (!ArticleData.value.title) return ElNotification({ title: '警告', message: '标题不能为空', type: 'error' })
+        if (!ArticleData.value.content) return ElNotification({ title: '警告', message: '内容不能为空', type: 'error' })
+        if (!ArticleData.value.cate) return ElNotification({ title: '警告', message: '分类不能为空', type: 'error' })
+
+        const { code, message } = await addArticleAPI(ArticleData.value)
+
+        if (code !== 200) return
+
+        ElNotification({
+            title: '成功',
+            message: message,
+            type: 'success',
+        })
+
+        // 初始化数据
+        ArticleData.value = {
+            title: "",
+            sketch: "",
+            content: "",
+            cover: "",
+            cate: "",
+            tag: "",
+            date: new Date()
+        }
+
+        // 清空本地的数据
+        localStorage.removeItem('article');
+    }
+
+    // 获取最新数据
+    getArticleData()
+
+    // 跳转到文章列表
+    router.push("/manage/article")
+}
 
 // 保存文章
 const save = () => {
@@ -36,38 +105,12 @@ const save = () => {
     })
 }
 
-// 发布文章
-const publish = async () => {
-    if (!ArticleData.value.title) return ElNotification({ title: '警告', message: '标题不能为空', type: 'error' })
-    if (!ArticleData.value.content) return ElNotification({ title: '警告', message: '内容不能为空', type: 'error' })
-    if (!ArticleData.value.cate) return ElNotification({ title: '警告', message: '分类不能为空', type: 'error' })
-
-    const { code, message } = await addArticleAPI(ArticleData.value)
-
-    if (code !== 200) return
-
-    ElNotification({
-        title: '成功',
-        message: message,
-        type: 'success',
-    })
-
-    // 初始化数据
-    ArticleData.value = {
-        title: "",
-        sketch: "",
-        content: "",
-        cover: "",
-        cate: "",
-        tag: "",
-        date: new Date()
-    }
-
-    // 清空本地的数据
-    localStorage.removeItem('article');
-
-    // 跳转到文章列表
-    router.push("/manage/article")
+// 文章数据校验规则
+const rules = {
+    title: [
+        { required: true, message: '标题不能为空', trigger: 'blur' },
+        { max: 50, message: '标题最大限制在50个字符', trigger: 'blur' },
+    ]
 }
 </script>
 
@@ -117,7 +160,7 @@ const publish = async () => {
 
                 <div class="operate">
                     <!-- 发布 -->
-                    <div @click="publish">发布文章</div>
+                    <div @click="submit">{{ id ? '编辑文章' : '发布文章' }}</div>
                     <!-- 保存文章 -->
                     <div style="background-color: #727cf5; margin-top: 10px;" @click="save">保存文章</div>
                 </div>

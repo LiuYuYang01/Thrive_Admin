@@ -8,6 +8,11 @@ getArticleData()
 
 // 删除文章
 import { delArticleData } from './logic/delArticle'
+
+// 编辑文章
+import { editArticleData } from './logic/editArticle'
+
+const router = useRouter()
 </script>
 
 <template>
@@ -31,9 +36,10 @@ import { delArticleData } from './logic/delArticle'
 
             <el-table-column fixed="right" label="操作" align="center" width="150">
                 <template #default="{ row }">
-                    <el-button circle size="small" :icon="View"></el-button>
-                    <el-button circle type="primary" size="small" :icon="Edit"></el-button>
-                    <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)"></el-button>
+                    <el-button circle size="small" :icon="View" />
+                    <el-button circle type="primary" size="small" :icon="Edit"
+                        @click="router.push(`/write?id=${row.id}`)" />
+                    <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)" />
                 </template>
             </el-table-column>
         </el-table>
