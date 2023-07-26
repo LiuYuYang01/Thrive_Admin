@@ -18,7 +18,7 @@ const handleCheckChange = (data: any) => {
         <div class="title">分类列表</div>
 
         <div class="list">
-            <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" show-checkbox node-key="name"
+            <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" node-key="name" show-checkbox
                 v-loading="loading" :element-loading-svg="svg" class="custom-loading-svg" @check-change="handleCheckChange"
                 ref="tree" />
         </div>

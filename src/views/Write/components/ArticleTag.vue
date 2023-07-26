@@ -23,6 +23,9 @@ const getTagData = async () => {
 // 已选择的标签
 const TagList = ref<string[]>([])
 
+// 保存数据
+TagList.value = props.modelValue ? props.modelValue.split(",") : []
+
 // 点击选中标签
 const TagSelect = () => {
     // 禁止重复添加

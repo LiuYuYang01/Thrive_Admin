@@ -4,7 +4,7 @@ import { Article } from '@/types/Article'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
 
 // 文章数据
-const ArticleData = ref<Article>({
+const ArticleData = ref<Article>(localStorage.getItem("article") ? JSON.parse(localStorage.getItem("article")!) : {
     title: "",
     sketch: "",
     content: "",

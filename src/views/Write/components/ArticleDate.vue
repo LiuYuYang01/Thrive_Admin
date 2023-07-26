@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Edit } from '@element-plus/icons-vue'
-const props = defineProps<{ modelValue: Date }>()
-const emit = defineEmits<{ (e: "update:modelValue", data: Date): void }>()
+const props = defineProps<{ modelValue: string | Date }>()
+const emit = defineEmits<{ (e: "update:modelValue", data: string | Date): void }>()
 const date = ref(props.modelValue)
 
 // 控制时间框是否显示隐藏
@@ -11,23 +11,24 @@ const isDate = ref<boolean>(false)
 import moment from 'moment';
 
 // 格式化一个新的时间
-const time = ref(moment(date.value).format('YYYY-MM-DD HH:mm:ss'))
+const time = ref(date.value)
 
 watch(date, data => {
     // 更新时间
     time.value = moment(data).format('YYYY-MM-DD HH:mm:ss')
+
     emit("update:modelValue", data)
 
     // 关闭时间框
     isDate.value = false
-})
+}, { immediate: true })
 </script>
 
 <template>
     <div class="ArticleDate">
         <div class="title"><box-icon name='time-five' />时间</div>
 
-        <el-input class="w-50 m-2" size="large" :placeholder="time">
+        <el-input class="w-50 m-2" size="large" :placeholder="(<string>time)">
             <template #append>
                 <el-button :icon="Edit" @click="isDate = !isDate" />
             </template>

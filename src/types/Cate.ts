@@ -6,4 +6,5 @@ export interface Cate {
     icon: string,
     cid?: string,
     children?: Omit<Cate, "icon" | "cid">[]
+    checked?: boolean;
 }
