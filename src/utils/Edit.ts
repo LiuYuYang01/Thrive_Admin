@@ -9,6 +9,4 @@ VueMarkdownEditor.use(vuepressTheme, {
     Prism,
 });
 
-// const Editor = () => VueMarkdownEditor
-
 export default VueMarkdownEditor

@@ -9,9 +9,6 @@ getArticleData()
 // 删除文章
 import { delArticleData } from './logic/delArticle'
 
-// 编辑文章
-import { editArticleData } from './logic/editArticle'
-
 const router = useRouter()
 </script>
 
@@ -24,7 +21,7 @@ const router = useRouter()
             <el-table-column prop="id" label="ID" width="80" align="center" />
             <el-table-column prop="title" label="标题" width="180" align="center" />
             <el-table-column prop="sketch" label="简述" width="300" align="sketch" class="briefly" />
-            <el-table-column prop="cate" label="分类" width="130" align="center" />
+            <el-table-column prop="cate" label="分类" width="130" align="center"/>
             <el-table-column prop="tag" label="标签" width="230" align="center" />
             <el-table-column prop="view" label="浏览量" width="100" align="center" />
             <el-table-column prop="count" label="评论数量" width="100" align="center" />
