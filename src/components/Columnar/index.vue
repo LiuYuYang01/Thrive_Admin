@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import * as echarts from 'echarts';
 
 onMounted(() => {
-    var chartDom = document.getElementById('Columnar');
+    var chartDom = document.getElementById('Columnar') as HTMLElement;
     var myChart = echarts.init(chartDom);
 
     const option = {

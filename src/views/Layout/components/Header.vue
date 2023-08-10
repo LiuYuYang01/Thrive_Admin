@@ -22,7 +22,7 @@ const quit = () => {
 
         <div class="nav">
             <div class="list">
-                <a href="/"><box-icon name='globe' />作者博客</a>
+                <a href="http:/liuyuyang.net" target="_blank"><box-icon name='globe' />作者博客</a>
                 <a href="/"><box-icon name='github' type='logo' />GitHub</a>
                 <a href="/"><box-icon name='message-square-dots' />消息</a>
             </div>

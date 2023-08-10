@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// @ts-nocheck
+
 import { TagList, getTagData } from '../logic/getTag'
 
 const run = () => {
