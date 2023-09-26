@@ -1,24 +1,28 @@
-import { getArticleAPI } from '@/api/Article'
-import { Article } from '@/types/Article'
+import { getArticleAPI, getArticlePageAPI } from "@/api/Article";
+import { Article } from "@/types/Article";
 
-export const loading = ref(true)
-export const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `
+export const loading = ref(true);
 
-export const ArticleData = ref<Article[]>()
+export const ArticleData = ref<Article[]>();
+
+// 文章总数
+export const total = ref<number>(0);
 
 // 获取文章列表
-export const getArticleData = async () => {
-    const { data } = await getArticleAPI()
+export const getArticleData = async (page?: number, size?: number) => {
+  loading.value = true;
 
-    ArticleData.value = data as Article[]
-    loading.value = false
-}
+  // 默认分页
+  if (!page || !size) {
+    page = 1;
+    size = 6;
+  }
+
+  // @ts-ignore
+  const { data, paginate } = await getArticlePageAPI(page, size);
+  total.value = paginate.total
+
+  ArticleData.value = data as Article[];
+  
+  loading.value = false;
+};
