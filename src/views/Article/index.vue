@@ -47,12 +47,9 @@ const delArticleData = async (id: number) => {
 
 const router = useRouter()
 
-// 每页显示多少个文章
-const size = ref<number>(2)
-
 // 监听页码变化
 const pageChange = (value: number) => {
-    getArticleData(value, size.value)
+    getArticleData(value, 6)
 }
 </script>
 
@@ -85,7 +82,7 @@ const pageChange = (value: number) => {
         </el-table>
 
         <el-row justify="end" style="margin-top: 20px;">
-            <el-pagination background layout="prev, pager, next" :page-size="size" :total="total"
+            <el-pagination background layout="prev, pager, next" :page-size="6" :total="total"
                 @current-change="pageChange" />
         </el-row>
     </div>

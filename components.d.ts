@@ -44,6 +44,7 @@ declare module 'vue' {
     Home: typeof import('./src/views/Home/index.vue')['default']
     Layout: typeof import('./src/views/Layout/index.vue')['default']
     Linear: typeof import('./src/views/Home/components/Linear.vue')['default']
+    Link: typeof import('./src/views/Link/index.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
     My: typeof import('./src/views/Setup/components/My.vue')['default']
     Recording: typeof import('./src/views/Home/components/Recording.vue')['default']

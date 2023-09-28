@@ -13,16 +13,14 @@ export const getArticleData = async (page?: number, size?: number) => {
   loading.value = true;
 
   // 默认分页
-  if (!page || !size) {
-    page = 1;
-    size = 6;
-  }
+  if (!page) page = 1;
+  if (!size) size = 6;
 
   // @ts-ignore
   const { data, paginate } = await getArticlePageAPI(page, size);
-  total.value = paginate.total
+  total.value = paginate.total;
 
   ArticleData.value = data as Article[];
-  
+
   loading.value = false;
 };
