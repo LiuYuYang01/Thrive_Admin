@@ -63,7 +63,7 @@ const submit = async (formEl: FormInstance | undefined) => {
   <div class="my">
     <Title title="个人设置" icon="user" />
 
-    <el-form ref="myRef" label-position="top" :model="myForm" :rules="rules" size="large" style="min-width: 480px;">
+    <el-form ref="myRef" label-position="top" :model="myForm" :rules="rules" size="large" style="min-width: 500px;">
       <el-form-item label="名称" prop="name">
         <el-input v-model="myForm.name" placeholder="名称" />
       </el-form-item>

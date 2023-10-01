@@ -437,10 +437,15 @@ const toHref = (url: string) => {
     open(url, "_blank")
 }
 
-// 保存按钮
-const save = () => {
 
-}
+// 新增网站
+const linkForm = ref<Link>({
+    title: "",
+    description: "",
+    email: "",
+    image: "",
+    url: "",
+})
 </script>
 
 <template>
@@ -450,7 +455,8 @@ const save = () => {
         <el-tabs tab-position="left">
             <el-tab-pane label="网站列表">
                 <div class="search">
-                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询" :prefix-icon="Search" />
+                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询"
+                        :prefix-icon="Search" />
                 </div>
 
                 <div class="list">
@@ -470,7 +476,35 @@ const save = () => {
                 <Null style="margin-top: 30px;" v-if="!linkData?.length" />
             </el-tab-pane>
 
-            <el-tab-pane label="新增网站">User</el-tab-pane>
+            <el-tab-pane label="新增网站">
+                <el-row style="flex-direction: column; margin-left: 30px;">
+                    <Title title="新增网站" icon="globe" class="title" />
+
+                    <el-form label-position="top" size="large" :model="linkForm" style="max-width: 500px">
+                        <el-form-item label="标题">
+                            <el-input v-model="linkForm.title" />
+                        </el-form-item>
+
+                        <el-form-item label="描述">
+                            <el-input v-model="linkForm.description" />
+                        </el-form-item>
+
+                        <el-form-item label="邮箱">
+                            <el-input v-model="linkForm.email" />
+                        </el-form-item>
+
+                        <el-form-item label="头像">
+                            <el-input v-model="linkForm.image" />
+                        </el-form-item>
+
+                        <el-form-item label="链接">
+                            <el-input v-model="linkForm.url" />
+                        </el-form-item>
+                    </el-form>
+
+                    <el-button type="primary" size="large" style="width: 500px;">新增网站</el-button>
+                </el-row>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -619,4 +653,11 @@ const save = () => {
         }
     }
 }
-</style>
+
+.el-row .title {
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin: 20px 0;
+    border-bottom: none;
+}</style>
