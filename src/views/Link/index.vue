@@ -421,13 +421,15 @@ const list = ref<Link[]>([
     }
 ])
 
-const linkData = ref<Link[]>()
+const linkData = ref<Link[]>(list.value)
 
 // 搜索的数据
 const search = ref<string>("")
 // 监听搜索数据的变化
 watch(search, data => {
-    console.log(data);
+    linkData.value = list.value.filter(item => {
+        return item.title.includes(data) || item.description.includes(data)
+    })
 })
 
 // 跳转页面
@@ -448,7 +450,7 @@ const save = () => {
         <el-tabs tab-position="left">
             <el-tab-pane label="网站列表">
                 <div class="search">
-                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="快捷搜索" :prefix-icon="Search" />
+                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询" :prefix-icon="Search" />
                 </div>
 
                 <div class="list">
