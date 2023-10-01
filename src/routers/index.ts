@@ -59,7 +59,7 @@ export const routes = [
           {
             path: "link",
             component: () => import("@/views/Link/index.vue"),
-            meta: { title: "链接管理" },
+            meta: { title: "网站管理" },
           },
           {
             path: "swiper",

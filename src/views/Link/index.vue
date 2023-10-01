@@ -2,7 +2,7 @@
 import { Link } from '@/types/Link';
 import { Search } from '@element-plus/icons-vue'
 
-const linkData = ref<Link[]>([
+const list = ref<Link[]>([
     {
         title: "Thrive",
         description: "记录一个架构师的崛起",
@@ -421,13 +421,21 @@ const linkData = ref<Link[]>([
     }
 ])
 
+const linkData = ref<Link[]>()
+
+// 搜索的数据
 const search = ref<string>("")
+// 监听搜索数据的变化
+watch(search, data => {
+    console.log(data);
+})
 
 // 跳转页面
 const toHref = (url: string) => {
     open(url, "_blank")
 }
 
+// 保存按钮
 const save = () => {
 
 }
@@ -435,13 +443,12 @@ const save = () => {
 
 <template>
     <div class="page">
-        <Title title="链接管理" icon="image" />
+        <Title title="网站管理" icon="globe" />
 
         <el-tabs tab-position="left">
-            <el-tab-pane label="链接列表">
+            <el-tab-pane label="网站列表">
                 <div class="search">
-                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="快捷搜索"
-                        :prefix-icon="Search" />
+                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="快捷搜索" :prefix-icon="Search" />
                 </div>
 
                 <div class="list">
@@ -457,9 +464,11 @@ const save = () => {
                         <div class="headFor" @click="toHref(item.url)">前往该网站 -></div>
                     </div>
                 </div>
+
+                <Null style="margin-top: 30px;" v-if="!linkData?.length" />
             </el-tab-pane>
 
-            <el-tab-pane label="新增链接">User</el-tab-pane>
+            <el-tab-pane label="新增网站">User</el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -481,8 +490,8 @@ const save = () => {
     width: 100%;
     margin: 0px 0;
     margin-bottom: 20px;
-    
-    .el-input{
+
+    .el-input {
         width: 500px;
     }
 }
