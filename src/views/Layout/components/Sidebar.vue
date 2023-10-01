@@ -8,7 +8,7 @@ const navList = ref(JSON.parse(sessionStorage.getItem("navList") as string) || r
 navList.value.forEach((item: { meta: any; }) => {
   const show = item.meta.show
 
-  // 如果有show属性就略过
+  // 如果没有show属性就设置，有就略过
   if (!show) item.meta.show = false
 })
 
@@ -45,7 +45,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     const r = navList.value[index].children
 
     if (r) {
-      // 如果所有二级属性都为：hidden: true，那么允许一级导航跳转
+      // 如果所有二级导航的属性都为：hidden: true，那么允许一级导航跳转
       const f = r?.every((item: any) => item.meta.hidden)
 
       f ? router.push(path) : 0
@@ -89,7 +89,9 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
 
           <!-- 二级导航 -->
           <template v-if="one.children">
+            <!-- 使用el-collapse-transition使展开收起实现过渡效果 -->
             <el-collapse-transition>
+              <!-- 如果一级导航的show属性为true就展开二级导航 -->
               <dl class="children" v-show="one.meta.show">
 
                 <template v-for="two, two_index in one.children">

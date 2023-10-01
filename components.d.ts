@@ -51,6 +51,7 @@ declare module 'vue' {
     Recording: typeof import('./src/views/Home/components/Recording.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Rss: typeof import('./src/views/Rss/index.vue')['default']
     Setup: typeof import('./src/views/Setup/index.vue')['default']
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
     Site: typeof import('./src/views/Setup/components/Site.vue')['default']

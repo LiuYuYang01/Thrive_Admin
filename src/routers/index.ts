@@ -10,6 +10,10 @@ NProgress.configure({
   showSpinner: false,
 });
 
+// meta字段说明
+// title：路由标题
+// icon：路由图标
+// show：默认是否展开二级导航
 export const routes = [
   {
     path: "/",
@@ -39,7 +43,7 @@ export const routes = [
       },
       {
         path: "/manage",
-        meta: { title: "管理", icon: "edit-alt", show: true },
+        meta: { title: "管理", icon: "planet", show: true },
         children: [
           {
             path: "article",
@@ -71,7 +75,7 @@ export const routes = [
       {
         path: "/setup",
         component: () => import("@/views/Setup/index.vue"),
-        meta: { title: "配置", icon: "planet" },
+        meta: { title: "配置", icon: "cog" },
         children: [
           {
             path: "",
@@ -94,6 +98,11 @@ export const routes = [
         path: "/work",
         component: () => import("@/views/Work/index.vue"),
         meta: { title: "工作室", icon: "desktop" },
+      },
+      {
+        path: "/rss",
+        component: () => import("@/views/Rss/index.vue"),
+        meta: { title: "订阅中心", icon: "paper-plane" },
       },
       {
         path: "/home/5",
