@@ -100,7 +100,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 .title {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 10px 0;
   border-bottom: none;
 }
 </style>

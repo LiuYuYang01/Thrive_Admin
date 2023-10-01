@@ -477,10 +477,10 @@ const linkForm = ref<Link>({
             </el-tab-pane>
 
             <el-tab-pane label="新增网站">
-                <el-row style="flex-direction: column; margin-left: 30px;">
+                <el-row style="flex-direction: column; width: 500px; margin-left: 40px;">
                     <Title title="新增网站" icon="globe" class="title" />
 
-                    <el-form label-position="top" size="large" :model="linkForm" style="max-width: 500px">
+                    <el-form label-position="top" size="large" :model="linkForm">
                         <el-form-item label="标题">
                             <el-input v-model="linkForm.title" />
                         </el-form-item>
@@ -502,7 +502,7 @@ const linkForm = ref<Link>({
                         </el-form-item>
                     </el-form>
 
-                    <el-button type="primary" size="large" style="width: 500px;">新增网站</el-button>
+                    <el-button type="primary" size="large">新增网站</el-button>
                 </el-row>
             </el-tab-pane>
         </el-tabs>
@@ -524,8 +524,7 @@ const linkForm = ref<Link>({
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 0px 0;
-    margin-bottom: 20px;
+    margin: 30px 0 50px;
 
     .el-input {
         width: 500px;
@@ -658,6 +657,7 @@ const linkForm = ref<Link>({
     display: flex;
     justify-content: center;
     width: 500px;
-    margin: 20px 0;
+    margin: 10px 0;
     border-bottom: none;
-}</style>
+}
+</style>
