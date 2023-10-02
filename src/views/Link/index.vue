@@ -245,6 +245,11 @@ const submit = () => {
                         <div class="description">{{ item.description }}</div>
                         <div class="type">{{ item.type }}</div>
 
+                        <div class="operate">
+                            <div>修改</div>
+                            <div>删除</div>
+                        </div>
+
                         <div class="headFor" @click="toHref(item.url)">前往该网站 -></div>
                     </div>
                 </div>
@@ -410,6 +415,39 @@ const submit = () => {
 
         &:hover .type {
             bottom: -40px;
+        }
+
+        .operate {
+            position: absolute;
+            bottom: -40px;
+            display: flex;
+            background-color: #fff;
+            transition: bottom $move;
+
+            width: 100%;
+            justify-content: center;
+            padding: 10px 0;
+
+            div {
+                padding: 3px 10px;
+                margin: 0 5px;
+                color: #fff;
+                font-size: 14px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:nth-child(1) {
+                    background-color: #49b984;
+                }
+
+                &:nth-child(2) {
+                    background-color: #f16c6d;
+                }
+            }
+        }
+
+        &:hover .operate {
+            bottom: 35px;
         }
 
         .headFor {
