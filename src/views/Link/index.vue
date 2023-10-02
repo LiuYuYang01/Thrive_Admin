@@ -1,128 +1,10 @@
 <script setup lang="ts">
-import { Link } from '@/types/Link';
+import { addLinkAPI } from '@/api/Link'
+import { Link } from '@/types/Link'
 import { Search } from '@element-plus/icons-vue'
+import { FormInstance } from 'element-plus'
 
 const list = ref<Link[]>([
-    {
-        title: "Thrive",
-        description: "记录一个架构师的崛起",
-        email: "3311118881@qq.com",
-        image: "https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640",
-        url: "/",
-    },
-    {
-        title: "Keep Running",
-        description: "迟博勋",
-        email: "",
-        image: "https://www.chiboxun.com/img/touxiang.jpg",
-        url: "https://www.chiboxun.com"
-    },
-    {
-        title: "夏夜小鹿",
-        description: "夏夜小鹿，是夏，也是露",
-        email: "",
-        image: "https://blog-static-1312414756.cos.ap-beijing.myqcloud.com/config/20c79361df4f83d0e0fbb1c5696cf7c9.JPG",
-        url: "https://xiayexiaolu.top/"
-    },
-    {
-        title: "xiaoger",
-        description: "个人学习和分享壁纸的博客",
-        email: "",
-        image: "https://image.xiaoger.top/xiaoger/config/xiaoger.jpg",
-        url: "https://xiaoger.top"
-    },
-    {
-        title: "在码圈",
-        description: "代码改变未来，努力coding",
-        email: "",
-        image: "https://www.bedebug.com/avatar",
-        url: "https://www.bedebug.com"
-    },
-    {
-        title: "MrWu",
-        description: "网络安全博客,分享黑客攻防技术和WordPress笔记.",
-        email: "",
-        image: "https://www.mrwu.red/favicon.ico",
-        url: "https://www.mrwu.red"
-    },
-    {
-        title: "Leonus",
-        description: "进一寸有进一寸的欢喜",
-        email: "",
-        image: "https://q1.qlogo.cn/g?b=qq&nk=990320751&s=5",
-        url: "https://blog.leonus.cn/"
-    },
-    {
-        title: "M酷的前端Blog",
-        description: "一个专注分享前端技术和趋势的博客",
-        email: "",
-        image: "https://bbchin.com/logo",
-        url: "https://bbchin.com"
-    },
-    {
-        title: "ChenZhen的客栈",
-        description: "个人博客，分享技术文章、自建ChatGPT提示库、在线聊天网页",
-        email: "",
-        image: "https://www.chenzhen.space/images/me.jpg",
-        url: "https://www.chenzhen.space"
-    },
-    {
-        title: "观后无感博客",
-        description: "经历反反复复，终是观后无感",
-        email: "",
-        image: "http://q1.qlogo.cn/g?b=qq&nk=2383262410&s=100",
-        url: "https://www.blog18.cn"
-    },
-    {
-        id: 16,
-        title: "耶瞳空间",
-        description: "静坐于万花筒，在绚烂中寻找那唯一的本源",
-        email: "3311118881@qq.com",
-        image: "https://s1.ax1x.com/2023/06/02/p9zTn0O.png",
-        url: "http://space.eyescode.top"
-    },
-    {
-        title: "小杨生活志",
-        description: "我们都有属于自己的单车，一切都那么简单，生活大部分是平淡，不需要过多的眼泪和笑来说明多糟糕或多美好",
-        email: "",
-        image: "https://blog.zwying.com/usr/uploads/sina/63adb58f409aa.jpg",
-        url: "https://www.yanghuaxing.com/"
-    },
-    {
-        title: "Leo's Blog",
-        description: "THIS IS MY STORY.",
-        email: "",
-        image: "https://s1.ax1x.com/2020/04/18/JnAGbF.jpg",
-        url: "https://www.isolitude.cn/"
-    },
-    {
-        title: "Jack’s Space",
-        description: "VeryJack 的个人空间",
-        email: "",
-        image: "https://pix.veryjack.com/i/2023/04/04/fsxnkv.webp",
-        url: "https://veryjack.com"
-    },
-    {
-        title: "沫言博客",
-        description: "这个世界从来都不公平，你只有努力，才能换来那些平等的待遇。",
-        email: "",
-        image: "https://6hi.cn/photo/logo.png",
-        url: "https://6hi.cn"
-    },
-    {
-        title: "itsNeko",
-        description: "有源源就有我！",
-        email: "",
-        image: "https://dyfa.top/usr/themes/Nabo-theme-typecho-main/image/logo.jpg",
-        url: "https://dyfa.top"
-    },
-    {
-        title: "零叁壹",
-        description: "心怀阳光，必有诗和远方！",
-        email: "",
-        image: "https://bu.dusays.com/2023/08/04/64cbd7e695896.jpg",
-        url: "https://blog.oiii.top"
-    },
     {
         id: 1,
         title: "Thrive",
@@ -130,6 +12,7 @@ const list = ref<Link[]>([
         email: "3311118881@qq.com",
         image: "https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640",
         url: "/",
+        type: "技术类"
     },
     {
         id: 2,
@@ -137,7 +20,8 @@ const list = ref<Link[]>([
         description: "分享设计与科技生活",
         email: "3311118881@qq.com",
         image: "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
-        url: "https://blog.zhheo.com/"
+        url: "https://blog.zhheo.com/",
+        type: "生活类"
     },
     {
         id: 3,
@@ -145,7 +29,8 @@ const list = ref<Link[]>([
         description: "友人C的个人空间",
         email: "3311118881@qq.com",
         image: "https://s1.ax1x.com/2023/06/02/p9zTn0O.png",
-        url: "http://space.eyescode.top"
+        url: "http://space.eyescode.top",
+        type: "技术类"
     },
     {
         id: 4,
@@ -153,7 +38,8 @@ const list = ref<Link[]>([
         description: "花有重开日，人无再少年",
         email: "3311118881@qq.com",
         image: "https://blog.zwying.com/avatar.jpg",
-        url: "https://blog.zwying.com"
+        url: "https://blog.zwying.com",
+        type: "生活类"
     },
     {
         id: 5,
@@ -161,7 +47,8 @@ const list = ref<Link[]>([
         description: "这是一个 Vue2 Vue3 与 SpringBoot 结合的产物～",
         email: "3311118881@qq.com",
         image: "https://s1.ax1x.com/2022/11/10/z9E7X4.jpg",
-        url: "https://poetize.cn/"
+        url: "https://poetize.cn/",
+        type: "生活类"
     },
     {
         id: 6,
@@ -169,7 +56,8 @@ const list = ref<Link[]>([
         description: "须知少时凌云志，曾许人间第一流！",
         email: "3311118881@qq.com",
         image: "https://wch666.com/head.png",
-        url: "https://wch666.com"
+        url: "https://wch666.com",
+        type: "技术类"
     },
     {
         id: 7,
@@ -177,7 +65,8 @@ const list = ref<Link[]>([
         description: "一只微不足道的猫",
         email: "3311118881@qq.com",
         image: "https://cravatar.cn/avatar/7adbfaef92d9d082be5dec39f3fe3d02?s=200",
-        url: "https://www.1gcat.com"
+        url: "https://www.1gcat.com",
+        type: "生活类"
     },
     {
         id: 8,
@@ -185,7 +74,8 @@ const list = ref<Link[]>([
         description: "风卷过的起点",
         email: "3311118881@qq.com",
         image: "https://cravatar.cn/avatar/cc763511474fe24ffcc80257fb7cb970?s=256",
-        url: "https://pinlyu.com/"
+        url: "https://pinlyu.com/",
+        type: "生活类"
     },
     {
         id: 9,
@@ -193,7 +83,8 @@ const list = ref<Link[]>([
         description: "再渺小的星光，也有属于它的光芒",
         email: "3311118881@qq.com",
         image: "https://www.blatr.cn/images/adminAvatar.jpg",
-        url: "https://www.blatr.cn"
+        url: "https://www.blatr.cn",
+        type: "技术类"
     },
     {
         id: 10,
@@ -201,7 +92,8 @@ const list = ref<Link[]>([
         description: "心有山海，静而不争",
         email: "3311118881@qq.com",
         image: "https://qiniu.ztyang.com/img/wechatavatar.jpg",
-        url: "https://www.ztyang.com"
+        url: "https://www.ztyang.com",
+        type: "生活类"
     },
     {
         id: 11,
@@ -209,7 +101,8 @@ const list = ref<Link[]>([
         description: "韶华不为少年留 恨悠悠 几时休",
         email: "3311118881@qq.com",
         image: "https://yy.liveout.cn/photo/photo2.jpg",
-        url: "https://www.liveout.cn/index/"
+        url: "https://www.liveout.cn/index/",
+        type: "生活类"
     },
     {
         id: 12,
@@ -217,7 +110,8 @@ const list = ref<Link[]>([
         description: "不曾与你分享的时间，我在进步。",
         email: "3311118881@qq.com",
         image: "https://blog.isww.cn/logo.head.jpg",
-        url: "https://blog.isww.cn/"
+        url: "https://blog.isww.cn/",
+        type: "生活类"
     },
     {
         id: 13,
@@ -225,7 +119,8 @@ const list = ref<Link[]>([
         description: "一场凡梦，一份追求。",
         email: "3311118881@qq.com",
         image: "https://www.zwbo.com/tx.png",
-        url: "https://www.zwbo.com/"
+        url: "https://www.zwbo.com/",
+        type: "生活类"
     },
     {
         id: 14,
@@ -233,7 +128,8 @@ const list = ref<Link[]>([
         description: "或许是个二次元？",
         email: "3311118881@qq.com",
         image: "https://blog.zwying.com/usr/uploads/sina/63adb58e798d4.jpg",
-        url: "https://hongweblog.com/"
+        url: "https://hongweblog.com/",
+        type: "生活类"
     },
     {
         id: 15,
@@ -241,183 +137,8 @@ const list = ref<Link[]>([
         description: "如果世界多了精彩，每一位都是创造者，大家都是你的观众",
         email: "3311118881@qq.com",
         image: "https://blog.gmcj0816.top/img/SeriousWission_TouXiangPic.png",
-        url: "https://blog.gmcj0816.top/"
-    },
-    {
-        id: 16,
-        title: "耶瞳空间",
-        description: "静坐于万花筒，在绚烂中寻找那唯一的本源",
-        email: "3311118881@qq.com",
-        image: "https://s1.ax1x.com/2023/06/02/p9zTn0O.png",
-        url: "http://space.eyescode.top"
-    },
-    {
-        title: "小杨生活志",
-        description: "我们都有属于自己的单车，一切都那么简单，生活大部分是平淡，不需要过多的眼泪和笑来说明多糟糕或多美好",
-        email: "",
-        image: "https://blog.zwying.com/usr/uploads/sina/63adb58f409aa.jpg",
-        url: "https://www.yanghuaxing.com/"
-    },
-    {
-        title: "Leo's Blog",
-        description: "THIS IS MY STORY.",
-        email: "",
-        image: "https://s1.ax1x.com/2020/04/18/JnAGbF.jpg",
-        url: "https://www.isolitude.cn/"
-    },
-    {
-        title: "Sehnsucht",
-        description: "transient",
-        email: "",
-        image: "https://s2.loli.net/2022/11/21/I9QUtsXcZK6wgH4.png",
-        url: "https://blog.sehnsucht.top/"
-    },
-    {
-        title: "Jack’s Space",
-        description: "VeryJack 的个人空间",
-        email: "",
-        image: "https://pix.veryjack.com/i/2023/04/04/fsxnkv.webp",
-        url: "https://veryjack.com"
-    },
-    {
-        title: "沫言博客",
-        description: "这个世界从来都不公平，你只有努力，才能换来那些平等的待遇。",
-        email: "",
-        image: "https://6hi.cn/photo/logo.png",
-        url: "https://6hi.cn"
-    },
-    {
-        title: "itsNeko",
-        description: "有源源就有我！",
-        email: "",
-        image: "https://dyfa.top/usr/themes/Nabo-theme-typecho-main/image/logo.jpg",
-        url: "https://dyfa.top"
-    },
-    {
-        title: "零叁壹",
-        description: "心怀阳光，必有诗和远方！",
-        email: "",
-        image: "https://bu.dusays.com/2023/08/04/64cbd7e695896.jpg",
-        url: "https://blog.oiii.top"
-    },
-    {
-        title: "永恒末匕",
-        description: "留下瞬间，记录永恒。",
-        email: "",
-        image: "https://q.qlogo.cn/headimg_dl?dst_uin=1527335101&spec=640&img_type=jpg",
-        url: "https://www.avbk.cn/"
-    },
-    {
-        title: "ZYYO笔记",
-        description: "热烈而自由。",
-        email: "",
-        image: "https://zyyo.net/a.jpg",
-        url: "https://zyyo.net/"
-    },
-    {
-        title: "优世界",
-        description: "记录生活点点滴滴。",
-        email: "",
-        image: "https://usj.cc/favicon.ico",
-        url: "https://usj.cc"
-    },
-    {
-        title: "Derek Dekker Blog",
-        description: "记录生活想法和技术文档",
-        email: "",
-        image: "https://assets.derekdekker.com/wp-content/uploads/2021/11/cropped-IMG_6927-1-2.jpeg",
-        url: "https://derekdekker.com"
-    },
-    {
-        title: "博客录（boke.lu）",
-        description: "boke.lu · 博客收录展示平台~",
-        email: "",
-        image: "https://boke.lu/logo.png",
-        url: "https://boke.lu"
-    },
-    {
-        title: "轻风记",
-        description: "风会记得一朵花的香",
-        email: "",
-        image: "https://hilzl.cn/ico/favicon.ico",
-        url: "https://hilzl.cn/"
-    },
-    {
-        title: "努力向前",
-        description: "别人云亦云，要有自己的思考",
-        email: "",
-        image: "https://static.greatiga.cn/greatiga.jpg",
-        url: "https://greatiga.cn/"
-    },
-    {
-        title: "关关和六六",
-        description: "向世界分享我们的故事",
-        email: "",
-        image: "https://www.gmcllp.cn/logo-y.png",
-        url: "https://www.gmcllp.cn"
-    },
-    {
-        title: "云烟成雨",
-        description: "迷失的人迷失了，相逢的人会再相逢。",
-        email: "",
-        image: "https://q1.qlogo.cn/g?b=qq&nk=396823203&s=640",
-        url: "https://shiyu.dev"
-    },
-    {
-        title: "SunJianJian",
-        description: "远处会有云，也会有未来",
-        email: "",
-        image: "https://www.sunjianjian.com/tx.png",
-        url: "https://www.sunjianjian.com"
-    },
-    {
-        title: "蝉時雨",
-        description: "蝉鸣如雨，花宵道中",
-        email: "",
-        image: "https://www.chanshiyu.com/avatar.jpg",
-        url: "https://chanshiyu.com"
-    },
-    {
-        title: "阿锋的小宇宙",
-        description: "沧海一粟，微亮渺小一只虫。",
-        email: "",
-        image: "https://cravatar.cn/avatar/868740183b995d2707e307ce0a89633a?s=200",
-        url: "https://feng.pub"
-    },
-    {
-        title: "FANnn",
-        description: "帆",
-        email: "",
-        image: "https://fan.ilnafz.cn/头像/mmexportc9cd15d51a5be38b7c11885b18f8e73c_1662039304408.jpeg",
-        url: "https://ilnafz.cn"
-    },
-    {
-        title: "火喵酱",
-        description: "世人皆萌，唯我独帅！",
-        email: "",
-        image: "https://www.mmbkz.cn/logo",
-        url: "https://www.mmbkz.cn"
-    },
-    {
-        title: "网友小宋",
-        description: "一介草民，只为生活！",
-        email: "",
-        image: "https://img.xyzbz.cn/i/2022/05/20/62870d1504cc7.png",
-        url: "https://xyzbz.cn/"
-    },
-    {
-        title: "茫跟的小屋",
-        description: "茫跟的一些个人日记、随笔",
-        email: "",
-        image: "https://www.mongon.cn/logo.png",
-        url: "https://www.mongon.cn/"
-    },
-    {
-        title: "设计笔记",
-        description: "无描述",
-        email: "",
-        image: "https://cravatar.cn/avatar/22278c1d83002246dca48b52e306b1c9?s=96&d=mm&r=g",
-        url: "https://biji.io"
+        url: "https://blog.gmcj0816.top/",
+        type: "技术类"
     }
 ])
 
@@ -427,6 +148,8 @@ const linkData = ref<Link[]>(list.value)
 const search = ref<string>("")
 // 监听搜索数据的变化
 watch(search, data => {
+    console.log(data,222);
+    
     linkData.value = list.value.filter(item => {
         return item.title.includes(data) || item.description.includes(data)
     })
@@ -437,15 +160,52 @@ const toHref = (url: string) => {
     open(url, "_blank")
 }
 
-
-// 新增网站
+// 网站表单
 const linkForm = ref<Link>({
     title: "",
     description: "",
     email: "",
     image: "",
     url: "",
+    type: ""
 })
+
+// 表单校验
+const linkRules = {
+    title: [
+        { required: true, message: "网站标题不能为空", trigger: "blur" },
+        { min: 2, max: 10, message: "网站标题限制在2 ~ 10个字符", trigger: "blur" }
+    ],
+    description: [
+        { required: true, message: "网站描述不能为空", trigger: "blur" },
+        { min: 2, max: 10, message: "网站描述限制在2 ~ 10个字符", trigger: "blur" }
+    ],
+    email: [
+        { required: true, message: "网站邮箱不能为空", trigger: "blur" }
+    ],
+    image: [
+        { required: true, message: "网站图标不能为空", trigger: "blur" },
+    ],
+    url: [
+        { required: true, message: "网站链接不能为空", trigger: "blur" }
+    ],
+    type: [
+        { min: 2, max: 5, message: "网站类型限制在2 ~ 5个字符", trigger: "blur" },
+        { required: true, message: "网站类型不能为空", trigger: "blur" }
+    ]
+}
+
+const linkRef = ref<FormInstance>()
+
+// 提交表单
+const submit = () => {
+    linkRef.value?.validate(async valid => {
+        if (valid) {
+            const res = await addLinkAPI(linkForm.value)
+            console.log(res);
+        }
+    })
+}
 </script>
 
 <template>
@@ -467,12 +227,13 @@ const linkForm = ref<Link>({
 
                         <div class="name">{{ item.title }}</div>
                         <div class="description">{{ item.description }}</div>
-                        <div class="type">技术类</div>
+                        <div class="type">{{ item.type }}</div>
 
                         <div class="headFor" @click="toHref(item.url)">前往该网站 -></div>
                     </div>
                 </div>
 
+                <!-- 空状态 -->
                 <Null style="margin-top: 30px;" v-if="!linkData?.length" />
             </el-tab-pane>
 
@@ -480,29 +241,34 @@ const linkForm = ref<Link>({
                 <el-row style="flex-direction: column; width: 500px; margin-left: 40px;">
                     <Title title="新增网站" icon="globe" class="title" />
 
-                    <el-form label-position="top" size="large" :model="linkForm">
-                        <el-form-item label="标题">
-                            <el-input v-model="linkForm.title" />
+                    <el-form label-position="top" size="large" ref="linkRef" :rules="linkRules" :model="linkForm">
+                        <el-form-item label="标题" prop="title">
+                            <el-input v-model="linkForm.title" placeholder="Thrive" />
                         </el-form-item>
 
-                        <el-form-item label="描述">
-                            <el-input v-model="linkForm.description" />
+                        <el-form-item label="描述" prop="description">
+                            <el-input v-model="linkForm.description" placeholder="Thrive" />
                         </el-form-item>
 
-                        <el-form-item label="邮箱">
-                            <el-input v-model="linkForm.email" />
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input v-model="linkForm.email" placeholder="3311118881@qq.com" />
                         </el-form-item>
 
-                        <el-form-item label="头像">
-                            <el-input v-model="linkForm.image" />
+                        <el-form-item label="头像" prop="image">
+                            <el-input v-model="linkForm.image"
+                                placeholder="https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640" />
                         </el-form-item>
 
-                        <el-form-item label="链接">
-                            <el-input v-model="linkForm.url" />
+                        <el-form-item label="链接" prop="url">
+                            <el-input v-model="linkForm.url" placeholder="https://liuyuyang.net/" />
+                        </el-form-item>
+
+                        <el-form-item label="类型" prop="url">
+                            <el-input v-model="linkForm.type" placeholder="技术类" />
                         </el-form-item>
                     </el-form>
 
-                    <el-button type="primary" size="large">新增网站</el-button>
+                    <el-button type="primary" size="large" @click="submit">新增网站</el-button>
                 </el-row>
             </el-tab-pane>
         </el-tabs>

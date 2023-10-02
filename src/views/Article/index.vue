@@ -79,9 +79,14 @@ const pageChange = (value: number) => {
                     <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)" />
                 </template>
             </el-table-column>
+
+            <template v-slot:empty>
+                <!-- 空状态 -->
+                <Null style="margin-top: 30px;" v-if="!ArticleData?.length" />
+            </template>
         </el-table>
 
-        <el-row justify="end" style="margin-top: 20px;">
+        <el-row justify="end" style="margin-top: 20px;" v-if="ArticleData?.length">
             <el-pagination background layout="prev, pager, next" :page-size="6" :total="total"
                 @current-change="pageChange" />
         </el-row>

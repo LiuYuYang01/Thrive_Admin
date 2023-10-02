@@ -17,7 +17,9 @@ export const getArticleData = async (page?: number, size?: number) => {
   if (!size) size = 6;
 
   // @ts-ignore
-  const { data, paginate } = await getArticlePageAPI(page, size);
+  const { code, data, paginate } = await getArticlePageAPI(page, size);
+  if(code !== 200) return loading.value = false
+
   total.value = paginate.total;
 
   ArticleData.value = data as Article[];
