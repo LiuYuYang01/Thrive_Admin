@@ -4,6 +4,9 @@ import { Link } from '@/types/Link'
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
+// 选项卡选中
+const tabValue = ref<string>("list")
+
 const list = ref<Link[]>([
     {
         id: 1,
@@ -148,8 +151,8 @@ const linkData = ref<Link[]>(list.value)
 const search = ref<string>("")
 // 监听搜索数据的变化
 watch(search, data => {
-    console.log(data,222);
-    
+    console.log(data, 222);
+
     linkData.value = list.value.filter(item => {
         return item.title.includes(data) || item.description.includes(data)
     })
@@ -199,10 +202,23 @@ const linkRef = ref<FormInstance>()
 
 // 提交表单
 const submit = () => {
+    // 新增之前先校验一下数据是否合法
     linkRef.value?.validate(async valid => {
         if (valid) {
-            const res = await addLinkAPI(linkForm.value)
-            console.log(res);
+            const { code, message, data } = await addLinkAPI(linkForm.value)
+            if (code !== 200) return
+
+            ElNotification({
+                title: '成功',
+                message: "新增网站成功",
+                type: 'success',
+            })
+
+            // 重置校验并初始化数据
+            linkRef.value?.resetFields()
+
+            // 将选项卡切换到列表
+            tabValue.value = "list"
         }
     })
 }
@@ -212,8 +228,8 @@ const submit = () => {
     <div class="page">
         <Title title="网站管理" icon="globe" />
 
-        <el-tabs tab-position="left">
-            <el-tab-pane label="网站列表">
+        <el-tabs tab-position="left" v-model="tabValue">
+            <el-tab-pane label="网站列表" name="list">
                 <div class="search">
                     <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询"
                         :prefix-icon="Search" />
@@ -237,7 +253,7 @@ const submit = () => {
                 <Null style="margin-top: 30px;" v-if="!linkData?.length" />
             </el-tab-pane>
 
-            <el-tab-pane label="新增网站">
+            <el-tab-pane label="新增网站" name="add">
                 <el-row style="flex-direction: column; width: 500px; margin-left: 40px;">
                     <Title title="新增网站" icon="globe" class="title" />
 
@@ -263,7 +279,7 @@ const submit = () => {
                             <el-input v-model="linkForm.url" placeholder="https://liuyuyang.net/" />
                         </el-form-item>
 
-                        <el-form-item label="类型" prop="url">
+                        <el-form-item label="类型" prop="type">
                             <el-input v-model="linkForm.type" placeholder="技术类" />
                         </el-form-item>
                     </el-form>
