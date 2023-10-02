@@ -1,151 +1,39 @@
 <script setup lang="ts">
-import { addLinkAPI } from '@/api/Link'
+import { addLinkAPI, getLinkAPI } from '@/api/Link'
 import { Link } from '@/types/Link'
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
+const loading = ref(false)
+const svg = `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `
+
 // 选项卡选中
 const tabValue = ref<string>("list")
 
-const list = ref<Link[]>([
-    {
-        id: 1,
-        title: "Thrive",
-        description: "记录一个架构师的崛起",
-        email: "3311118881@qq.com",
-        image: "https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640",
-        url: "/",
-        type: "技术类"
-    },
-    {
-        id: 2,
-        title: "张洪Heo",
-        description: "分享设计与科技生活",
-        email: "3311118881@qq.com",
-        image: "https://bu.dusays.com/2022/12/28/63ac2812183aa.png",
-        url: "https://blog.zhheo.com/",
-        type: "生活类"
-    },
-    {
-        id: 3,
-        title: "友人C",
-        description: "友人C的个人空间",
-        email: "3311118881@qq.com",
-        image: "https://s1.ax1x.com/2023/06/02/p9zTn0O.png",
-        url: "http://space.eyescode.top",
-        type: "技术类"
-    },
-    {
-        id: 4,
-        title: "秦枫鸢梦",
-        description: "花有重开日，人无再少年",
-        email: "3311118881@qq.com",
-        image: "https://blog.zwying.com/avatar.jpg",
-        url: "https://blog.zwying.com",
-        type: "生活类"
-    },
-    {
-        id: 5,
-        title: "生活倒影",
-        description: "这是一个 Vue2 Vue3 与 SpringBoot 结合的产物～",
-        email: "3311118881@qq.com",
-        image: "https://s1.ax1x.com/2022/11/10/z9E7X4.jpg",
-        url: "https://poetize.cn/",
-        type: "生活类"
-    },
-    {
-        id: 6,
-        title: "心月云",
-        description: "须知少时凌云志，曾许人间第一流！",
-        email: "3311118881@qq.com",
-        image: "https://wch666.com/head.png",
-        url: "https://wch666.com",
-        type: "技术类"
-    },
-    {
-        id: 7,
-        title: "一克猫",
-        description: "一只微不足道的猫",
-        email: "3311118881@qq.com",
-        image: "https://cravatar.cn/avatar/7adbfaef92d9d082be5dec39f3fe3d02?s=200",
-        url: "https://www.1gcat.com",
-        type: "生活类"
-    },
-    {
-        id: 8,
-        title: "频率",
-        description: "风卷过的起点",
-        email: "3311118881@qq.com",
-        image: "https://cravatar.cn/avatar/cc763511474fe24ffcc80257fb7cb970?s=256",
-        url: "https://pinlyu.com/",
-        type: "生活类"
-    },
-    {
-        id: 9,
-        title: "青灯暮雨",
-        description: "再渺小的星光，也有属于它的光芒",
-        email: "3311118881@qq.com",
-        image: "https://www.blatr.cn/images/adminAvatar.jpg",
-        url: "https://www.blatr.cn",
-        type: "技术类"
-    },
-    {
-        id: 10,
-        title: "相左",
-        description: "心有山海，静而不争",
-        email: "3311118881@qq.com",
-        image: "https://qiniu.ztyang.com/img/wechatavatar.jpg",
-        url: "https://www.ztyang.com",
-        type: "生活类"
-    },
-    {
-        id: 11,
-        title: "Echo’s blog",
-        description: "韶华不为少年留 恨悠悠 几时休",
-        email: "3311118881@qq.com",
-        image: "https://yy.liveout.cn/photo/photo2.jpg",
-        url: "https://www.liveout.cn/index/",
-        type: "生活类"
-    },
-    {
-        id: 12,
-        title: "奇异纬度",
-        description: "不曾与你分享的时间，我在进步。",
-        email: "3311118881@qq.com",
-        image: "https://blog.isww.cn/logo.head.jpg",
-        url: "https://blog.isww.cn/",
-        type: "生活类"
-    },
-    {
-        id: 13,
-        title: "正物博客",
-        description: "一场凡梦，一份追求。",
-        email: "3311118881@qq.com",
-        image: "https://www.zwbo.com/tx.png",
-        url: "https://www.zwbo.com/",
-        type: "生活类"
-    },
-    {
-        id: 14,
-        title: "HONG的小站",
-        description: "或许是个二次元？",
-        email: "3311118881@qq.com",
-        image: "https://blog.zwying.com/usr/uploads/sina/63adb58e798d4.jpg",
-        url: "https://hongweblog.com/",
-        type: "生活类"
-    },
-    {
-        id: 15,
-        title: "七鳄の学习格",
-        description: "如果世界多了精彩，每一位都是创造者，大家都是你的观众",
-        email: "3311118881@qq.com",
-        image: "https://blog.gmcj0816.top/img/SeriousWission_TouXiangPic.png",
-        url: "https://blog.gmcj0816.top/",
-        type: "技术类"
-    }
-])
+// 网站列表
+const linkList = ref<Link[]>([])
+const linkData = ref<Link[]>(linkList.value)
 
-const linkData = ref<Link[]>(list.value)
+// 获取网站列表数据
+const getLinkData = async () => {
+    loading.value = true
+
+    const { data } = await getLinkAPI();
+    linkList.value = data as Link[]
+    linkData.value = linkList.value
+
+    loading.value = false
+}
+getLinkData() 
 
 // 搜索的数据
 const search = ref<string>("")
@@ -153,7 +41,7 @@ const search = ref<string>("")
 watch(search, data => {
     console.log(data, 222);
 
-    linkData.value = list.value.filter(item => {
+    linkData.value = linkList.value.filter(item => {
         return item.title.includes(data) || item.description.includes(data)
     })
 })
@@ -235,7 +123,8 @@ const submit = () => {
                         :prefix-icon="Search" />
                 </div>
 
-                <div class="list">
+                <div class="list" v-loading="loading" :element-loading-svg="svg"
+                    element-loading-svg-view-box="-10, -10, 50, 50">
                     <div class="item" v-for="item in linkData">
                         <div class="avatar">
                             <img :src="item.image" alt="">
@@ -255,7 +144,7 @@ const submit = () => {
                 </div>
 
                 <!-- 空状态 -->
-                <Null style="margin-top: 30px;" v-if="!linkData?.length" />
+                <Null style="margin-top: 30px;" v-if="!loading && !linkData?.length" />
             </el-tab-pane>
 
             <el-tab-pane label="新增网站" name="add">
@@ -322,6 +211,7 @@ const submit = () => {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    min-height: 100px;
 
     .item {
         overflow: hidden;

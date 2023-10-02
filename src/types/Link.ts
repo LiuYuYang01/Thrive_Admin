@@ -6,4 +6,5 @@ export interface Link {
   image: string;
   url: string;
   type: string;
+  date?: string;
 }
