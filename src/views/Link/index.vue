@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { addLinkAPI, delLinkAPI, editLinkAPI, getLinkAPI } from '@/api/Link'
 import { Link } from '@/types/Link'
+import { whetherToDelete } from '@/utils/ConfirmMessage';
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
@@ -134,17 +135,22 @@ const submit = () => {
 
 // 删除网站
 const deleteLink = async (id: number) => {
-    const { code } = await delLinkAPI(id)
+    const fn = async () => {
+        const { code } = await delLinkAPI(id)
 
-    if (code !== 200) return
+        if (code !== 200) return
 
-    ElNotification({
-        title: '成功',
-        message: "删除网站成功",
-        type: 'success',
-    })
+        ElNotification({
+            title: '成功',
+            message: "删除网站成功",
+            type: 'success',
+        })
 
-    getLinkData()
+        getLinkData()
+    }
+
+    // 确认是否删除
+    whetherToDelete(fn, "网站")
 }
 
 // 修改网站

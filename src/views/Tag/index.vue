@@ -39,6 +39,7 @@ const delTagData = async (id: number) => {
         getTagData()
     }
 
+    // 确认是否删除
     whetherToDelete(fn, "标签")
 }
 
