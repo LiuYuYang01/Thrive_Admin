@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addLinkAPI, getLinkAPI } from '@/api/Link'
+import { addLinkAPI, delLinkAPI, editLinkAPI, getLinkAPI } from '@/api/Link'
 import { Link } from '@/types/Link'
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
@@ -33,7 +33,7 @@ const getLinkData = async () => {
 
     loading.value = false
 }
-getLinkData() 
+getLinkData()
 
 // 搜索的数据
 const search = ref<string>("")
@@ -48,6 +48,7 @@ watch(search, data => {
 
 // 跳转页面
 const toHref = (url: string) => {
+    // 在新窗口跳转
     open(url, "_blank")
 }
 
@@ -65,11 +66,11 @@ const linkForm = ref<Link>({
 const linkRules = {
     title: [
         { required: true, message: "网站标题不能为空", trigger: "blur" },
-        { min: 2, max: 10, message: "网站标题限制在2 ~ 10个字符", trigger: "blur" }
+        { min: 2, max: 30, message: "网站标题限制在2 ~ 30个字符", trigger: "blur" }
     ],
     description: [
         { required: true, message: "网站描述不能为空", trigger: "blur" },
-        { min: 2, max: 10, message: "网站描述限制在2 ~ 10个字符", trigger: "blur" }
+        { min: 2, max: 100, message: "网站描述限制在2 ~ 100个字符", trigger: "blur" }
     ],
     email: [
         { required: true, message: "网站邮箱不能为空", trigger: "blur" }
@@ -81,7 +82,7 @@ const linkRules = {
         { required: true, message: "网站链接不能为空", trigger: "blur" }
     ],
     type: [
-        { min: 2, max: 5, message: "网站类型限制在2 ~ 5个字符", trigger: "blur" },
+        { min: 2, max: 10, message: "网站类型限制在2 ~ 10个字符", trigger: "blur" },
         { required: true, message: "网站类型不能为空", trigger: "blur" }
     ]
 }
@@ -93,22 +94,68 @@ const submit = () => {
     // 新增之前先校验一下数据是否合法
     linkRef.value?.validate(async valid => {
         if (valid) {
-            const { code, message, data } = await addLinkAPI(linkForm.value)
-            if (code !== 200) return
+            // const { code } = await addLinkAPI(linkForm.value)
+            // if (code !== 200) return
 
-            ElNotification({
-                title: '成功',
-                message: "新增网站成功",
-                type: 'success',
-            })
+            // 有ID就是编辑，没有就是新增
+            if (linkForm.value.id) {
+                // 编辑网站
+                const { code } = await editLinkAPI(linkForm.value.id!, linkForm.value)
+                if (code !== 200) return
+
+                ElNotification({
+                    title: '成功',
+                    message: "编辑网站成功",
+                    type: 'success',
+                })
+            } else {
+                // 新增网站
+                const { code } = await addLinkAPI(linkForm.value)
+                if (code !== 200) return
+
+                ElNotification({
+                    title: '成功',
+                    message: "新增网站成功",
+                    type: 'success',
+                })
+            }
 
             // 重置校验并初始化数据
             linkRef.value?.resetFields()
+
+            // 获取最新数据
+            getLinkData()
 
             // 将选项卡切换到列表
             tabValue.value = "list"
         }
     })
+}
+
+// 删除网站
+const deleteLink = async (id: number) => {
+    const { code } = await delLinkAPI(id)
+
+    if (code !== 200) return
+
+    ElNotification({
+        title: '成功',
+        message: "删除网站成功",
+        type: 'success',
+    })
+
+    getLinkData()
+}
+
+// 修改网站
+const editLink = async (item: Link) => {
+    // delete item.id 可以将item属性的id排除
+
+    // 将选项卡切换到编辑网站
+    tabValue.value = "operate"
+
+    delete item.date
+    linkForm.value = item
 }
 </script>
 
@@ -135,8 +182,8 @@ const submit = () => {
                         <div class="type">{{ item.type }}</div>
 
                         <div class="operate">
-                            <div>修改</div>
-                            <div>删除</div>
+                            <div @click="editLink(item)">修改</div>
+                            <div @click="deleteLink(item.id!)">删除</div>
                         </div>
 
                         <div class="headFor" @click="toHref(item.url)">前往该网站 -></div>
@@ -147,9 +194,9 @@ const submit = () => {
                 <Null style="margin-top: 30px;" v-if="!loading && !linkData?.length" />
             </el-tab-pane>
 
-            <el-tab-pane label="新增网站" name="add">
+            <el-tab-pane :label="linkForm.id ? '编辑网站' : '新增网站'" name="operate">
                 <el-row style="flex-direction: column; width: 500px; margin-left: 40px;">
-                    <Title title="新增网站" icon="globe" class="title" />
+                    <Title :title="linkForm.id ? '编辑网站' : '新增网站'" icon="globe" class="title" />
 
                     <el-form label-position="top" size="large" ref="linkRef" :rules="linkRules" :model="linkForm">
                         <el-form-item label="标题" prop="title">
@@ -178,7 +225,7 @@ const submit = () => {
                         </el-form-item>
                     </el-form>
 
-                    <el-button type="primary" size="large" @click="submit">新增网站</el-button>
+                    <el-button type="primary" size="large" @click="submit">{{ linkForm.id ? '编辑网站' : '新增网站' }}</el-button>
                 </el-row>
             </el-tab-pane>
         </el-tabs>
