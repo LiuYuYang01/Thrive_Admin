@@ -13,6 +13,7 @@ declare module 'vue' {
     ArticleTag: typeof import('./src/views/Write/components/ArticleTag.vue')['default']
     Cate: typeof import('./src/views/Cate/index.vue')['default']
     Columnar: typeof import('./src/components/Columnar/index.vue')['default']
+    Comment: typeof import('./src/views/Comment/index.vue')['default']
     Date: typeof import('./src/components/Date/index.vue')['default']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']

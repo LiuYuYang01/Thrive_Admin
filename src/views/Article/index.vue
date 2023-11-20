@@ -65,7 +65,7 @@ const pageChange = (value: number) => {
             <el-table-column prop="cate" label="分类" width="130" align="center" />
             <el-table-column prop="tag" label="标签" width="230" align="center" />
             <el-table-column prop="view" label="浏览量" width="100" align="center" />
-            <el-table-column prop="count" label="评论数量" width="100" align="center" />
+            <el-table-column prop="comment" label="评论数量" width="100" align="center" />
             <el-table-column prop="date" label="发布时间" width="180" align="center">
                 <template #default="{ row }">
                     {{ moment(row.date).format('YYYY-MM-DD HH:mm:ss') }}

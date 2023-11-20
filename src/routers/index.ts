@@ -51,6 +51,11 @@ export const routes = [
             meta: { title: "文章管理" },
           },
           {
+            path: "comment",
+            component: () => import("@/views/Comment/index.vue"),
+            meta: { title: "评论管理" },
+          },
+          {
             path: "cate",
             component: () => import("@/views/Cate/index.vue"),
             meta: { title: "分类管理" },
