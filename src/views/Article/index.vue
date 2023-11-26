@@ -72,11 +72,10 @@ const pageChange = (value: number) => {
                 </template>
             </el-table-column>
 
-            <el-table-column fixed="right" label="操作" align="center" width="150">
+            <el-table-column fixed="right" label="操作" align="center" width="200">
                 <template #default="{ row }">
-                    <el-button circle type="primary" size="small" :icon="Edit"
-                        @click="router.push(`/write?id=${row.id}`)" />
-                    <el-button circle type="danger" size="small" :icon="Delete" @click="delArticleData(row.id)" />
+                    <el-button type="primary" :icon="Edit" @click="router.push(`/write?id=${row.id}`)">修改</el-button>
+                    <el-button type="danger" :icon="Delete" @click="delArticleData(row.id)" style="margin-left: 17px;">删除</el-button>
                 </template>
             </el-table-column>
 

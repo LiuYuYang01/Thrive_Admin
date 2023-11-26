@@ -1,4 +1,4 @@
-import { getArticleAPI, getArticlePageAPI } from "@/api/Article";
+import { getArticlePageAPI } from "@/api/Article";
 import { Article } from "@/types/Article";
 
 export const loading = ref(true);
