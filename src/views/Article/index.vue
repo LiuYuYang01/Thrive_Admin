@@ -2,17 +2,7 @@
 import moment from 'moment';
 import { ElNotification } from 'element-plus'
 import { Edit, Delete } from '@element-plus/icons-vue'
-
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `;
+import svg from '@/utils/LoadingIcon'
 
 // 获取文章列表
 import { getArticleData, ArticleData, total, loading } from './logic/getArticle'
