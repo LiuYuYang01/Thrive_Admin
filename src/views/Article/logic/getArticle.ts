@@ -12,9 +12,9 @@ export const total = ref<number>(0);
 export const getArticleData = async (page?: number, size?: number) => {
   loading.value = true;
 
-  // 默认分页
-  if (!page) page = 1;
-  if (!size) size = 6;
+  // // 默认分页
+  // if (!page) page = 1;
+  // if (!size) size = 6;
 
   // @ts-ignore
   const { code, data, paginate } = await getArticlePageAPI(page, size);

@@ -51,6 +51,8 @@ instance.interceptors.response.use(
     return res.data;
   },
   (err) => {
+    console.log(err,888);
+    
     // 如果401相当于认证失败
     if (err.response.status === 401) {
       const store = useUserStore();

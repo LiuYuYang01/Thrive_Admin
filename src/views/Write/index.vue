@@ -4,6 +4,9 @@ import { Article } from '@/types/Article'
 import { addArticleAPI, editArticleAPI, getArticleAPI } from '@/api/Article'
 import { getArticleData } from '@/views/Article/logic/getArticle'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
+import { FormInstance } from 'element-plus'
+
+const form = ref<FormInstance>()
 
 // 文章数据
 const ArticleData = ref<Article>(localStorage.getItem("article") ? JSON.parse(localStorage.getItem("article")!) : {
@@ -61,7 +64,8 @@ const submit = async () => {
         if (!ArticleData.value.cate) return ElNotification({ title: '警告', message: '分类不能为空', type: 'error' })
 
         const { code, message } = await addArticleAPI(ArticleData.value)
-
+        console.log(code,message,999);
+        
         if (code !== 200) return
 
         ElNotification({
@@ -84,6 +88,8 @@ const submit = async () => {
         // 清空本地的数据
         localStorage.removeItem('article');
     }
+
+    form.value?.resetFields()
 
     // 获取最新数据
     getArticleData()
@@ -119,7 +125,7 @@ const rules = {
 
         <div class="job">
             <div class="edit">
-                <el-form ref="TagRef" :rules="rules" :model="ArticleData">
+                <el-form ref="form" :rules="rules" :model="ArticleData">
                     <el-form-item prop="title">
                         <!-- 文章标题 -->
                         <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！" />
@@ -158,10 +164,10 @@ const rules = {
                 <ArticleTag v-model="ArticleData.tag" />
 
                 <div class="operate">
-                    <!-- 发布 -->
-                    <div @click="submit">{{ id ? '编辑文章' : '发布文章' }}</div>
                     <!-- 保存文章 -->
-                    <div style="background-color: #727cf5; margin-top: 10px;" @click="save">保存文章</div>
+                    <div style="background-color: #727cf5" @click="save">保存文章</div>
+                    <!-- 发布 -->
+                    <div style="margin-top: 10px" @click="submit">{{ id ? '编辑文章' : '发布文章' }}</div>
                 </div>
             </div>
         </div>

@@ -20,6 +20,10 @@ export const getArticleAPI = (id?: number) =>
     : Request<Article[]>("GET", `/article`);
 
 // 分页查询
-export const getArticlePageAPI = (page: number, size: number) => {
-  return Request<Article[]>("GET", `/article?page=${page}&size=${size}`);
+export const getArticlePageAPI = (page?: number, size?: number) => {
+  if(page && size){
+    return Request<Article[]>("GET", `/article/paginate?page=${page}&size=${size}`);
+  }else{
+    return Request<Article[]>("GET", `/article/paginate`);
+  }
 };
