@@ -7,11 +7,11 @@ export const addCommentDataAPI = (data: Comment) => Request("POST", "/comment", 
 export const getCommentDataAPI = (id: number) => Request<Comment[]>("GET", `/comment/${id}`);
 
 // 获取评论列表
-export const getCommentListAPI = (params?: {page: number, size: number}) => {
+export const getCommentListAPI = (params?: Page) => {
   // 如果有参数就是分页查询，没有参数就是查询全部
   if (params) {
-    return Request<Comment[]>("GET", `/comment?page=${params.page}&size=${params.size}`);
+    return Request<Comment[]>("GET", `/comment/paginate?page=${params.page}&size=${params.size}`);
   } else {
-    return Request<Comment[]>("GET", "/comment");
+    return Request<Comment[]>("GET", "/comment/paginate");
   }
 };
