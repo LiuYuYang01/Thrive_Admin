@@ -185,7 +185,7 @@ const rules = {
         padding: 0 50px;
 
         .edit {
-            width: 1000px;
+            width: 75%;
 
             :deep .el-collapse-item__content {
                 padding-bottom: 0px !important;
@@ -211,7 +211,7 @@ const rules = {
         }
 
         .sidebar {
-            width: 250px;
+            width: 20%;
 
             >div {
                 border: 1px solid #eee;
