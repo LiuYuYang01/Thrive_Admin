@@ -7,5 +7,12 @@ interface Comment {
     id: number,
     name: string,
     rid: number,
-    url: string
+    url: string,
+    audit: number
+}
+
+interface Info {
+    loading: boolean,
+    total: number,
+    list: Comment[]
 }

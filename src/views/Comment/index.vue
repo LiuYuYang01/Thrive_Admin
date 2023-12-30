@@ -1,103 +1,60 @@
 <script setup lang="ts">
-import moment from 'moment';
 import { getCommentListAPI } from '@/api/Comment'
-import svg from '@/utils/LoadingIcon'
 
-import { ArticleData, getArticleData } from '@/views/Article/logic/getArticle'
-getArticleData() // 获取文章列表
+const tab = ref("list")
 
-const loading = ref(false)
+const tabClick = (e: any) => {
+    const name = e.props.name
 
-// 评论列表
-const commentList = ref<Comment[]>()
-// 评论总数
-const total = ref<number>(0);
+    getCommentList(name)
+}
+
+const info = reactive<Info>({
+    loading: false,
+    total: 0,
+    list: []
+})
 
 // 获取评论列表
-const getCommentList = async (params?: Page) => {
-    loading.value = true
+const getCommentList = async (name: string, params?: Page) => {
+    info.loading = true
 
-    const { data, paginate } = await getCommentListAPI(params)
-    commentList.value = data
-    total.value = paginate?.total!
+    if (name === "list") {
+        const { data, paginate } = await getCommentListAPI(params)
+        console.log(data, 333);
 
-    loading.value = false
+        // 审核成功的评论
+        info.list = data.filter(item => item.audit === 1)
+        info.total = paginate?.total!
+    } else {
+        const { data, paginate } = await getCommentListAPI(params)
+        console.log(data, 444);
+
+        // 待审核的评论
+        info.list = data.filter(item => item.audit === 0)
+        info.total = paginate?.total!
+    }
+
+    info.loading = false
 }
-getCommentList()
 
-// 过滤该评论所属的文章
-const filterArticleTitle = (id: number) => {
-    const data = ArticleData.value?.filter(item => item.id == id)
-
-    return data?.length ? data[0].title : " ";
-}
-
-// 筛选选中的数据
-const handleSelectionChange = (e: Comment[]) => {
-    console.log(e);
-}
-
-// 监听页码变化
-const pageChange = (value: number) => {
-    console.log(value);
-
-    getCommentList({ page: value, size: 6 })
-}
+getCommentList("list")
 </script>
 
 <template>
     <div class="page">
         <Title title="评论管理" icon="comment-minus" />
 
-        <el-table ref="form" :data="commentList" v-loading="loading" :element-loading-svg="svg"
-            element-loading-svg-view-box="-10, -10, 50, 50" style="width: 100%" @selection-change="handleSelectionChange"
-            size="large">
-            <el-table-column type="selection" width="55" />
+        <el-tabs v-model="tab" @tab-click="tabClick">
+            <el-tab-pane label="评论列表" name="list">
+                <CommentList :data="info" @get="getCommentList('list')" />
+            </el-tab-pane>
 
-            <el-table-column property="id" label="ID" width="100" />
-
-            <el-table-column property="name" label="名称" width="170" fixed="left" />
-
-            <el-table-column property="email" label="邮箱" width="230" />
-
-            <el-table-column property="content" label="内容" width="270" />
-
-            <el-table-column property="url" label="网站" width="250">
-                <template #default="scope">
-                    <a :href="scope.row.url" class="url">{{ scope.row.url }}</a>
-                </template>
-            </el-table-column>
-
-            <el-table-column property="rid" label="所属文章" width="300">
-                <template #default="scope">
-                    {{ filterArticleTitle(scope.row.aid) }}
-                </template>
-            </el-table-column>
-
-            <el-table-column label="评论时间" width="230">
-                <template #default="scope">{{ moment(scope.row.date).format('YYYY-MM-DD HH:mm:ss') }}</template>
-            </el-table-column>
-
-            <el-table-column fixed="right" label="操作" width="120" align="center">
-                <template #default>
-                    <el-button link type="primary" size="small"><b>通过</b></el-button>
-                    <el-button link type="danger" size="small"><b>删除</b></el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
-        <el-row justify="end" style="margin-top: 20px;" v-if="ArticleData?.length">
-            <el-pagination background layout="prev, pager, next" :page-size="6" :total="total"
-                @current-change="pageChange" />
-        </el-row>
+            <el-tab-pane label="待审核" name="audit">
+                <CommentList :data="info" @get="getCommentList('list')" />
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
-<style scoped lang="scss">
-.url {
-    &:hover {
-        color: $color;
-        transition: color $move;
-    }
-}
-</style>
+<style scoped lang="scss"></style>
