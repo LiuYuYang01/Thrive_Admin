@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { getCommentListAPI } from '@/api/Comment'
+import svg from '@/utils/LoadingIcon'
 
 import { ArticleData, getArticleData } from '@/views/Article/logic/getArticle'
 getArticleData() // 获取文章列表
+
+const loading = ref(false)
 
 // 评论列表
 const commentList = ref<Comment[]>()
@@ -12,9 +15,13 @@ const total = ref<number>(0);
 
 // 获取评论列表
 const getCommentList = async (params?: Page) => {
+    loading.value = true
+
     const { data, paginate } = await getCommentListAPI(params)
     commentList.value = data
     total.value = paginate?.total!
+
+    loading.value = false
 }
 getCommentList()
 
@@ -32,6 +39,8 @@ const handleSelectionChange = (e: Comment[]) => {
 
 // 监听页码变化
 const pageChange = (value: number) => {
+    console.log(value);
+
     getCommentList({ page: value, size: 6 })
 }
 </script>
@@ -40,7 +49,9 @@ const pageChange = (value: number) => {
     <div class="page">
         <Title title="评论管理" icon="comment-minus" />
 
-        <el-table ref="form" :data="commentList" style="width: 100%" @selection-change="handleSelectionChange" size="large">
+        <el-table ref="form" :data="commentList" v-loading="loading" :element-loading-svg="svg"
+            element-loading-svg-view-box="-10, -10, 50, 50" style="width: 100%" @selection-change="handleSelectionChange"
+            size="large">
             <el-table-column type="selection" width="55" />
 
             <el-table-column property="id" label="ID" width="100" />
