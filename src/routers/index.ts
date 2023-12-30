@@ -108,12 +108,7 @@ export const routes = [
         path: "/rss",
         component: () => import("@/views/Rss/index.vue"),
         meta: { title: "订阅中心", icon: "paper-plane" },
-      },
-      {
-        path: "/home/5",
-        component: () => import("@/views/Home/index.vue"),
-        meta: { title: "主题设置", icon: "palette" },
-      },
+      }
     ],
   },
   {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getCommentListAPI } from '@/api/Comment'
+import { getCommentAllAPI } from '@/api/Comment'
 
-const tab = ref("list")
+// const tab = ref("list")
 
 const tabClick = (e: any) => {
     const name = e.props.name
@@ -10,29 +10,29 @@ const tabClick = (e: any) => {
 }
 
 const info = reactive<Info>({
+    tab: "list",
     loading: false,
     total: 0,
     list: []
 })
 
 // 获取评论列表
-const getCommentList = async (name: string, params?: Page) => {
+const getCommentList = async (name: string) => {
     info.loading = true
 
-    if (name === "list") {
-        const { data, paginate } = await getCommentListAPI(params)
-        console.log(data, 333);
+    const { data } = await getCommentAllAPI()
 
+    if (name === "list") {
         // 审核成功的评论
         info.list = data.filter(item => item.audit === 1)
-        info.total = paginate?.total!
-    } else {
-        const { data, paginate } = await getCommentListAPI(params)
-        console.log(data, 444);
 
+        info.total = info.list.length
+        info.tab = "list"
+    } else {
         // 待审核的评论
         info.list = data.filter(item => item.audit === 0)
-        info.total = paginate?.total!
+        info.total = info.list.length
+        info.tab = "audit"
     }
 
     info.loading = false
@@ -45,7 +45,7 @@ getCommentList("list")
     <div class="page">
         <Title title="评论管理" icon="comment-minus" />
 
-        <el-tabs v-model="tab" @tab-click="tabClick">
+        <el-tabs v-model="info.tab" @tab-click="tabClick">
             <el-tab-pane label="评论列表" name="list">
                 <CommentList :data="info" @get="getCommentList('list')" />
             </el-tab-pane>

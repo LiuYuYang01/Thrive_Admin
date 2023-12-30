@@ -39,7 +39,7 @@ const router = useRouter()
 
 // 监听页码变化
 const pageChange = (value: number) => {
-    getArticleData(value, 6)
+    getArticleData({ page: value, size: 6 })
 }
 </script>
 

@@ -3,13 +3,14 @@ import moment from 'moment';
 import svg from '@/utils/LoadingIcon'
 
 import { ArticleData, getArticleData } from '@/views/Article/logic/getArticle'
+import { auditCommentDataAPI } from '@/api/Comment';
 getArticleData() // 获取文章列表
 
 const props = defineProps<{ data: Info }>()
-const emit = defineEmits<(e: "get", params?: Page) => void>()
+const emit = defineEmits<(e: "get", tab:string) => void>()
 
 // 默认每页显示个数
-const defaultSize = ref<number>(6)
+// const defaultSize = ref<number>(2)
 
 // 过滤该评论所属的文章
 const filterArticleTitle = (id: number) => {
@@ -23,12 +24,27 @@ const handleSelectionChange = (e: Comment[]) => {
     console.log(e);
 }
 
-// 监听页码变化
-const pageChange = (value: number) => {
-    console.log(value,999);
+// 审核评论
+const auditComment = async (id: number) => {
+    const { code } = await auditCommentDataAPI(id)
     
-    emit("get", { page: value, size: 6 })
+    if(code != 200) return
+
+    // 获取最新数据
+    emit("get", "list")
+
+    ElMessage({
+        message: '评论审核成功',
+        type: 'success',
+    })
 }
+
+// 监听页码变化
+// const pageChange = (value: number) => {
+//     console.log(value,999);
+    
+//     emit("get", { page: value, size: 6 })
+// }
 </script>
 
 <template>
@@ -62,18 +78,18 @@ const pageChange = (value: number) => {
                 <template #default="scope">{{ moment(scope.row.date).format('YYYY-MM-DD HH:mm:ss') }}</template>
             </el-table-column>
 
-            <el-table-column fixed="right" label="操作" width="120" align="center">
-                <template #default>
-                    <el-button link type="primary" size="small"><b>通过</b></el-button>
+            <el-table-column fixed="right" label="操作" :width="data.tab === 'audit' ? 120 : 80" align="center">
+                <template #default="scope">
+                    <el-button link type="primary" size="small" v-if="data.tab === 'audit'" @click="auditComment(scope.row.id)"><b>通过</b></el-button>
                     <el-button link type="danger" size="small"><b>删除</b></el-button>
                 </template>
             </el-table-column>
         </el-table>
 
-        <el-row justify="end" style="margin-top: 20px;" v-if="ArticleData?.length">
-            <el-pagination background layout="prev, pager, next" :page-size="defaultSize" :total="data.total"
+        <!-- <el-row justify="end" style="margin-top: 20px;" v-if="data.list?.length && data.list?.length > 3">
+            <el-pagination background layout="prev, pager, next" :page-size="2" :total="data.list?.length"
                 @current-change="pageChange" />
-        </el-row>
+        </el-row> -->
     </div>
 </template>
 

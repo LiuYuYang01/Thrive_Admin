@@ -3,13 +3,16 @@ import Request from '@/utils/Request'
 // 新增评论
 export const addCommentDataAPI = (data: Comment) => Request("POST", "/comment", data)
 
+// 审核评论
+export const auditCommentDataAPI = (id: number) => Request("PATCH", `/comment/audit/${id}`)
+
 // 获取评论信息
 export const getCommentDataAPI = (id: number) => Request<Comment[]>("GET", `/comment/${id}`);
 
-// // 获取评论列表
-// export const getCommentAllAPI = () => {
-//   return Request<Comment[]>("GET", "/comment");
-// };
+// 获取评论列表
+export const getCommentAllAPI = () => {
+  return Request<Comment[]>("GET", "/comment");
+};
 
 // 分页查询评论列表
 export const getCommentListAPI = (params?: Page) => {

@@ -9,7 +9,7 @@ export const ArticleData = ref<Article[]>();
 export const total = ref<number>(0);
 
 // 获取文章列表
-export const getArticleData = async (page?: number, size?: number) => {
+export const getArticleData = async (params?: Page) => {
   loading.value = true;
 
   // // 默认分页
@@ -17,7 +17,9 @@ export const getArticleData = async (page?: number, size?: number) => {
   // if (!size) size = 6;
 
   // @ts-ignore
-  const { code, data, paginate } = await getArticlePageAPI(page, size);
+  const { code, data, paginate } = await getArticlePageAPI(params);
+  console.log(paginate,333);
+  
   if(code !== 200) return loading.value = false
 
   total.value = paginate.total;
