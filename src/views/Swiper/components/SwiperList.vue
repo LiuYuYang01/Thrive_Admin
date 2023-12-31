@@ -80,11 +80,6 @@ const delSwiperData = async (id: number) => {
             </el-table-column>
         </el-table>
 
-        <!-- 分页 -->
-        <div class="pagination">
-            <el-pagination background layout="prev, pager, next" :total="50" class="mt-4" />
-        </div>
-
         <!-- 查看轮播图 -->
         <el-dialog v-model="viewImageShow" title="查看图片" width="30%" center>
             <img :src="image" alt="" style="width: 100%; border-radius: 5px;">

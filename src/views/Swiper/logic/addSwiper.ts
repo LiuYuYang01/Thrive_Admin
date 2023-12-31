@@ -24,7 +24,7 @@ export const rules = reactive<FormRules<Swiper>>({
     ],
     description: [
         { required: true, message: "轮播图描述不能为空", trigger: "blur" },
-        { min: 10, max: 50, message: "轮播图描述限制在10 ~ 50个字符", trigger: "blur" }
+        { min: 10, message: "轮播图描述不能少于10个字符", trigger: "blur" }
     ],
     url: [
         { required: true, message: "轮播图链接不能为空", trigger: "blur" },

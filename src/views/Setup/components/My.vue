@@ -36,9 +36,6 @@ const rules = reactive<FormRules<UserInfo>>({
   avatar: [
     { required: true, message: "头像不能为空", trigger: "blur" },
   ],
-  background: [
-    { required: true, message: "背景不能为空", trigger: "blur" },
-  ],
   introduce: [
     { required: true, message: "介绍不能为空", trigger: "blur" },
     { max: 50, message: "介绍限制最多50个字符", trigger: "blur" }

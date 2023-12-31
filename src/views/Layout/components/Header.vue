@@ -24,7 +24,7 @@ const quit = () => {
             <div class="list">
                 <a href="http://liuyuyang.net" target="_blank"><box-icon name='globe' />作者博客</a>
                 <a href="/"><box-icon name='github' type='logo' />GitHub</a>
-                <a href="/"><box-icon name='message-square-dots' />消息</a>
+                <!-- <a href="/"><box-icon name='message-square-dots' />消息</a> -->
             </div>
 
             <div class="my">
@@ -69,7 +69,7 @@ const quit = () => {
     .nav {
         display: flex;
         justify-content: space-between;
-        width: 500px;
+        width: 350px;
         margin-right: 60px;
 
         .list {
