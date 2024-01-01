@@ -100,7 +100,7 @@ getSystemParameData()
 
                 <ul class="capacity">
                     <li>总容量：{{ Percentage.disk.diskTotal }}G</li>
-                    <li>可用容量：{{ Percentage.disk.diskUsed }}G</li>
+                    <li>已用容量：{{ Percentage.disk.diskUsed }}G</li>
                     <li>剩余量：{{ Percentage.disk.diskFree }}G</li>
                 </ul>
             </div>

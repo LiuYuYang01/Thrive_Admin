@@ -56,16 +56,16 @@ const submit = async (formEl: FormInstance | undefined) => {
     <Title title="系统设置" icon="user" />
 
     <el-form ref="myRef" label-position="top" :model="myForm" :rules="rules" size="large" style="min-width: 500px;">
-      <el-form-item label="管理员账号" prop="name">
-        <el-input v-model="myForm.username" placeholder="请输入管理员账号" />
+      <el-form-item label="管理员账号" prop="username">
+        <el-input v-model="myForm.username" placeholder="请输入账号" />
       </el-form-item>
 
-      <el-form-item type="password" label="管理员旧密码" prop="name">
-        <el-input v-model="myForm.oldPassword" placeholder="请输入管理员旧密码" />
+      <el-form-item label="管理员旧密码" prop="oldPassword">
+        <el-input type="password" v-model="myForm.oldPassword" placeholder="请输入旧密码" />
       </el-form-item>
 
-      <el-form-item label="管理员新密码" prop="introduce">
-        <el-input type="password" v-model="myForm.newPassword" placeholder="请输入管理员新密码" />
+      <el-form-item label="管理员新密码" prop="newPassword">
+        <el-input type="password" v-model="myForm.newPassword" placeholder="请输入新密码" />
       </el-form-item>
 
       <el-form-item>

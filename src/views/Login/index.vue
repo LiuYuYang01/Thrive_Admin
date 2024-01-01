@@ -5,6 +5,7 @@ import { loginAPI } from '@/api/User'
 import { useUserStore } from '@/stores'
 
 const store = useUserStore()
+const route = useRoute()
 const router = useRouter()
 
 // 是否显示密码
@@ -51,8 +52,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       type: 'success',
     })
 
-    // 登录成功后跳转到首页
-    router.push("/home")
+    // 跳转到上一次的页面
+    if (route.query.returnUrl) {
+      router.push(route.query.returnUrl as string)
+    } else {
+      // 登录成功后跳转到首页
+      router.push("/home")
+    }
 
     // 将登录的数据保存到本地
     store.setUser(data, "login")
@@ -80,9 +86,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
             <template #suffix>
               <el-icon class="el-input__icon">
                 <a href="javascript:;" style="color: #a8abb2; padding: 0 20px;" @click="isPassCut">
-                  <View v-if="isPass === 'password'"/>
+                  <View v-if="isPass === 'password'" />
 
-                  <Hide v-else/>
+                  <Hide v-else />
                 </a>
               </el-icon>
             </template>

@@ -46,7 +46,7 @@ instance.interceptors.response.use(
       // 跳转到登录页
       router.push({
         path: "/login",
-        query: { returnUrl: router.currentRoute.value.fullPath },
+        query: { returnUrl: router.currentRoute.value.fullPath }, // 记录上一次路由的路径
       });
 
       // 程序异常：增删改查失败导致状态码不等于200
