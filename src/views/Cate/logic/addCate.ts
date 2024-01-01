@@ -4,10 +4,10 @@ import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { getCateData } from './getCate'
 
 // 控制新增分类的表单是否显示
-export const cateFormShow = ref(false)
+export const show = ref(false)
 
 // 新增表单框实例
-export const cateRef = ref<FormInstance>()
+export const form = ref<FormInstance>()
 
 // 表单数据
 export const cateForm = ref<Cate>({
@@ -36,13 +36,13 @@ const emitLevel = ref<any>()
 
 // 弹出新增分类框，并且根据id决定新增一级还是二级分类
 export const addCate = (id: number | undefined) => {
-    cateFormShow.value = true
+    show.value = true
     addId.value = id
 }
 
 // 编辑分类
 export const editCate = async (data: Cate | undefined, level: any) => {
-    cateFormShow.value = true
+    show.value = true
 
     emitId.value = data?.id
     emitLevel.value = level
@@ -64,7 +64,7 @@ export const submit = async (formEl: FormInstance | undefined) => {
             emitLevel.value = emitLevel.value >= 0 ? 'one' : 'two'
 
             const { code, message } = await editCateAPI(cateForm.value, emitId.value as number, emitLevel.value)
-
+            
             if (code !== 200) return
 
             ElNotification({
@@ -91,7 +91,7 @@ export const submit = async (formEl: FormInstance | undefined) => {
         formEl.resetFields()
 
         // 关闭新增分类表单框
-        cateFormShow.value = false
+        show.value = false
         // 获取最新数据
         getCateData()
     })
@@ -100,8 +100,8 @@ export const submit = async (formEl: FormInstance | undefined) => {
 // 关闭弹框时处理的逻辑
 export const close = () => {
     // 关闭新增分类弹框
-    cateFormShow.value = false
+    show.value = false
 
     // 将表单校验初始化
-    cateRef.value?.resetFields()
+    form.value?.resetFields()
 }

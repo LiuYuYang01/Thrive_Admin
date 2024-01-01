@@ -4,10 +4,15 @@ import { getCateData, cateList, loading, svg } from './logic/getCate'
 getCateData()
 
 // 新增、编辑分类逻辑
-import { cateFormShow, addCate, editCate, cateRef, cateForm, rules, submit, close } from './logic/addCate'
+import { show, addCate, editCate, form, cateForm, rules, submit, close } from './logic/addCate'
 
 // 删除分类逻辑
 import { delCate } from './logic/delCate'
+
+onMounted(() => {
+  show.value = false
+  form.value?.resetFields()
+})
 </script>
 
 <template>
@@ -45,8 +50,8 @@ import { delCate } from './logic/delCate'
     </el-tree>
 
     <!-- 新增分类 -->
-    <el-dialog v-model="cateFormShow" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
-      <el-form ref="cateRef" :rules="rules" label-position="top" :model="cateForm" size="large">
+    <el-dialog v-model="show" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
+      <el-form ref="form" :rules="rules" label-position="top" :model="cateForm" size="large">
         <el-form-item label="名称" prop="name">
           <el-input v-model="cateForm.name" placeholder="大前端" />
         </el-form-item>
@@ -65,7 +70,7 @@ import { delCate } from './logic/delCate'
 
         <el-form-item style="margin-bottom: -5px;">
           <el-button @click="close">取消</el-button>
-          <el-button type="primary" @click="submit(cateRef)">确定</el-button>
+          <el-button type="primary" @click="submit(form)">确定</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
