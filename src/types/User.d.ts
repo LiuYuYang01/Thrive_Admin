@@ -1,16 +1,16 @@
-export interface LoginForm {
+interface LoginForm {
     username: string,
     password: string
 }
 
-export interface account {
+interface account {
     username: string,
     password: string,
     token: string,
     userInfo: UserInfo
 }
 
-export interface UserInfo {
+interface UserInfo {
     id?: number,
     name: string,
     qq: string,
@@ -20,4 +20,10 @@ export interface UserInfo {
     role?: string
 }
 
-export type User = account & UserInfo
+interface updateUser{
+    username: string,
+    oldPassword: string,
+    newPassword: string
+}
+
+type User = account & UserInfo

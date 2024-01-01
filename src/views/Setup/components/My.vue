@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { FormInstance, FormRules, ElNotification } from 'element-plus';
-import { User, UserInfo } from '@/types/User';
 
 const myForm = ref<UserInfo>({
   name: '',

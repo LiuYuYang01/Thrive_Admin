@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { User, Lock, View } from '@element-plus/icons-vue'
+import { User, Lock, View, Hide } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
 import { loginAPI } from '@/api/User'
 import { useUserStore } from '@/stores'
-import { LoginForm } from '@/types/User'
 
 const store = useUserStore()
 const router = useRouter()
+
+// 是否显示密码
+const isPass = ref<string>("password")
+// 点击眼睛切换密码显示
+const isPassCut = () => isPass.value === "password" ? isPass.value = "text" : isPass.value = "password"
 
 // 登录信息
 const loginInfo = reactive<LoginForm>({
@@ -14,7 +18,7 @@ const loginInfo = reactive<LoginForm>({
   password: '123123',
 })
 
-const loginRef = ref<FormInstance>()
+const form = ref<FormInstance>()
 
 // 登录数据校验
 const rules = reactive<FormRules<LoginForm>>({
@@ -64,20 +68,21 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         <p>现代化博客管理系统</p>
       </div>
 
-      <el-form ref="loginRef" :model="loginInfo" :rules="rules" label-position="top" size="large"
-        style="padding: 20px 40px;">
+      <el-form ref="form" :model="loginInfo" :rules="rules" label-position="top" size="large" style="padding: 20px 40px;">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名" />
         </el-form-item>
 
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginInfo.password" :prefix-icon="Lock" placeholder="请输入密码">
+          <el-input :type="isPass" v-model="loginInfo.password" :prefix-icon="Lock" placeholder="请输入密码">
 
             <!-- 小眼睛图标 -->
             <template #suffix>
               <el-icon class="el-input__icon">
-                <a href="javascript:;" style="color: #a8abb2;">
-                  <View />
+                <a href="javascript:;" style="color: #a8abb2; padding: 0 20px;" @click="isPassCut">
+                  <View v-if="isPass === 'password'"/>
+
+                  <Hide v-else/>
                 </a>
               </el-icon>
             </template>
@@ -85,7 +90,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" size="large" @click="submitForm(loginRef)" class="submit">登录</el-button>
+          <el-button type="primary" size="large" @click="submitForm(form)" class="submit">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

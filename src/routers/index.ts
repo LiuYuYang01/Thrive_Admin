@@ -85,7 +85,7 @@ export const routes = [
           {
             path: "",
             component: () => import("@/views/Setup/components/Setup.vue"),
-            meta: { title: "全局配置" },
+            meta: { title: "系统配置" },
           },
           {
             path: "site",

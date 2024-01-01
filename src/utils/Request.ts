@@ -36,6 +36,29 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   (res) => {
+    // 如果401相当于认证失败
+    if (res.data?.code === 401) {
+      const store = useUserStore();
+
+      // 删除用户信息
+      store.delUser();
+
+      // 跳转到登录页
+      router.push({
+        path: "/login",
+        query: { returnUrl: router.currentRoute.value.fullPath },
+      });
+
+      // 程序异常：增删改查失败导致状态码不等于200
+      ElNotification({
+        title: "程序异常",
+        message: res.data?.message || "未知错误",
+        type: "error",
+      });
+
+      return Promise.reject(res.data);
+    }
+
     // 只要code不等于200, 就相当于响应失败
     if (res.data?.code !== 200) {
       // 程序异常：增删改查失败导致状态码不等于200
@@ -52,20 +75,6 @@ instance.interceptors.response.use(
   },
   (err) => {
     console.log(err,888);
-    
-    // 如果401相当于认证失败
-    if (err.response.status === 401) {
-      const store = useUserStore();
-
-      // 删除用户信息
-      store.delUser();
-
-      // 跳转到登录页
-      router.push({
-        path: "/login",
-        query: { returnUrl: router.currentRoute.value.fullPath },
-      });
-    }
 
     // 服务器异常：网络错误、请求超时、状态码不在200-299之间等等
     ElNotification({
