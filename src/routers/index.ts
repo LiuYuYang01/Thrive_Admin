@@ -125,7 +125,9 @@ const router = createRouter({
 });
 
 // 访问权限控制
-router.beforeEach((to) => {
+router.beforeEach((to, form) => {
+  // 准备进入的路由：to
+  // 刚刚离开的路由：form
   const store = useUserStore();
 
   // 开启进度条
@@ -139,10 +141,15 @@ router.beforeEach((to) => {
 
   // 如果没有token就意味着没有登录 并且 在没有登录情况下会自动跳转到登录页
   if (!store.user?.token && !wihteList.includes(to.path)) return "/login";
-  // 如果已登录，则跳转到指定的页面
 
+  // 如果有token，就不让他跳转到登录页了
+  if(store.user?.token && to.path === "/login") return form.path
+  
   // 关闭进度条
   NProgress.done();
+
+  // 如果已登录，则跳转到指定的页面
+  return true
 });
 
 export default router;
