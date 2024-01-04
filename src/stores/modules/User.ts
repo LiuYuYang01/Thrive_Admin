@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import type { User, UserInfo } from "@/types/User";
 import { getUserAPI, editUserAPI } from "@/api/User";
 
 export const useUserStore = defineStore(

@@ -1,6 +1,4 @@
 import Request from '@/utils/Request'
-import { LoginForm } from '@/types/User'
-import { User, UserInfo } from '@/types/User'
 
 // 登录
 export const loginAPI = (data: LoginForm) => Request<User>("POST", "/login", data)

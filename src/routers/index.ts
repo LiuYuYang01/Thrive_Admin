@@ -34,11 +34,11 @@ export const routes = [
             component: () => import("@/views/Write/index.vue"),
             meta: { title: "发布文章" },
           },
-          {
-            path: "b",
-            component: () => import("@/views/Home/index.vue"),
-            meta: { title: "发布说说" },
-          },
+          // {
+          //   path: "b",
+          //   component: () => import("@/views/Home/index.vue"),
+          //   meta: { title: "发布说说" },
+          // },
         ],
       },
       {

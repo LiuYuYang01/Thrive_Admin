@@ -22,7 +22,7 @@ export const getArticleData = async (params?: Page) => {
   
   if(code !== 200) return loading.value = false
 
-  total.value = paginate.total;
+  total.value = paginate?.total as number;
 
   ArticleData.value = data as Article[];
 

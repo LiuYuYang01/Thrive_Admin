@@ -17,7 +17,7 @@ const store = useUserStore()
 // 获取用户信息
 const getUserData = async () => {
   await store.getUser()
-  webData.value = store.userInfo as SetupWeb
+  webData.value = store.userInfo as any
 }
 getUserData()
 
@@ -48,7 +48,7 @@ const submit = async (formEl: FormInstance | undefined) => {
     if (!valid) return
 
     // 编辑用户信息
-    store.setUser(webData.value, "edit")
+    // store.setUser(webData.value, "edit")
   })
 }
 </script>

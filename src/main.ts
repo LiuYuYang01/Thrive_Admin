@@ -3,7 +3,8 @@ import App from './App.vue'
 
 // 引入图标库
 import 'boxicons'
-import 'boxicons/dist/boxicons'
+// import 'boxicons/dist/boxicons.js'
+import "boxicons/css/boxicons.min.css";
 
 // 引入store
 import pinia from '@/stores/index'
