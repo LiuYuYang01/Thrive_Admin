@@ -18,13 +18,13 @@ const quit = () => {
 
 <template>
     <div class="header">
-        <div class="info"><box-icon type='solid' name='hot' />新一代博客管理系统</div>
+        <div class="info"><i class='bx bxs-hot icon'></i>新一代博客管理系统</div>
 
         <div class="nav">
             <div class="list">
-                <a href="http://liuyuyang.net" target="_blank"><box-icon name='globe' />作者博客</a>
-                <a href="/"><box-icon name='github' type='logo' />GitHub</a>
-                <!-- <a href="/"><box-icon name='message-square-dots' />消息</a> -->
+                <a href="http://liuyuyang.net" target="_blank"><i class='bx bx-globe icon'></i>作者博客</a>
+                <a href="/"><i class='bx bxl-github icon'></i>GitHub</a>
+                <!-- <a href="/"><i class='bx bx-message-square-dots icon'></i>消息</a> -->
             </div>
 
             <div class="my">
@@ -35,8 +35,8 @@ const quit = () => {
                 <el-collapse-transition>
                     <div class="box">
                         <dl>
-                            <dd @click="router.push('/setup/my')"><box-icon name='user' />个人设置</dd>
-                            <dd @click="quit"><box-icon name='exit' />退出登录</dd>
+                            <dd @click="router.push('/setup/my')"><i class='bx bx-user icon'></i>个人设置</dd>
+                            <dd @click="quit"><i class='bx bx-exit icon'></i>退出登录</dd>
                         </dl>
                     </div>
                 </el-collapse-transition>
@@ -60,8 +60,9 @@ const quit = () => {
         align-items: center;
         margin-left: 20px;
 
-        box-icon {
-            fill: #ec4747;
+        .icon {
+            color: #ec4747;
+            font-size: 20px;
             margin-right: 5px;
         }
     }
@@ -82,9 +83,8 @@ const quit = () => {
                 padding: 20px;
                 transition: all $move;
 
-                box-icon {
-                    width: 20px;
-                    height: 20px;
+                .icon {
+                    font-size: 20px;
                     margin-right: 5px;
                     fill: #333;
                     transition: fill $move;
@@ -94,7 +94,7 @@ const quit = () => {
                     color: $color;
                     background-color: #f9f9f9;
 
-                    box-icon {
+                    .icon {
                         fill: $color;
                     }
                 }
@@ -144,10 +144,11 @@ const quit = () => {
                         color: #666;
                         transition: all $move;
 
-                        box-icon {
-                            fill: #666;
-                            width: 20px;
-                            height: 30px;
+                        .icon {
+                            color: #666;
+                            // width: 20px;
+                            // height: 30px;
+                            font-size: 20px;
                             margin-right: 5px;
                             transition: fill $move;
                         }
@@ -157,8 +158,8 @@ const quit = () => {
                             color: $color;
                             background-color: #f5f5fb;
 
-                            box-icon {
-                                fill: $color;
+                            .icon {
+                                color: $color;
                             }
                         }
                     }

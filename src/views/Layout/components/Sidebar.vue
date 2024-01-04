@@ -40,7 +40,7 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
 
 
-    
+
     // 如果一级导航中有二级的或者所有hidden属性为true，就不让他跳转路由
     const r = navList.value[index].children
 
@@ -82,9 +82,9 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
         <li class="item" v-for="one, one_index in navList" :key="one.path" @click.stop="toPath(one_index, one.path)">
           <!-- 一级导航 -->
           <a href="javascript:;" class="nav" :class="{ nav_active: active.one === one.path }">
-            <div><box-icon :name="one.meta.icon" />{{ one.meta.title }}</div>
+            <div><i :class="['bx', `bx-${one.meta.icon}`, 'icon']"></i>{{ one.meta.title }}</div>
 
-            <box-icon name='chevron-down' class="icon" v-if="isIcon(one)" />
+            <i class='bx bx-chevron-down icon' v-if="isIcon(one)"></i>
           </a>
 
           <!-- 二级导航 -->
@@ -94,7 +94,7 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
               <!-- 如果一级导航的show属性为true就展开二级导航 -->
               <dl class="children" v-show="one.meta.show">
 
-                <template v-for="two, two_index in one.children">
+                <template v-for=" two, two_index  in one.children">
                   <dd :class="{ nav_active: active.two === `${one.path}/${two.path}` }"
                     @click.stop="toPath(two_index, `${one.path}/${two.path}`, 'two')" v-if="!two.meta.hidden">
                     {{ two.meta.title }}
@@ -145,18 +145,13 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
       font-size: 15px;
       transition: all $move;
 
-      box-icon {
-        width: 20px;
-        height: 25px;
-        fill: #cedce4;
+      .icon {
+        font-size: 20px;
+        color: #cedce4;
         margin-right: 10px;
         position: relative;
-        top: 5px;
-        transition: fill;
-      }
-
-      .icon {
-        margin-top: -13px;
+        top: 4px;
+        transition: color $move;
       }
     }
 
@@ -166,8 +161,8 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
         color: #fff;
       }
 
-      .nav box-icon {
-        fill: #fff;
+      .nav .icon {
+        color: #fff;
       }
     }
 
@@ -175,8 +170,8 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
     .nav_active {
       color: #fff !important;
 
-      box-icon {
-        fill: #fff !important;
+      .icon {
+        color: #fff !important;
       }
     }
 
@@ -188,7 +183,7 @@ const isIcon = (one: any) => one.children && !one.children?.every((item: any) =>
         height: 45px;
         color: #cedce4;
         font-size: 14px;
-        transition: $move;
+        transition: all $move;
         cursor: pointer;
 
         // 鼠标经过导航高亮

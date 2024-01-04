@@ -21,7 +21,7 @@ const rules = reactive<FormRules>({
 // 新增 / 编辑 标签切换
 const title = ref<string>("新增标签");
 
-import {whetherToDelete} from '@/utils/ConfirmMessage'
+import { whetherToDelete } from '@/utils/ConfirmMessage'
 
 // 删除标签
 const delTagData = async (id: number) => {
@@ -99,7 +99,7 @@ const submit = async (formEl: FormInstance | undefined) => {
             <el-tab-pane label="标签管理">
                 <el-row justify="space-between" style="padding: 30px 80px">
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
-                        <div class="title">标签列表</div>
+                        <div class="title"><i class='bx bx-purchase-tag icon' />标签列表</div>
 
                         <el-table :data="TagList" width="100%" height="80%" style="height: 800px;">
                             <el-table-column prop="id" label="ID" width="100" />
@@ -115,7 +115,7 @@ const submit = async (formEl: FormInstance | undefined) => {
                     </el-row>
 
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
-                        <div class="title">标签管理</div>
+                        <div class="title"><i class='bx bx-cog icon' />标签管理</div>
 
                         <el-form ref="TagRef" :rules="rules" label-position="top" label-width="100px" :model="TagData">
                             <el-form-item label="标签名称" prop="name">
@@ -141,6 +141,11 @@ const submit = async (formEl: FormInstance | undefined) => {
 .page {
     .title {
         @include title;
+
+        .icon{
+            margin-right: 10px;
+            font-size: 25px;
+        }
     }
 
     :deep .demo-tabs {
