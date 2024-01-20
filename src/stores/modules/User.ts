@@ -1,21 +1,22 @@
 import { defineStore } from "pinia";
 import { getUserAPI, editUserAPI } from "@/api/User";
+import router from "@/routers";
 
 export const useUserStore = defineStore(
   "user",
   () => {
+    const token = ref<string>("")
     const user = ref<User>();
-    const userInfo = ref<UserInfo>();
 
     // 获取用户信息
     const getUser = async () => {
       const { data } = await getUserAPI(1);
 
-      userInfo.value = (data as User).userInfo;
+      user.value = data as User;
     };
 
     // 编辑用户信息
-    const setUser = async (data: UserInfo, type: string) => {
+    const setUser = async (data: User, type: string) => {
       switch (type) {
         case "login":
           user.value = data as User;
@@ -32,7 +33,7 @@ export const useUserStore = defineStore(
             type: "success",
           });
 
-          userInfo.value = data as UserInfo;
+          user.value = data as User;
           break;
       }
     };
@@ -40,14 +41,19 @@ export const useUserStore = defineStore(
     // 清空用户，退出后使用
     const delUser = () => {
       user.value = undefined;
-      userInfo.value = undefined;
 
       // 清空本地的所有数据
       localStorage.clear();
       sessionStorage.clear();
+
+      // 跳转到登录页
+      router.push({
+        path: "/login",
+        query: { returnUrl: router.currentRoute.value.fullPath }, // 记录上一次路由的路径
+      });
     };
 
-    return { user, userInfo, getUser, setUser, delUser };
+    return { user, token, getUser, setUser, delUser };
   },
   { persist: true }
 );

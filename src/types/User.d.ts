@@ -4,19 +4,16 @@ interface LoginForm {
 }
 
 interface account {
-    username: string,
-    password: string,
     token: string,
-    userInfo: UserInfo
+    user: User
 }
 
-interface UserInfo {
+interface User extends LoginForm{
     id?: number,
     name: string,
-    qq: string,
+    email: string,
     avatar: string,
-    introduce: string,
-    background: string,
+    info: string,
     role?: string
 }
 
@@ -25,5 +22,3 @@ interface updateUser{
     oldPassword: string,
     newPassword: string
 }
-
-type User = account & UserInfo

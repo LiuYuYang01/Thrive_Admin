@@ -284,6 +284,9 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "ElNotification": true,
+    "ElMessageBox": true,
+    "ElMessage": true
   }
 }

@@ -140,10 +140,10 @@ router.beforeEach((to, form) => {
   const wihteList = ["/login"];
 
   // 如果没有token就意味着没有登录 并且 在没有登录情况下会自动跳转到登录页
-  if (!store.user?.token && !wihteList.includes(to.path)) return "/login";
+  if (!store.token && !wihteList.includes(to.path)) return "/login";
 
   // 如果有token，就不让他跳转到登录页了
-  if(store.user?.token && to.path === "/login") return form.path
+  if(store.token && to.path === "/login") return form.path
   
   // 关闭进度条
   NProgress.done();
