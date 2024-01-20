@@ -30,7 +30,7 @@ const quit = () => {
             <div class="my">
                 <img :src="store.user?.avatar || 'https://q1.qlogo.cn/g?b=qq&amp;nk=3311118881&amp;s=640'" alt="">
 
-                <div class="name">{{ store.userInfo?.name || '未命名' }}</div>
+                <div class="name">{{ store.user?.name || '未命名' }}</div>
 
                 <el-collapse-transition>
                     <div class="box">

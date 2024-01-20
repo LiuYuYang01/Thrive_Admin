@@ -1,18 +1,22 @@
 <script setup lang="ts">
-// 获取分类逻辑
-import { getCateData, cateList, loading, svg } from './logic/getCate'
-getCateData()
+import svg from '@/utils/LoadingIcon'
+import { getCateDataAPI } from '@/api/Cate'
 
-// 新增、编辑分类逻辑
-import { show, addCate, editCate, form, cateForm, rules, submit, close } from './logic/addCate'
+const loading = ref<boolean>(false)
 
-// 删除分类逻辑
-import { delCate } from './logic/delCate'
+// 分类列表
+const cateList = ref<Cate[]>()
 
-onMounted(() => {
-  show.value = false
-  form.value?.resetFields()
-})
+// 获取分类列表数据
+const getCateList = async () => {
+  loading.value = true
+
+  const { data } = await getCateDataAPI()
+  cateList.value = data.result as Cate[]
+
+  loading.value = false
+}
+getCateList()
 </script>
 
 <template>
@@ -20,37 +24,35 @@ onMounted(() => {
     <Title title="分类管理" icon="category-alt" />
 
     <el-row justify="center" style="margin-bottom: 10px;">
-      <el-button key="primary" type="primary" text @click="addCate(undefined)">新增一级分类</el-button>
+      <el-button key="primary" type="primary" text>新增一级分类</el-button>
     </el-row>
 
     <!-- 分类列表 -->
     <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
-      :element-loading-svg="svg" class="custom-loading-svg cate" :default-expand-all="true">
+      :element-loading-svg="svg" class="cate" :default-expand-all="true">
       <template #default="{ node, data }">
-        <span class="custom-tree-node">
-          <span class="name">{{ node.label }}</span>
+        <el-row justify="space-between" style="width: 100%;">
+          <span>{{ node.label }}</span>
 
-          <span>
-            <el-dropdown size="small">
-              <span class="el-dropdown-link">
-                操作<box-icon name='chevron-down' />
-              </span>
+          <el-dropdown>
+            <span style="outline: none;">
+              操作 <box-icon name='chevron-down' />
+            </span>
 
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item v-if="data.children" @click="addCate(data.id)">新增</el-dropdown-item>
-                  <el-dropdown-item @click="editCate(data, data?.children?.length)">编辑</el-dropdown-item>
-                  <el-dropdown-item @click="delCate(data.id, data?.children?.length)">删除</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </span>
-        </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item v-if="data.children">新增</el-dropdown-item>
+                <el-dropdown-item>编辑</el-dropdown-item>
+                <el-dropdown-item>删除</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </el-row>
       </template>
     </el-tree>
 
     <!-- 新增分类 -->
-    <el-dialog v-model="show" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
+    <!-- <el-dialog v-model="showModel" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
       <el-form ref="form" :rules="rules" label-position="top" :model="cateForm" size="large">
         <el-form-item label="名称" prop="name">
           <el-input v-model="cateForm.name" placeholder="大前端" />
@@ -73,7 +75,7 @@ onMounted(() => {
           <el-button type="primary" @click="submit(form)">确定</el-button>
         </el-form-item>
       </el-form>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -88,12 +90,6 @@ onMounted(() => {
     height: 100%;
     padding: 50px;
     margin-left: 8%;
-  }
-
-  .custom-tree-node {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
   }
 
   .el-tooltip__trigger {

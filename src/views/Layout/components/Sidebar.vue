@@ -68,6 +68,16 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 
 // 导航下拉图标是否显示隐藏
 const isIcon = (one: any) => one.children && !one.children?.every((item: any) => item.meta.hidden)
+
+onMounted(() => {
+    const Sidebar: HTMLElement = document.querySelector(".Sidebar")!
+    console.log(Sidebar);
+
+    window.addEventListener("resize", () => {
+        console.log(window.innerHeight);
+        console.log(Sidebar?.offsetHeight, 222);
+    })
+})
 </script>
 
 <template>

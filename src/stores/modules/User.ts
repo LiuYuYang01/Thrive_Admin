@@ -16,14 +16,15 @@ export const useUserStore = defineStore(
     };
 
     // 编辑用户信息
-    const setUser = async (data: User, type: string) => {
+    const setUser = async (data: account, type: string) => {
       switch (type) {
         case "login":
-          user.value = data as User;
+          token.value = data.token;
+          user.value = data.user;
           break;
 
         case "edit":
-          const { code, message } = await editUserAPI(1, data);
+          const { code, message } = await editUserAPI(1, data.user);
 
           if (code !== 200) return;
 
@@ -33,7 +34,7 @@ export const useUserStore = defineStore(
             type: "success",
           });
 
-          user.value = data as User;
+          user.value = data.user;
           break;
       }
     };
