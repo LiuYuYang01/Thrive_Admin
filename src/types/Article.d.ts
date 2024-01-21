@@ -1,12 +1,12 @@
-export interface Article {
+interface Article {
     id?: number,
     title: string,
-    sketch: string,
+    description: string,
     content: string,
     cover: string,
     cate: string,
     tag: string,
     view?: number
     count?: number,
-    date: Date,
+    createtime: Date,
 }
