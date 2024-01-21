@@ -47,7 +47,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 
     ElNotification({
       title: '成功',
-      message: "登录成功：欢迎回来 🎉",
+      message: `Hello ${data.user.name} 欢迎回来 🎉`,
       type: 'success',
     })
 

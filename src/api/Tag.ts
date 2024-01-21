@@ -10,7 +10,7 @@ export const delTagDataAPI = (id: number) => Request<Tag>("DELETE", `/tag/${id}`
 export const editTagDataAPI = (data: Tag) => Request<Tag>("PATCH", "/tag", data)
 
 // 获取标签
-export const getTagDataAPI = (id?: number) => Request<Paginate<Tag>>("GET", `/tag/${id}`)
+export const getTagDataAPI = (id?: number) => Request<Tag>("GET", `/tag/${id}`)
 
 // 获取标签列表
 export const getTagListAPI = (page?: Page) => {

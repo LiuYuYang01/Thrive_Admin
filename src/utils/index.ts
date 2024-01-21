@@ -1,18 +1,3 @@
-// 封装是否删除确认对话框
-export function whetherDelete(cb: () => {}, text: string) {
-    ElMessageBox.confirm(
-        `你确定要删除该${text}吗`,
-        '警告',
-        {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-        }
-    )
-        .then(() => {
-            cb()
-        })
-}
-
 // 封装loading加载效果
 export const svg =  `
         <path class="path" d="

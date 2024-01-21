@@ -1,31 +1,53 @@
 <script setup lang="ts">
 import { ElNotification } from 'element-plus'
 import { Select } from '@element-plus/icons-vue'
-import { Tag } from '@/types/Tag';
-import { query, querySearch, restaurants } from '../logic/QueryTag'
-import { getTagAPI, addTagAPI } from '@/api/Tag'
+import { getTagDataAPI, getTagListAPI, addTagDataAPI } from '@/api/Tag'
 
 const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits<{ (e: "update:modelValue", data: string): void }>()
-console.log(props.modelValue,999);
+console.log(props.modelValue, 999);
 
-const TagData = ref<any>()
+const list = ref<any>()
 
 // 标签搜索框实例
 const AutocompleteRef = ref()
 
 // 获取标签列表
-const getTagData = async () => {
-    const { data } = await getTagAPI()
+const getTagList = async () => {
+    const { data } = await getTagListAPI()
 
-    TagData.value = data
+    list.value = data
 }
+getTagList()
 
 // 已选择的标签
 const TagList = ref<string[]>([])
 
-// 保存数据
-TagList.value = props.modelValue ? props.modelValue.split(",") : []
+
+interface RestaurantItem {
+    name: string
+    link: string
+}
+
+const query = ref<string>('')
+
+const restaurants = ref<RestaurantItem[]>([])
+
+const querySearch = (queryString: string, cb: any) => {
+    const results = queryString
+        ? restaurants.value.filter(createFilter(queryString))
+        : restaurants.value
+    // 调用回调函数以返回建议
+    cb(results)
+}
+
+const createFilter = (queryString: string) => {
+    return (restaurant: RestaurantItem) => {
+        return (
+            restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        )
+    }
+}
 
 // 点击选中标签
 const TagSelect = () => {
@@ -47,48 +69,6 @@ const TagSelect = () => {
     // 关闭搜索框
     AutocompleteRef.value.activated = false
 }
-
-// 添加标签
-const addTagData = async () => {
-    if (!query.value.trim()) return ElNotification({
-        title: '失败',
-        message: "标签不能为空",
-        type: 'error',
-    })
-
-    // 添加前先判断需要添加的标签是否存在，如果存在就没必要再添加了
-    const isExist = TagData.value.find((item: Tag) => item.name.toLocaleLowerCase() === query.value.toLocaleLowerCase())
-
-    // 如果能找到就是标签已存在，就不再调用接口重新添加了
-    if (isExist) {
-        TagSelect()
-    } else {
-        const { code, message } = await addTagAPI({ name: query.value })
-        if (code !== 200) return
-
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success',
-        })
-
-        TagSelect()
-    }
-
-    // 获取最新数据
-    await getTagData()
-
-    restaurants.value = TagData.value
-}
-
-// 删除选择的标签
-const delTagData = (data: string) => TagList.value.splice(TagList.value.findIndex(item => item === data), 1)
-
-onMounted(async () => {
-    await getTagData()
-
-    restaurants.value = TagData.value
-})
 </script>
 
 <template>
@@ -97,18 +77,18 @@ onMounted(async () => {
 
         <el-row justify="center" class="query">
             <el-autocomplete v-model="query" ref="AutocompleteRef" size="large" :fetch-suggestions="querySearch"
-                placeholder="添加标签" value-key="name" class="inline-input w-50" @keyup.enter="addTagData" @select="TagSelect">
+                placeholder="添加标签" value-key="name" class="inline-input w-50" @keyup.enter="() => 1" @select="TagSelect">
 
                 <!-- 手动添加按钮 -->
                 <template #append>
-                    <el-button :icon="Select" @click="addTagData" />
+                    <el-button :icon="Select" />
                 </template>
             </el-autocomplete>
         </el-row>
 
         <div class="list">
             <!-- 渲染选择的标签列表 -->
-            <span class="item" v-for="item in TagList" :key="item" @click="delTagData(item)">{{ item }}</span>
+            <span class="item" v-for="item in TagList" :key="item">{{ item }}</span>
             <!-- <span class="item" v-for="item in 5" :key="item">大前端</span> -->
         </div>
     </div>

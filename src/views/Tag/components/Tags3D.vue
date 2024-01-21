@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // @ts-nocheck
 
-import { TagList, getTagData } from '../logic/getTag'
+import { list, getTagList } from '../tag'
 
 const run = () => {
     var radius = 250;
@@ -228,12 +228,12 @@ const fn = () => {
     })
 }
 
-getTagData(fn)
+getTagList(fn)
 </script>
 
 <template>
     <div id="tagsList">
-        <a href="javascript:;" :title="name" v-for="{ name } in TagList">{{ name }}</a>
+        <a href="javascript:;" :title="name" v-for="{ name } in list">{{ name }}</a>
     </div>
 </template>
 

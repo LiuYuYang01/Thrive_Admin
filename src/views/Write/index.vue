@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import moment from 'moment'
-import { Article } from '@/types/Article'
-import { addArticleAPI, editArticleAPI, getArticleAPI } from '@/api/Article'
-import { getArticleData } from '@/views/Article/logic/getArticle'
+import { addArticleDataAPI, editArticleDataAPI, getArticleDataAPI } from '@/api/Article'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
 const form = ref<FormInstance>()
 
 // 文章数据
-const ArticleData = ref<Article>(localStorage.getItem("article") ? JSON.parse(localStorage.getItem("article")!) : {
+const article = ref<Article>(localStorage.getItem("article") ? JSON.parse(localStorage.getItem("article")!) : {
     title: "",
     sketch: "",
     content: "",
@@ -19,89 +17,10 @@ const ArticleData = ref<Article>(localStorage.getItem("article") ? JSON.parse(lo
     date: new Date()
 })
 
-const router = useRouter()
-const id = ref<number>(+router.currentRoute.value.query.id!)
-
-// 数据回显
-const ArticleDataEcho = async () => {
-    if (!id.value) return
-
-    // 获取指定的文章
-    const { data } = await getArticleAPI(id.value)
-
-    // 解构数据
-    let { title, sketch, content, cover, cate, tag, date } = data as Article
-
-    // 赋值数据
-    ArticleData.value = { ...ArticleData.value, title, sketch, content, cover, cate, tag, date }
-}
-ArticleDataEcho()
-
-// 编辑/发布文章
-const submit = async () => {
-    // 编辑文章
-    if (id.value) {
-        ArticleData.value.date = moment(ArticleData.value.date).format('YYYY-MM-DD HH:mm:ss') as any
-
-        // 编辑数据
-        const { code, message } = await editArticleAPI(id.value, ArticleData.value)
-
-        if (code !== 200) return
-
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success'
-        })
-
-        // 清空本地的数据
-        localStorage.removeItem('article');
-    }
-    // 发布文章
-    else {
-        if (!ArticleData.value.title) return ElNotification({ title: '警告', message: '标题不能为空', type: 'error' })
-        if (!ArticleData.value.content) return ElNotification({ title: '警告', message: '内容不能为空', type: 'error' })
-        if (!ArticleData.value.cate) return ElNotification({ title: '警告', message: '分类不能为空', type: 'error' })
-
-        const { code, message } = await addArticleAPI(ArticleData.value)
-        console.log(code,message,999);
-        
-        if (code !== 200) return
-
-        ElNotification({
-            title: '成功',
-            message: message,
-            type: 'success',
-        })
-
-        // 初始化数据
-        ArticleData.value = {
-            title: "",
-            sketch: "",
-            content: "",
-            cover: "",
-            cate: "",
-            tag: "",
-            date: new Date()
-        }
-
-        // 清空本地的数据
-        localStorage.removeItem('article');
-    }
-
-    form.value?.resetFields()
-
-    // 获取最新数据
-    getArticleData()
-
-    // 跳转到文章列表
-    router.push("/manage/article")
-}
-
 // 保存文章
 const save = () => {
     // 保存文章到本地
-    localStorage.setItem("article", JSON.stringify({ ...ArticleData.value, cate: "" }))
+    localStorage.setItem("article", JSON.stringify({ ...article.value, cate: "" }))
 
     ElNotification({
         title: '成功',
@@ -125,15 +44,15 @@ const rules = {
 
         <div class="job">
             <div class="edit">
-                <el-form ref="form" :rules="rules" :model="ArticleData">
+                <el-form ref="form" :rules="rules" :model="article">
                     <el-form-item prop="title">
                         <!-- 文章标题 -->
-                        <el-input v-model="ArticleData.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！" />
+                        <el-input v-model="article.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！" />
                     </el-form-item>
                 </el-form>
 
                 <!-- 文章内容 -->
-                <v-md-editor v-model="ArticleData.content" height="600px" mode="edit"></v-md-editor>
+                <v-md-editor v-model="article.content" height="600px" mode="edit"></v-md-editor>
 
                 <el-collapse class="extend">
                     <el-collapse-item name="1">
@@ -143,10 +62,10 @@ const rules = {
                             </el-icon>扩展设置
                         </template>
 
-                        <el-input v-model="ArticleData.cover" size="large" :prefix-icon="Picture" placeholder="文章封面（选填）"
+                        <el-input v-model="article.cover" size="large" :prefix-icon="Picture" placeholder="文章封面（选填）"
                             style="margin: 10px 0 15px;" />
 
-                        <el-input v-model="ArticleData.sketch" type="textarea" maxlength="100" show-word-limit size="large"
+                        <el-input v-model="article.description" type="textarea" maxlength="100" show-word-limit size="large"
                             placeholder="文章简述（选填）" class="sketch" />
                     </el-collapse-item>
                 </el-collapse>
@@ -155,19 +74,19 @@ const rules = {
             <!-- 侧边栏 -->
             <div class="sidebar">
                 <!-- 分类 -->
-                <ArticleCate v-model="ArticleData.cate" />
+                <ArticleCate v-model="article.cate" />
 
                 <!-- 日期 -->
-                <ArticleDate v-model="ArticleData.date" />
+                <ArticleDate v-model="article.createtime" />
 
                 <!-- 标签 -->
-                <ArticleTag v-model="ArticleData.tag" />
+                <ArticleTag v-model="article.tag" />
 
                 <div class="operate">
                     <!-- 保存文章 -->
                     <div style="background-color: #727cf5" @click="save">保存文章</div>
                     <!-- 发布 -->
-                    <div style="margin-top: 10px" @click="submit">{{ id ? '编辑文章' : '发布文章' }}</div>
+                    <div style="margin-top: 10px">发布文章</div>
                 </div>
             </div>
         </div>

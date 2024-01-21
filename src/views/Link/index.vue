@@ -1,39 +1,29 @@
 <script setup lang="ts">
-import { addLinkDataAPI, delLinkDataAPI, editLinkDataAPI, getLinkDataAPI } from '@/api/Link'
-import { whetherDelete } from '@/utils';
+import { addLinkDataAPI, delLinkDataAPI, editLinkDataAPI, getLinkListAPI } from '@/api/Link'
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
 const loading = ref(false)
-const svg = `
-        <path class="path" d="
-          M 30 15
-          L 28 17
-          M 25.61 25.61
-          A 15 15, 0, 0, 1, 15 30
-          A 15 15, 0, 1, 1, 27.99 7.5
-          L 15 15
-        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
-      `
+import { svg } from '@/utils'
 
 // 选项卡选中
-const tabValue = ref<string>("list")
+const tab = ref<string>("list")
 
 // 网站列表
-const linkList = ref<Link[]>([])
-const linkData = ref<Link[]>(linkList.value)
+const list = ref<Link[]>([])
+const listTemp = ref<Link[]>(list.value)
 
 // 获取网站列表数据
-const getLinkData = async () => {
+const getLinkList = async () => {
     loading.value = true
 
-    const { data } = await getLinkDataAPI();
-    linkList.value = data.result as Link[]
-    linkData.value = linkList.value
+    const { data } = await getLinkListAPI();
+    list.value = data.result as Link[]
+    listTemp.value = list.value
 
     loading.value = false
 }
-getLinkData()
+getLinkList()
 
 // 搜索的数据
 const search = ref<string>("")
@@ -41,7 +31,7 @@ const search = ref<string>("")
 watch(search, data => {
     console.log(data, 222);
 
-    linkData.value = linkList.value.filter(item => {
+    listTemp.value = list.value.filter(item => {
         return item.title.includes(data) || item.description.includes(data)
     })
 })
@@ -53,7 +43,7 @@ const toHref = (url: string) => {
 }
 
 // 网站表单
-const linkForm = ref<Link>({
+const link = ref<Link>({
     title: "",
     description: "",
     email: "",
@@ -63,7 +53,7 @@ const linkForm = ref<Link>({
 })
 
 // 表单校验
-const linkRules = {
+const rules = {
     title: [
         { required: true, message: "网站标题不能为空", trigger: "blur" },
         { min: 2, max: 30, message: "网站标题限制在2 ~ 30个字符", trigger: "blur" }
@@ -87,80 +77,16 @@ const linkRules = {
     ]
 }
 
-const linkRef = ref<FormInstance>()
+const form = ref<FormInstance>()
 
 // 提交表单
 const submit = () => {
     // 新增之前先校验一下数据是否合法
-    linkRef.value?.validate(async valid => {
+    form.value?.validate(async valid => {
         if (valid) {
-            // const { code } = await addLinkAPI(linkForm.value)
-            // if (code !== 200) return
-
-            // 有ID就是编辑，没有就是新增
-            if (linkForm.value.id) {
-                // 编辑网站
-                const { code } = await editLinkDataAPI(linkForm.value.id!, linkForm.value)
-                if (code !== 200) return
-
-                ElNotification({
-                    title: '成功',
-                    message: "编辑网站成功",
-                    type: 'success',
-                })
-            } else {
-                // 新增网站
-                const { code } = await addLinkDataAPI(linkForm.value)
-                if (code !== 200) return
-
-                ElNotification({
-                    title: '成功',
-                    message: "新增网站成功",
-                    type: 'success',
-                })
-            }
-
-            // 重置校验并初始化数据
-            linkRef.value?.resetFields()
-
-            // 获取最新数据
-            getLinkData()
-
-            // 将选项卡切换到列表
-            tabValue.value = "list"
+           
         }
     })
-}
-
-// 删除网站
-const deleteLink = async (id: number) => {
-    const fn = async () => {
-        const { code } = await delLinkDataAPI(id)
-
-        if (code !== 200) return
-
-        ElNotification({
-            title: '成功',
-            message: "删除网站成功",
-            type: 'success',
-        })
-
-        getLinkData()
-    }
-
-    // 确认是否删除
-    whetherDelete(fn, "网站")
-}
-
-// 修改网站
-const editLink = async (item: Link) => {
-    // delete item.id 可以将item属性的id排除
-
-    // 将选项卡切换到编辑网站
-    tabValue.value = "operate"
-
-    delete item.createtime
-    linkForm.value = item
 }
 </script>
 
@@ -168,7 +94,7 @@ const editLink = async (item: Link) => {
     <div class="page">
         <Title title="网站管理" icon="globe" />
 
-        <el-tabs tab-position="left" v-model="tabValue">
+        <el-tabs tab-position="left" v-model="tab">
             <el-tab-pane label="网站列表" name="list">
                 <div class="search">
                     <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询"
@@ -177,7 +103,7 @@ const editLink = async (item: Link) => {
 
                 <div class="list" v-loading="loading" :element-loading-svg="svg"
                     element-loading-svg-view-box="-10, -10, 50, 50">
-                    <div class="item" v-for="item in linkData">
+                    <div class="item" v-for="item in listTemp">
                         <div class="avatar">
                             <img :src="item.image" alt="">
                         </div>
@@ -196,41 +122,40 @@ const editLink = async (item: Link) => {
                 </div>
 
                 <!-- 空状态 -->
-                <Null style="margin-top: 30px;" v-if="!loading && !linkData?.length" />
+                <Null style="margin-top: 30px;" v-if="!loading && !listTemp?.length" />
             </el-tab-pane>
 
-            <el-tab-pane :label="linkForm.id ? '编辑网站' : '新增网站'" name="operate">
+            <el-tab-pane :label="link.id ? '编辑网站' : '新增网站'" name="operate">
                 <el-row style="flex-direction: column; width: 500px; margin-left: 40px;">
-                    <Title :title="linkForm.id ? '编辑网站' : '新增网站'" icon="globe" class="title" />
+                    <Title :title="link.id ? '编辑网站' : '新增网站'" icon="globe" class="title" />
 
-                    <el-form label-position="top" size="large" ref="linkRef" :rules="linkRules" :model="linkForm">
+                    <el-form label-position="top" size="large" ref="form" :rules="rules" :model="link">
                         <el-form-item label="标题" prop="title">
-                            <el-input v-model="linkForm.title" placeholder="Thrive" />
+                            <el-input v-model="link.title" placeholder="Thrive" />
                         </el-form-item>
 
                         <el-form-item label="描述" prop="description">
-                            <el-input v-model="linkForm.description" placeholder="Thrive" />
+                            <el-input v-model="link.description" placeholder="Thrive" />
                         </el-form-item>
 
                         <el-form-item label="邮箱" prop="email">
-                            <el-input v-model="linkForm.email" placeholder="3311118881@qq.com" />
+                            <el-input v-model="link.email" placeholder="3311118881@qq.com" />
                         </el-form-item>
 
                         <el-form-item label="头像" prop="image">
-                            <el-input v-model="linkForm.image"
-                                placeholder="https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640" />
+                            <el-input v-model="link.image" placeholder="https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640" />
                         </el-form-item>
 
                         <el-form-item label="链接" prop="url">
-                            <el-input v-model="linkForm.url" placeholder="https://liuyuyang.net/" />
+                            <el-input v-model="link.url" placeholder="https://liuyuyang.net/" />
                         </el-form-item>
 
                         <el-form-item label="类型" prop="type">
-                            <el-input v-model="linkForm.type" placeholder="技术类" />
+                            <el-input v-model="link.type" placeholder="技术类" />
                         </el-form-item>
                     </el-form>
 
-                    <el-button type="primary" size="large" @click="submit">{{ linkForm.id ? '编辑网站' : '新增网站' }}</el-button>
+                    <el-button type="primary" size="large" @click="submit">{{ link.id ? '编辑网站' : '新增网站' }}</el-button>
                 </el-row>
             </el-tab-pane>
         </el-tabs>

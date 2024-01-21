@@ -5,14 +5,14 @@ import { getCateListAPI } from '@/api/Cate'
 const loading = ref<boolean>(false)
 
 // 分类列表
-const cateList = ref<Cate[]>()
+const list = ref<Cate[]>()
 
 // 获取分类列表数据
 const getCateList = async () => {
   loading.value = true
 
   const { data } = await getCateListAPI()
-  cateList.value = data.result as Cate[]
+  list.value = data.result as Cate[]
 
   loading.value = false
 }
@@ -28,7 +28,7 @@ getCateList()
     </el-row>
 
     <!-- 分类列表 -->
-    <el-tree :data="cateList" :props="{ children: 'children', label: 'name' }" v-loading="loading"
+    <el-tree :data="list" :props="{ children: 'children', label: 'name' }" v-loading="loading"
       :element-loading-svg="svg" class="cate" :default-expand-all="true">
       <template #default="{ node, data }">
         <el-row justify="space-between" style="width: 100%;">

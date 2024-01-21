@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { ElNotification, FormInstance, FormRules } from 'element-plus'
-import { addTagAPI, delTagAPI, editTagAPI } from '@/api/Tag'
-import { TagList, getTagData } from './logic/getTag'
-import { Tag } from '@/types/Tag';
+import { addTagDataAPI, delTagDataAPI, editTagDataAPI } from '@/api/Tag'
+import { list, getTagList } from './tag'
 
-const TagRef = ref<FormInstance>()
+const form = ref<FormInstance>()
 
-const TagData = ref<Tag>({
-    name: ""
-})
+const tag = ref<Tag>({ name: "" })
 
 // 标签数据校验
 const rules = reactive<FormRules>({
@@ -21,12 +18,10 @@ const rules = reactive<FormRules>({
 // 新增 / 编辑 标签切换
 const title = ref<string>("新增标签");
 
-import { whetherDelete } from '@/utils'
-
 // 删除标签
 const delTagData = async (id: number) => {
     async function fn() {
-        const { code, message } = await delTagAPI(id)
+        const { code, message } = await delTagDataAPI(id)
 
         if (code !== 200) return
 
@@ -36,16 +31,13 @@ const delTagData = async (id: number) => {
             type: 'success',
         })
 
-        getTagData()
+        getTagList()
     }
-
-    // 确认是否删除
-    whetherDelete(fn, "标签")
 }
 
 // 编辑标签
 const editTagData = (data: Tag) => {
-    TagData.value = { ...data }
+    tag.value = { ...data }
     title.value = "编辑标签"
 }
 
@@ -62,7 +54,7 @@ const submit = async (formEl: FormInstance | undefined) => {
             if (code !== 200) return
 
             // 初始化数据
-            TagRef.value?.resetFields()
+            form.value?.resetFields()
 
             ElNotification({
                 title: '成功',
@@ -70,18 +62,18 @@ const submit = async (formEl: FormInstance | undefined) => {
                 type: 'success',
             })
 
-            getTagData()
+            getTagList()
         }
 
         // 有id就是编辑，没有就是新增
-        if (TagData.value.id) {
-            const { code, message } = await editTagAPI(TagData.value.id, TagData.value)
+        if (tag.value.id) {
+            const { code, message } = await editTagDataAPI(tag.value)
 
             title.value = "新增标签"
 
             fn(code, message)
         } else {
-            const { code, message } = await addTagAPI(TagData.value)
+            const { code, message } = await addTagDataAPI(tag.value)
 
             fn(code, message)
         }
@@ -91,7 +83,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 
 <template>
     <div class="page">
-        <el-tabs tab-position="left" class="demo-tabs">
+        <el-tabs tab-position="left" class="tabs">
             <el-tab-pane label="标签墙">
                 <Tags3D />
             </el-tab-pane>
@@ -101,7 +93,7 @@ const submit = async (formEl: FormInstance | undefined) => {
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
                         <div class="title"><i class='bx bx-purchase-tag icon' />标签列表</div>
 
-                        <el-table :data="TagList" width="100%" height="80%" style="height: 800px;">
+                        <el-table :data="list" width="100%" height="80%" style="height: 800px;">
                             <el-table-column prop="id" label="ID" width="100" />
                             <el-table-column prop="name" label="名称" width="180" align="center" />
 
@@ -117,13 +109,13 @@ const submit = async (formEl: FormInstance | undefined) => {
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
                         <div class="title"><i class='bx bx-cog icon' />标签管理</div>
 
-                        <el-form ref="TagRef" :rules="rules" label-position="top" label-width="100px" :model="TagData">
+                        <el-form ref="ref" :rules="rules" label-position="top" label-width="100px" :model="tag">
                             <el-form-item label="标签名称" prop="name">
-                                <el-input v-model="TagData.name" size="large" placeholder="新增标签" />
+                                <el-input v-model="tag.name" size="large" placeholder="新增标签" />
                             </el-form-item>
 
                             <el-form-item>
-                                <el-button type="primary" @click="submit(TagRef!)" size="large" style="width: 100%;">{{
+                                <el-button type="primary" @click="submit(form)" size="large" style="width: 100%;">{{
                                     title
                                 }}</el-button>
                             </el-form-item>
@@ -142,13 +134,13 @@ const submit = async (formEl: FormInstance | undefined) => {
     .title {
         @include title;
 
-        .icon{
+        .icon {
             margin-right: 10px;
             font-size: 25px;
         }
     }
 
-    :deep .demo-tabs {
+    :deep .tabs {
         height: 100%;
 
         .el-tabs__content {
