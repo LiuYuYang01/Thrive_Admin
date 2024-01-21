@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import svg from '@/utils/LoadingIcon'
+import { svg } from '@/utils'
 import moment from 'moment';
 
 const loading = ref<boolean>(false)

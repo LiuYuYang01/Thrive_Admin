@@ -21,7 +21,7 @@ const rules = reactive<FormRules>({
 // 新增 / 编辑 标签切换
 const title = ref<string>("新增标签");
 
-import { whetherToDelete } from '@/utils/ConfirmMessage'
+import { whetherDelete } from '@/utils'
 
 // 删除标签
 const delTagData = async (id: number) => {
@@ -40,7 +40,7 @@ const delTagData = async (id: number) => {
     }
 
     // 确认是否删除
-    whetherToDelete(fn, "标签")
+    whetherDelete(fn, "标签")
 }
 
 // 编辑标签

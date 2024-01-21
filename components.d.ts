@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Add: typeof import('./src/views/Swiper/components/Add.vue')['default']
     Article: typeof import('./src/views/Article/index.vue')['default']
     ArticleCate: typeof import('./src/views/Write/components/ArticleCate.vue')['default']
     ArticleDate: typeof import('./src/views/Write/components/ArticleDate.vue')['default']
@@ -61,15 +60,11 @@ declare module 'vue' {
     Sidebar: typeof import('./src/views/Layout/components/Sidebar.vue')['default']
     Site: typeof import('./src/views/Setup/components/Site.vue')['default']
     Swiper: typeof import('./src/views/Swiper/index.vue')['default']
-    SwiperAdd: typeof import('./src/views/Swiper/components/SwiperAdd.vue')['default']
-    SwiperList: typeof import('./src/views/Swiper/components/SwiperList.vue')['default']
     System: typeof import('./src/views/Setup/components/System.vue')['default']
     SystemParame: typeof import('./src/views/Home/components/SystemParame.vue')['default']
     Tag: typeof import('./src/views/Tag/index.vue')['default']
     Tags3D: typeof import('./src/views/Tag/components/Tags3D.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
-    User: typeof import('./src/views/Setup/components/User.vue')['default']
-    Web: typeof import('./src/views/Setup/components/Web.vue')['default']
     Work: typeof import('./src/views/Work/index.vue')['default']
     Write: typeof import('./src/views/Write/index.vue')['default']
   }

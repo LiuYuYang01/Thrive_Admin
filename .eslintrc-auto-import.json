@@ -4,6 +4,9 @@
     "ComponentPublicInstance": true,
     "ComputedRef": true,
     "EffectScope": true,
+    "ElMessage": true,
+    "ElMessageBox": true,
+    "ElNotification": true,
     "InjectionKey": true,
     "PropType": true,
     "Ref": true,
@@ -284,9 +287,6 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true,
-    "ElNotification": true,
-    "ElMessageBox": true,
-    "ElMessage": true
+    "whenever": true
   }
 }

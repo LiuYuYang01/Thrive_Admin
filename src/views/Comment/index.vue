@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import moment from 'moment';
-import svg from '@/utils/LoadingIcon'
+import { svg } from '@/utils'
 
 const tab = ref<string>()
 const loading = ref<boolean>(false)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { addLinkDataAPI, delLinkDataAPI, editLinkDataAPI, getLinkDataAPI } from '@/api/Link'
-import { whetherToDelete } from '@/utils/ConfirmMessage';
+import { whetherDelete } from '@/utils';
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
 
@@ -149,7 +149,7 @@ const deleteLink = async (id: number) => {
     }
 
     // 确认是否删除
-    whetherToDelete(fn, "网站")
+    whetherDelete(fn, "网站")
 }
 
 // 修改网站
