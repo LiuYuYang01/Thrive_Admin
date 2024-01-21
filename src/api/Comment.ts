@@ -1,25 +1,22 @@
 import Request from '@/utils/Request'
 
 // 新增评论
-export const addCommentDataAPI = (data: Comment) => Request("POST", "/comment", data)
+export const addCommentDataAPI = (data: Comment) => Request<Comment>("POST", "/comment", data)
 
-// 审核评论
-export const auditCommentDataAPI = (id: number) => Request("PATCH", `/comment/audit/${id}`)
+// 删除评论
+export const delCommentDataAPI = (id: number) => Request<Comment>("DELETE", `/comment/${id}`)
 
-// 获取评论信息
-export const getCommentDataAPI = (id: number) => Request<Comment[]>("GET", `/comment/${id}`);
+// 修改评论
+export const editCommentDataAPI = (data: Comment) => Request<Comment>("PATCH", "/comment", data)
+
+// 获取评论
+export const getCommentDataAPI = (id?: number) => Request<Paginate<Comment>>("GET", `/comment/${id}`)
 
 // 获取评论列表
-export const getCommentAllAPI = () => {
-  return Request<Comment[]>("GET", "/comment");
-};
-
-// 分页查询评论列表
-export const getCommentListAPI = (params?: Page) => {
-  // 如果有参数就是分页查询，没有参数就是查询全部
-  if (params) {
-    return Request<Comment[]>("GET", `/comment/paginate?page=${params.page}&size=${params.size}`);
-  } else {
-    return Request<Comment[]>("GET", "/comment/paginate");
-  }
+export const getCommentListAPI = (page?: Page) => {
+    if (page) {
+        return Request<Comment[]>("GET", `/comment?page=${page.page}&size=${page.size}`);
+    } else {
+        return Request<Comment[]>("GET", `/comment`);
+    }
 };

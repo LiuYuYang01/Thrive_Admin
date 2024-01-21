@@ -7,7 +7,16 @@ export const addLinkDataAPI = (data: Link) => Request<Link>("POST", "/link", dat
 export const delLinkDataAPI = (id: number) => Request<Link>("DELETE", `/link/${id}`)
 
 // 修改网站
-export const editLinkDataAPI = (id: number, data: Link) => Request<Link>("PATCH", `/link/${id}`, data)
+export const editLinkDataAPI = (data: Link) => Request<Link>("PATCH", "/link", data)
 
-// 获取网站：传ID代表获取单个，不传代表所有
-export const getLinkDataAPI = (id?: number) => id ? Request<Link>("GET", `/link/${id}`) : Request<Paginate<Link[]>>("GET", "/link")
+// 获取网站
+export const getLinkDataAPI = (id?: number) => Request<Paginate<Link>>("GET", `/link/${id}`)
+
+// 获取网站列表
+export const getLinkListAPI = (page?: Page) => {
+    if (page) {
+        return Request<Link[]>("GET", `/link?page=${page.page}&size=${page.size}`);
+    } else {
+        return Request<Link[]>("GET", `/link`);
+    }
+};

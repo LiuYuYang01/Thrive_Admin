@@ -65,6 +65,7 @@ declare module 'vue' {
     Tag: typeof import('./src/views/Tag/index.vue')['default']
     Tags3D: typeof import('./src/views/Tag/components/Tags3D.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
+    Web: typeof import('./src/views/Setup/components/Web.vue')['default']
     Work: typeof import('./src/views/Work/index.vue')['default']
     Write: typeof import('./src/views/Write/index.vue')['default']
   }

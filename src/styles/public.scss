@@ -1,0 +1,98 @@
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+input,
+textarea,
+th,
+td,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    outline: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #f9f9f9;
+}
+
+body {
+    font-size: 15px;
+    color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+input,
+textarea {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+/* 文本渐变 */
+.text-gradient {
+    display: inline-block;
+    color: #8f75da;
+    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#8f75da), to(#727cf5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// 页面布局
+.page {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    margin: 20px;
+    border-radius: $round;
+    background-color: #fff;
+    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+}

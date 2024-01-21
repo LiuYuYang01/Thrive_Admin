@@ -1,13 +1,22 @@
 import Request from '@/utils/Request'
 
-// 新增分类：传cid代表新增一级分类，不传代表新增二级
-export const addCateDataAPI = (data: Cate, cid?: number) => cid ? Request<Cate>("POST", "/cate", { ...data, cid }) : Request<Cate>("POST", "/cate", data)
+// 新增分类
+export const addCateDataAPI = (data: Cate) => Request<Cate>("POST", "/cate", data)
 
 // 删除分类
-export const delCateDataAPI = (id: number, level: string) => Request<Cate>("DELETE", `/cate/${id}`, { level })
+export const delCateDataAPI = (id: number) => Request<Cate>("DELETE", `/cate/${id}`)
 
 // 修改分类
-export const editCateDataAPI = (data: Cate, id: number, level: string) => Request<Cate>("PATCH", `/cate/${id}`, { ...data, level })
+export const editCateDataAPI = (data: Cate) => Request<Cate>("PATCH", "/cate", data)
 
-// 获取分类：传ID代表获取单个分类，不传代表所有分类
-export const getCateDataAPI = (id?: number) => id ? Request<Paginate<Cate>>("GET", `/cate/${id}`) : Request<Paginate<Cate[]>>("GET", "/cate")
+// 获取分类
+export const getCateDataAPI = (id?: number) => Request<Paginate<Cate>>("GET", `/cate/${id}`)
+
+// 获取评论列表
+export const getCateListAPI = (page?: Page) => {
+    if (page) {
+        return Request<Cate[]>("GET", `/cate?page=${page.page}&size=${page.size}`);
+    } else {
+        return Request<Cate[]>("GET", `/cate`);
+    }
+};
