@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { addLinkAPI, delLinkAPI, editLinkAPI, getLinkAPI } from '@/api/Link'
-import { Link } from '@/types/Link'
+import { addLinkDataAPI, delLinkDataAPI, editLinkDataAPI, getLinkDataAPI } from '@/api/Link'
 import { whetherToDelete } from '@/utils/ConfirmMessage';
 import { Search } from '@element-plus/icons-vue'
 import { FormInstance } from 'element-plus'
@@ -28,8 +27,8 @@ const linkData = ref<Link[]>(linkList.value)
 const getLinkData = async () => {
     loading.value = true
 
-    const { data } = await getLinkAPI();
-    linkList.value = data as Link[]
+    const { data } = await getLinkDataAPI();
+    linkList.value = data.result as Link[]
     linkData.value = linkList.value
 
     loading.value = false
@@ -101,7 +100,7 @@ const submit = () => {
             // 有ID就是编辑，没有就是新增
             if (linkForm.value.id) {
                 // 编辑网站
-                const { code } = await editLinkAPI(linkForm.value.id!, linkForm.value)
+                const { code } = await editLinkDataAPI(linkForm.value.id!, linkForm.value)
                 if (code !== 200) return
 
                 ElNotification({
@@ -111,7 +110,7 @@ const submit = () => {
                 })
             } else {
                 // 新增网站
-                const { code } = await addLinkAPI(linkForm.value)
+                const { code } = await addLinkDataAPI(linkForm.value)
                 if (code !== 200) return
 
                 ElNotification({
@@ -136,7 +135,7 @@ const submit = () => {
 // 删除网站
 const deleteLink = async (id: number) => {
     const fn = async () => {
-        const { code } = await delLinkAPI(id)
+        const { code } = await delLinkDataAPI(id)
 
         if (code !== 200) return
 
@@ -160,7 +159,7 @@ const editLink = async (item: Link) => {
     // 将选项卡切换到编辑网站
     tabValue.value = "operate"
 
-    delete item.date
+    delete item.createtime
     linkForm.value = item
 }
 </script>

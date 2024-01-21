@@ -1,10 +1,10 @@
-export interface Response<T> {
+interface Response<T> {
     code: number,
     message: string
     data: T
 }
 
-export interface Paginate<T> {
+interface Paginate<T> {
     next: boolean,
     prev: boolean,
     page: number,

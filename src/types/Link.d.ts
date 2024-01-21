@@ -1,4 +1,4 @@
-export interface Link {
+interface Link {
   id?: number;
   title: string;
   description: string;
@@ -6,5 +6,5 @@ export interface Link {
   image: string;
   url: string;
   type: string;
-  date?: string;
+  createtime?: string;
 }

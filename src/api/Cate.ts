@@ -1,5 +1,4 @@
 import Request from '@/utils/Request'
-import { Paginate } from '@/types/Response'
 
 // 新增分类：传cid代表新增一级分类，不传代表新增二级
 export const addCateDataAPI = (data: Cate, cid?: number) => cid ? Request<Cate>("POST", "/cate", { ...data, cid }) : Request<Cate>("POST", "/cate", data)

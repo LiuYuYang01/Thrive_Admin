@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import type { Response } from "@/types/Response";
 import { Action, ElMessageBox, ElNotification } from "element-plus";
 import { useUserStore } from "@/stores";
 
