@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Add: typeof import('./src/views/Swiper/components/Add.vue')['default']
     Article: typeof import('./src/views/Article/index.vue')['default']
     ArticleCate: typeof import('./src/views/Write/components/ArticleCate.vue')['default']
     ArticleDate: typeof import('./src/views/Write/components/ArticleDate.vue')['default']
@@ -47,7 +48,9 @@ declare module 'vue' {
     Layout: typeof import('./src/views/Layout/index.vue')['default']
     Linear: typeof import('./src/views/Home/components/Linear.vue')['default']
     Link: typeof import('./src/views/Link/index.vue')['default']
+    List: typeof import('./src/views/Swiper/components/List.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
+    Manage: typeof import('./src/views/Swiper/components/Manage.vue')['default']
     My: typeof import('./src/views/Setup/components/My.vue')['default']
     Null: typeof import('./src/components/Null/index.vue')['default']
     Recording: typeof import('./src/views/Home/components/Recording.vue')['default']
