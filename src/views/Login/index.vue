@@ -14,7 +14,7 @@ const isPass = ref<string>("password")
 const isPassCut = () => isPass.value === "password" ? isPass.value = "text" : isPass.value = "password"
 
 // 登录信息
-const loginInfo = reactive<LoginForm>({
+const loginInfo = reactive<Login>({
   username: 'liuyuyang',
   password: '123123',
 })
@@ -22,7 +22,7 @@ const loginInfo = reactive<LoginForm>({
 const form = ref<FormInstance>()
 
 // 登录数据校验
-const rules = reactive<FormRules<LoginForm>>({
+const rules = reactive<FormRules<Login>>({
   username: [
     { required: true, message: "用户不能为空", trigger: "blur" },
     { min: 6, max: 16, message: "用户名限制在6 ~ 16个字符", trigger: "blur" }

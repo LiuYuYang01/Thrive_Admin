@@ -11,13 +11,13 @@ const list = [
     title: "系统配置",
     description: "系统配置描述信息",
     icon: "shield-quarter",
-    path: "/setup/"
+    path: "/setup/system"
   },
   {
     title: "网站设置",
     description: "网站设置描述信息",
     icon: "globe",
-    path: "/setup/site"
+    path: "/setup/web"
   },
   {
     title: "个人设置",

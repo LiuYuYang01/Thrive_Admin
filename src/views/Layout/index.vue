@@ -19,20 +19,32 @@ onBeforeRouteUpdate(to => {
       <!-- 顶部 -->
       <Header />
 
-      <!-- <div :class="path !== '/home' ? 'page' : ''">
-        <RouterView></RouterView>
-      </div> -->
-
       <RouterView></RouterView>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+/* 定义滚动条的高度、宽度和颜色 */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 0;
+}
+
+/* 定义滚动条滑块的样式 */
+::-webkit-scrollbar-thumb {
+  /* 滑块的颜色 */
+  background-color: #727cf5;
+  /* 滑块的圆角 */
+  border-radius: 5px;
+}
+
 .container {
   display: flex;
+  height: 100vh;
 
   .main {
+    overflow: scroll;
     position: relative;
     width: 100%;
   }

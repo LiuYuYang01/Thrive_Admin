@@ -68,20 +68,10 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
 
 // 导航下拉图标是否显示隐藏
 const isIcon = (one: any) => one.children && !one.children?.every((item: any) => item.meta.hidden)
-
-onMounted(() => {
-    const Sidebar: HTMLElement = document.querySelector(".Sidebar")!
-    console.log(Sidebar);
-
-    window.addEventListener("resize", () => {
-        console.log(window.innerHeight);
-        console.log(Sidebar?.offsetHeight, 222);
-    })
-})
 </script>
 
 <template>
-  <div class="Sidebar">
+  <div class="sidebar" ref="sidebar">
     <div class="logo" @click="router.push('/')">
       <a href="javascript:;">Thrive</a>
     </div>
@@ -121,9 +111,17 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.Sidebar {
-  width: 240px;
-  height: 100vh;
+/* 定义滚动条滑块的样式 */
+::-webkit-scrollbar-thumb {
+  /* 滑块的颜色 */
+  background-color: #d2d2d2 !important;
+  /* 滑块的圆角 */
+  border-radius: 5px;
+}
+
+.sidebar {
+  overflow: scroll;
+  min-width: 230px;
   background-image: linear-gradient(135deg, #8f75da 0%, #727cf5 60%);
   // background-color: #3e4656;
   box-shadow: 15px 2px 18px -3px rgba(121, 122, 243, 0.1);

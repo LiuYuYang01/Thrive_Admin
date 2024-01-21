@@ -11,12 +11,12 @@ const store = useUserStore()
 
     <!-- 信息 -->
     <div class="info">
-      <h3 class="text-gradient">Hello {{ store.userInfo?.name || '未命名' }} ! 欢迎使用 Thrive 后台管理系统</h3>
+      <h3 class="text-gradient">Hello {{ store.user?.name || '未命名' }} ! 欢迎使用 Thrive 后台管理系统</h3>
 
       <p>
         <el-icon>
           <EditPen />
-        </el-icon> {{store.userInfo?.introduce || '互联网从不缺乏天才，而努力才是最终的入场券！'}}
+        </el-icon> {{store.user?.info || '快去写一个 个性签名~'}}
       </p>
     </div>
   </div>

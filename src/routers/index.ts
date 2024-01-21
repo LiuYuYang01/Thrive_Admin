@@ -83,13 +83,13 @@ export const routes = [
         meta: { title: "配置", icon: "cog" },
         children: [
           {
-            path: "",
-            component: () => import("@/views/Setup/components/Setup.vue"),
+            path: "system",
+            component: () => import("@/views/Setup/components/System.vue"),
             meta: { title: "系统配置" },
           },
           {
-            path: "site",
-            component: () => import("@/views/Setup/components/Site.vue"),
+            path: "web",
+            component: () => import("@/views/Setup/components/Web.vue"),
             meta: { title: "网站管理" },
           },
           {

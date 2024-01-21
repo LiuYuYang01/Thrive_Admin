@@ -1,14 +1,9 @@
-interface LoginForm {
+interface Login {
     username: string,
     password: string
 }
 
-interface account {
-    token: string,
-    user: User
-}
-
-interface User extends LoginForm{
+interface UserInfo {
     id?: number,
     name: string,
     email: string,
@@ -17,7 +12,14 @@ interface User extends LoginForm{
     role?: string
 }
 
-interface updateUser{
+type User = Login & UserInfo
+
+interface account {
+    token: string,
+    user: User
+}
+
+interface editUser {
     username: string,
     oldPassword: string,
     newPassword: string
