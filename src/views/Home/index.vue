@@ -8,7 +8,7 @@
         <HeaderInfo />
 
         <!-- 系统信息 -->
-        <SystemParame />
+        <SystemInfo />
 
         <div class="box">
             <Linear />

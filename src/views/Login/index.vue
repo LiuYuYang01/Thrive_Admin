@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { useUserStore } from '@/stores'
+import { loginDataAPI } from '@/api/User';
 import { User, Lock, View, Hide } from '@element-plus/icons-vue'
 import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { loginAPI } from '@/api/User'
-import { useUserStore } from '@/stores'
 
 const store = useUserStore()
 const route = useRoute()
 const router = useRouter()
+const form = ref<FormInstance>()
 
 // 是否显示密码
 const isPass = ref<string>("password")
@@ -14,12 +15,10 @@ const isPass = ref<string>("password")
 const isPassCut = () => isPass.value === "password" ? isPass.value = "text" : isPass.value = "password"
 
 // 登录信息
-const loginInfo = reactive<Login>({
+const login = reactive<Login>({
   username: 'liuyuyang',
   password: '123123',
 })
-
-const form = ref<FormInstance>()
 
 // 登录数据校验
 const rules = reactive<FormRules<Login>>({
@@ -42,11 +41,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     if (!valid) return
 
     // 校验通过
-    const { code, data, message } = await loginAPI(loginInfo)
+    const { code, data, message } = await loginDataAPI(login)
+    store.token = data.token
+    store.user = data.user
 
     ElNotification({
       title: '成功',
-      message: message,
+      message: "登录成功：欢迎回来 🎉",
       type: 'success',
     })
 
@@ -57,9 +58,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       // 登录成功后跳转到首页
       router.push("/home")
     }
-
-    // 将登录的数据保存到本地
-    store.setUser(data, "login")
   })
 }
 </script>
@@ -72,13 +70,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         <p>现代化博客管理系统</p>
       </div>
 
-      <el-form ref="form" :model="loginInfo" :rules="rules" label-position="top" size="large" style="padding: 20px 40px;">
+      <el-form ref="form" :model="login" :rules="rules" label-position="top" size="large" style="padding: 20px 40px;">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginInfo.username" :prefix-icon="User" placeholder="请输入用户名" />
+          <el-input v-model="login.username" :prefix-icon="User" placeholder="请输入用户名" />
         </el-form-item>
 
         <el-form-item label="密码" prop="password">
-          <el-input :type="isPass" v-model="loginInfo.password" :prefix-icon="Lock" placeholder="请输入密码">
+          <el-input :type="isPass" v-model="login.password" :prefix-icon="Lock" placeholder="请输入密码">
 
             <!-- 小眼睛图标 -->
             <template #suffix>

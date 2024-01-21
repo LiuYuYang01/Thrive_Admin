@@ -12,9 +12,7 @@ navList.value.forEach((item: { meta: any; }) => {
   if (!show) item.meta.show = false
 })
 
-
 const router = useRouter()
-
 
 const nav_active = JSON.parse(sessionStorage.getItem("nav_active")!)
 
@@ -23,7 +21,6 @@ const active = reactive(nav_active || {
   one: "/home",
   two: ""
 })
-
 
 // 导航选中及切换效果
 const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
@@ -38,8 +35,6 @@ const toPath = (index: number, path: string, type: "one" | "two" = "one") => {
     navList.value[index].meta.show = !navList.value[index].meta.show
     // 将展开的导航记录在会话存储中，这样页面刷新后之前打开的菜单不会被折叠起来
     sessionStorage.setItem("navList", JSON.stringify(navList.value))
-
-
 
     // 如果一级导航中有二级的或者所有hidden属性为true，就不让他跳转路由
     const r = navList.value[index].children

@@ -73,26 +73,3 @@ textarea {
     resize: none;
     overflow: auto;
 }
-
-/* 文本渐变 */
-.text-gradient {
-    display: inline-block;
-    color: #8f75da;
-    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#8f75da), to(#727cf5));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-// 页面布局
-.page {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
-    margin: 20px;
-    border-radius: $round;
-    background-color: #fff;
-    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
-}

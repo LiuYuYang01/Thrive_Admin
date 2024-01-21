@@ -1,12 +1,12 @@
 <script setup lang="ts">
-const router = useRouter()
+// const router = useRouter()
 
-const path = ref<string>("")
-path.value = router.currentRoute.value.path
+// const path = ref<string>("")
+// path.value = router.currentRoute.value.path
 
-onBeforeRouteUpdate(to => {
-  path.value = to.path
-})
+// onBeforeRouteUpdate(to => {
+//   path.value = to.path
+// })
 </script>
 
 <template>

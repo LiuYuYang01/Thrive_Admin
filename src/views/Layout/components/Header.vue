@@ -2,18 +2,6 @@
 import { useUserStore } from '@/stores'
 const store = useUserStore()
 const router = useRouter()
-
-// 从pinia中获取用户信息
-store.getUser()
-
-// 退出登录
-const quit = () => {
-    // 清空用户信息
-    store.delUser()
-
-    // 跳转到登录页
-    router.push("/login")
-}
 </script>
 
 <template>
@@ -36,7 +24,7 @@ const quit = () => {
                     <div class="box">
                         <dl>
                             <dd @click="router.push('/setup/my')"><i class='bx bx-user icon'></i>个人设置</dd>
-                            <dd @click="quit"><i class='bx bx-exit icon'></i>退出登录</dd>
+                            <dd @click="store.quitLogin"><i class='bx bx-exit icon'></i>退出登录</dd>
                         </dl>
                     </div>
                 </el-collapse-transition>

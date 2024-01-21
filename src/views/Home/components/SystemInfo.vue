@@ -1,10 +1,9 @@
 <script setup lang="ts">
 // 引入时间插件
 import moment from 'moment';
-import { SystemParame } from '@/types/System'
 
 // 系统配置信息
-const Percentage = ref<SystemParame>({
+const Percentage = ref<System>({
     cpu: 0,
     memory: {
         memoryAvailable: 0,
@@ -46,16 +45,16 @@ const colors = [
 ]
 
 // 获取系统信息
-import { getSystemParameAPI } from '@/api/System'
-const getSystemParameData = async () => {
+import { getSystemDataAPI } from '@/api/System'
+const getSystemData = async () => {
     loading.value = true
 
-    const { data } = await getSystemParameAPI()
+    const { data } = await getSystemDataAPI()
     Percentage.value = data
 
     loading.value = false
 }
-getSystemParameData()
+getSystemData()
 </script>
 
 <template>
@@ -63,7 +62,7 @@ getSystemParameData()
         element-loading-svg-view-box="-10, -10, 50, 50">
         <div class="title">
             <div><box-icon name='tachometer' />系统信息</div>
-            <div style="cursor: pointer;" @click="getSystemParameData"><box-icon name='refresh' /></div>
+            <div style="cursor: pointer;" @click="getSystemData"><box-icon name='refresh' /></div>
         </div>
 
         <div class="list">

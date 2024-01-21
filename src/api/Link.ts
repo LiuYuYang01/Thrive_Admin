@@ -15,8 +15,8 @@ export const getLinkDataAPI = (id?: number) => Request<Paginate<Link>>("GET", `/
 // 获取网站列表
 export const getLinkListAPI = (page?: Page) => {
     if (page) {
-        return Request<Link[]>("GET", `/link?page=${page.page}&size=${page.size}`);
+        return Request<Paginate<Link[]>>("GET", `/link?page=${page.page}&size=${page.size}`);
     } else {
-        return Request<Link[]>("GET", `/link`);
+        return Request<Paginate<Link[]>>("GET", `/link`);
     }
 };

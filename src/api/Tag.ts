@@ -15,8 +15,8 @@ export const getTagDataAPI = (id?: number) => Request<Paginate<Tag>>("GET", `/ta
 // 获取标签列表
 export const getTagListAPI = (page?: Page) => {
     if (page) {
-        return Request<Tag[]>("GET", `/tag?page=${page.page}&size=${page.size}`);
+        return Request<Paginate<Tag[]>>("GET", `/tag?page=${page.page}&size=${page.size}`);
     } else {
-        return Request<Tag[]>("GET", `/tag`);
+        return Request<Paginate<Tag[]>>("GET", `/tag`);
     }
 };

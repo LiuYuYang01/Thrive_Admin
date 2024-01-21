@@ -20,9 +20,7 @@ instance.interceptors.request.use(
     const store = useUserStore();
 
     // 如果有token就把赋值给请求头
-    if (store.token) {
-      config.headers["Authorization"] = `Bearer ${store.token}`;
-    }
+    if (store.token) config.headers["Authorization"] = `Bearer ${store.token}`;
 
     return config;
   },
@@ -40,6 +38,20 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   (res: AxiosResponse) => {
+    // 如果code为401就证明认证失败
+    if (res.data.code === 401) {
+      const store = useUserStore();
+
+      return ElMessageBox.alert('🔒️ 登录已过期，是否重新登录?', '暂无权限', {
+        confirmButtonText: '去登录',
+        showClose: false,
+        callback: (action: Action) => {
+          // 删除用户信息
+          store.quitLogin()
+        }
+      })
+    }
+
     // 只要code不等于200, 就相当于响应失败
     if (res.data?.code !== 200) {
       // 程序异常：增删改查失败导致状态码不等于200
@@ -55,20 +67,6 @@ instance.interceptors.response.use(
     return res.data;
   },
   (err: AxiosError) => {
-    // 如果401相当于认证失败
-    if (err.response?.status === 401) {
-      const store = useUserStore();
-
-      return ElMessageBox.alert('登录已过期，是否重新登录?', '暂无权限', {
-        confirmButtonText: '去登录',
-        showClose: false,
-        callback: (action: Action) => {
-          // 删除用户信息
-          store.delUser();
-        }
-      })
-    }
-
     // 服务器异常：网络错误、请求超时、状态码不在200-299之间等等
     ElNotification({
       title: "服务器异常",

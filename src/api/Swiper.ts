@@ -15,8 +15,8 @@ export const getSwiperDataAPI = (id?: number) => Request<Paginate<Swiper>>("GET"
 // 获取轮播图列表
 export const getSwiperListAPI = (page?: Page) => {
     if (page) {
-        return Request<Swiper[]>("GET", `/swiper?page=${page.page}&size=${page.size}`);
+        return Request<Paginate<Swiper[]>>("GET", `/swiper?page=${page.page}&size=${page.size}`);
     } else {
-        return Request<Swiper[]>("GET", `/swiper`);
+        return Request<Paginate<Swiper[]>>("GET", `/swiper`);
     }
 };

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { svg } from '@/utils'
-import { getCateDataAPI } from '@/api/Cate'
+import { getCateListAPI } from '@/api/Cate'
 
 const loading = ref<boolean>(false)
 
@@ -11,7 +11,7 @@ const cateList = ref<Cate[]>()
 const getCateList = async () => {
   loading.value = true
 
-  const { data } = await getCateDataAPI()
+  const { data } = await getCateListAPI()
   cateList.value = data.result as Cate[]
 
   loading.value = false

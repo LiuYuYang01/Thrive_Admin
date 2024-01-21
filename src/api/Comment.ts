@@ -15,8 +15,8 @@ export const getCommentDataAPI = (id?: number) => Request<Paginate<Comment>>("GE
 // 获取评论列表
 export const getCommentListAPI = (page?: Page) => {
     if (page) {
-        return Request<Comment[]>("GET", `/comment?page=${page.page}&size=${page.size}`);
+        return Request<Paginate<Comment[]>>("GET", `/comment?page=${page.page}&size=${page.size}`);
     } else {
-        return Request<Comment[]>("GET", `/comment`);
+        return Request<Paginate<Comment[]>>("GET", `/comment`);
     }
 };

@@ -18,8 +18,8 @@ export const getArticleDataAPI = (id?: number) => Request<Article>("GET", `/arti
 // 获取文章列表
 export const getArticleListAPI = (page?: Page) => {
   if (page) {
-    return Request<Article[]>("GET", `/article?page=${page.page}&size=${page.size}`);
+    return Request<Paginate<Article[]>>("GET", `/article?page=${page.page}&size=${page.size}`);
   } else {
-    return Request<Article[]>("GET", `/article`);
+    return Request<Paginate<Article[]>>("GET", `/article`);
   }
 };
