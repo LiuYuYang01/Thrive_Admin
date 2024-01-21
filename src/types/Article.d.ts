@@ -4,6 +4,7 @@ interface Article {
     description: string,
     content: string,
     cover: string,
+    cids: number[],
     cate: string,
     tag: string,
     view?: number

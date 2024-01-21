@@ -29,9 +29,14 @@ const colors = ref<string[]>(['info', '', 'success', 'danger', 'warning'])
         <el-table :data="list" v-loading="loading" :element-loading-svg="svg"
             element-loading-svg-view-box="-10, -10, 50, 50" class="table">
             <el-table-column prop="id" label="ID" width="80" align="center" />
-            <el-table-column prop="title" label="📑 标题" width="180" align="center" />
-            <el-table-column prop="description" label="摘要" width="300" aligFn="sketch" />
-            <el-table-column prop="cate" label="🗂️ 分类" width="130" align="center" />
+            <el-table-column prop="title" label="📑 标题" width="270" align="center" />
+            <el-table-column prop="description" label="摘要" width="300" align="center"/>
+            <el-table-column prop="cate" label="🗂️ 分类" width="130" align="center">
+                <template #default="{ row }">
+                    <span>{{ row.cate[0].name }}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column prop="tag" label="🏷️ 标签" width="230" align="center">
                 <template #default="{ row }">
                     <el-row justify="space-evenly">
@@ -40,6 +45,7 @@ const colors = ref<string[]>(['info', '', 'success', 'danger', 'warning'])
                     </el-row>
                 </template>
             </el-table-column>
+
             <el-table-column prop="view" label="🔥 浏览量" width="100" align="center" />
             <el-table-column prop="comment" label="🔢 评论数量" width="120" align="center" />
             <el-table-column prop="createtime" label="⏰ 发布时间" width="180" align="center">

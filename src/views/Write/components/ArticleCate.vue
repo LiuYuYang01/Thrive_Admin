@@ -2,7 +2,7 @@
 import { svg } from '@/utils'
 import { getCateListAPI } from '@/api/Cate'
 
-const props = defineProps<{ modelValue: string }>()
+const props = defineProps<{ modelValue: number[] }>()
 const emit = defineEmits<{ (e: "update:modelValue", name: string): void }>()
 
 const tree = ref()
@@ -24,7 +24,8 @@ getCateList()
 
 const handleCheckChange = (data: any) => {
     // 通过tree实例获取选中的分类
-    const SelectedCate = tree.value.getCheckedKeys().join(',')
+    const SelectedCate = tree.value.getCheckedKeys()
+    
     emit("update:modelValue", SelectedCate)
 }
 </script>
@@ -34,7 +35,7 @@ const handleCheckChange = (data: any) => {
         <div class="title">分类列表</div>
 
         <div class="list">
-            <el-tree :data="list" :props="{ children: 'children', label: 'name' }" node-key="name" show-checkbox
+            <el-tree :data="list" :props="{ children: 'children', label: 'name' }" node-key="id" :default-expanded-keys="modelValue" :default-checked-keys="modelValue" show-checkbox
                 v-loading="loading" :element-loading-svg="svg" @check-change="handleCheckChange" ref="tree" />
         </div>
     </div>

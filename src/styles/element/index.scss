@@ -3,24 +3,24 @@
     $colors: (
         "primary": (
             // 主色
-            "base": #727cf5,
+            "base": #727cf5
         ),
         "success": (
             // 成功色
-            "base": #1dc779,
+            "base": #1dc779
         ),
         "warning": (
             // 警告色
-            "base": #ffb302,
+            "base": #ffb302
         ),
         "danger": (
             // 危险色
-            "base": #f56c6c,
+            "base": #f56c6c
         ),
         "error": (
             // 错误色
-            "base": #cf4444,
-        ),
+            "base": #cf4444
+        )
     )
 );
 
@@ -30,4 +30,10 @@
         background-color: #727cf5;
         box-shadow: none;
     }
+}
+
+// 自定义时间框样式
+.el-date-table > tbody > tr:first-child,
+.el-date-picker__time-header {
+    display: none;
 }

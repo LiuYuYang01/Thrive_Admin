@@ -2,25 +2,28 @@
 import moment from 'moment'
 import { addArticleDataAPI, editArticleDataAPI, getArticleDataAPI } from '@/api/Article'
 import { Edit, Picture, Setting } from '@element-plus/icons-vue'
-import { FormInstance } from 'element-plus'
+import { FormInstance, ElNotification } from 'element-plus'
 
 const form = ref<FormInstance>()
 
-// 文章数据
-const article = ref<Article>(localStorage.getItem("article") ? JSON.parse(localStorage.getItem("article")!) : {
+// 文章草稿
+const localData = localStorage.getItem("article")
+
+// 从本地读取草稿，如果有，就加载草稿数据
+const article = ref<Article>(localData ? JSON.parse(localData!) : {
     title: "",
-    sketch: "",
+    description: "",
     content: "",
     cover: "",
-    cate: "",
+    cids: [2, 6],
     tag: "",
-    date: new Date()
+    createtime: new Date()
 })
 
 // 保存文章
 const save = () => {
     // 保存文章到本地
-    localStorage.setItem("article", JSON.stringify({ ...article.value, cate: "" }))
+    localStorage.setItem("article", JSON.stringify({ ...article.value }))
 
     ElNotification({
         title: '成功',
@@ -46,6 +49,8 @@ const rules = {
             <div class="edit">
                 <el-form ref="form" :rules="rules" :model="article">
                     <el-form-item prop="title">
+                        {{ article }}
+
                         <!-- 文章标题 -->
                         <el-input v-model="article.title" size="large" :prefix-icon="Edit" placeholder="给这篇文章定义个标题吧！" />
                     </el-form-item>
@@ -74,7 +79,7 @@ const rules = {
             <!-- 侧边栏 -->
             <div class="sidebar">
                 <!-- 分类 -->
-                <ArticleCate v-model="article.cate" />
+                <ArticleCate v-model="article.cids" />
 
                 <!-- 日期 -->
                 <ArticleDate v-model="article.createtime" />
