@@ -2,6 +2,7 @@
 import { ElNotification, FormInstance, FormRules } from 'element-plus'
 import { addTagDataAPI, delTagDataAPI, editTagDataAPI } from '@/api/Tag'
 import { list, getTagList } from './tag'
+import { whetherToDelete } from '@/utils';
 
 const form = ref<FormInstance>()
 
@@ -33,11 +34,14 @@ const delTagData = async (id: number) => {
 
         getTagList()
     }
+
+    // 确认是否删除
+    whetherToDelete(fn, "标签")
 }
 
 // 编辑标签
 const editTagData = (data: Tag) => {
-    tag.value = { ...data }
+    tag.value = data
     title.value = "编辑标签"
 }
 
@@ -50,9 +54,7 @@ const submit = async (formEl: FormInstance | undefined) => {
         if (!valid) return
 
         // 逻辑复用
-        const fn = (code: number, message: string) => {
-            if (code !== 200) return
-
+        const fn = (message: string) => {
             // 初始化数据
             form.value?.resetFields()
 
@@ -67,15 +69,15 @@ const submit = async (formEl: FormInstance | undefined) => {
 
         // 有id就是编辑，没有就是新增
         if (tag.value.id) {
-            const { code, message } = await editTagDataAPI(tag.value)
+            await editTagDataAPI(tag.value)
 
             title.value = "新增标签"
 
-            fn(code, message)
+            fn("🎉编辑标签成功")
         } else {
-            const { code, message } = await addTagDataAPI(tag.value)
+            await addTagDataAPI(tag.value)
 
-            fn(code, message)
+            fn("🎉新增标签成功")
         }
     })
 }
@@ -91,6 +93,23 @@ const submit = async (formEl: FormInstance | undefined) => {
             <el-tab-pane label="标签管理">
                 <el-row justify="space-between" style="padding: 30px 80px">
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
+                        <div class="title"><i class='bx bx-cog icon' />标签管理</div>
+
+                        <el-form ref="form" :rules="rules" label-position="top" label-width="100px" :model="tag">
+                            <el-form-item label="标签名称" prop="name">
+                                <el-input v-model="tag.name" size="large" placeholder="新增标签" />
+                            </el-form-item>
+
+                            <el-form-item>
+                                <el-button type="primary" @click="submit(form)" size="large" style="width: 100%;">{{ title
+                                }}</el-button>
+                            </el-form-item>
+                        </el-form>
+
+                        <img src="@/assets/svg/tag.svg" alt="" style="width: 100%; margin-top: 70px;">
+                    </el-row>
+
+                    <el-row style="display: flex; flex-direction: column; width: 40%;">
                         <div class="title"><i class='bx bx-purchase-tag icon' />标签列表</div>
 
                         <el-table :data="list" width="100%" height="80%" style="height: 800px;">
@@ -104,24 +123,6 @@ const submit = async (formEl: FormInstance | undefined) => {
                                 </template>
                             </el-table-column>
                         </el-table>
-                    </el-row>
-
-                    <el-row style="display: flex; flex-direction: column; width: 40%;">
-                        <div class="title"><i class='bx bx-cog icon' />标签管理</div>
-
-                        <el-form ref="ref" :rules="rules" label-position="top" label-width="100px" :model="tag">
-                            <el-form-item label="标签名称" prop="name">
-                                <el-input v-model="tag.name" size="large" placeholder="新增标签" />
-                            </el-form-item>
-
-                            <el-form-item>
-                                <el-button type="primary" @click="submit(form)" size="large" style="width: 100%;">{{
-                                    title
-                                }}</el-button>
-                            </el-form-item>
-                        </el-form>
-
-                        <img src="@/assets/svg/tag.svg" alt="" style="width: 100%; margin-top: 70px;">
                     </el-row>
                 </el-row>
             </el-tab-pane>
@@ -140,7 +141,7 @@ const submit = async (formEl: FormInstance | undefined) => {
         }
     }
 
-    :deep .tabs {
+    :deep(.tabs) {
         height: 100%;
 
         .el-tabs__content {
@@ -152,5 +153,9 @@ const submit = async (formEl: FormInstance | undefined) => {
             justify-content: space-between;
         }
     }
+
+    // :deep(.el-table--fit) {
+    //     height: 60% !important;
+    // }
 }
 </style>
