@@ -5,9 +5,9 @@ interface Article {
     content: string,
     cover: string,
     cids: number[],
-    cate: string,
+    cate: Cate[],
     tag: string,
-    view?: number
-    count?: number,
+    view: number
+    count: number,
     createtime: Date,
 }

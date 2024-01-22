@@ -1,5 +1,7 @@
+import { ElMessageBox } from "element-plus"
+
 // 封装loading加载效果
-export const svg =  `
+export const svg = `
         <path class="path" d="
           M 30 15
           L 28 17
@@ -9,3 +11,18 @@ export const svg =  `
           L 15 15
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
+
+// 封装确认删除按钮
+export function whetherToDelete(cb: () => {}, text: string) {
+  ElMessageBox.confirm(
+    `你确定要删除该${text}吗`,
+    '警告',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+    }
+  )
+    .then(() => {
+      cb()
+    })
+}

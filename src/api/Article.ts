@@ -5,7 +5,7 @@ export const addArticleDataAPI = (data: Article) =>
   Request<Article>("POST", "/article", data);
 
 // 删除文章
-export const deleteArticleDataAPI = (id: number) =>
+export const delArticleDataAPI = (id: number) =>
   Request<Article>("DELETE", `/article/${id}`);
 
 // 编辑文章

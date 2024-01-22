@@ -40,7 +40,7 @@ const AutocompleteRef = ref()
 
 // 获取标签列表
 const getTagList = async () => {
-    const { data } = await getTagListAPI()
+    const { data } = await getTagListAPI({ page: 1, size: 9999 })
 
     list.value = data.result as Tag[]
 }

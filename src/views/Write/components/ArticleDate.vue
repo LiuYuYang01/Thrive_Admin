@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{ modelValue: string | Date }>()
 const emit = defineEmits<{ (e: "update:modelValue", date: Date): void }>()
-const date = ref(props.modelValue)
 
 // 格式化一个新的时间
-const time = ref(date.value)
+const time = ref(props.modelValue)
 
 // 监听选择的时间
 const change = (date: Date) => {
@@ -16,8 +15,8 @@ const change = (date: Date) => {
     <div class="ArticleDate">
         <div class="title"><box-icon name='time-five' />时间</div>
 
-        <el-date-picker v-model="time" type="datetime" placeholder="Select date and time" size="large" style="width: 100%;"
-            @change="change" />
+        <el-date-picker v-model="time" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="Select date and time"
+            size="large" style="width: 100%;" @change="change" />
     </div>
 </template>
 
