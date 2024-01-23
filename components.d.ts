@@ -52,6 +52,7 @@ declare module 'vue' {
     Linear: typeof import('./src/views/Home/components/Linear.vue')['default']
     Link: typeof import('./src/views/Link/index.vue')['default']
     List: typeof import('./src/views/Comment/components/List.vue')['default']
+    Loading: typeof import('./src/components/Loading/index.vue')['default']
     Login: typeof import('./src/views/Login/index.vue')['default']
     Manage: typeof import('./src/views/Swiper/components/Manage.vue')['default']
     My: typeof import('./src/views/Setup/components/My.vue')['default']

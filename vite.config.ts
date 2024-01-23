@@ -12,6 +12,9 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [
     vue({
+      script: {
+        defineModel: true,
+      },
       template: {
         // 告诉Vue编译器以box-icon开头的标签是自定义标签而不是组件，不然控制台会有提醒
         compilerOptions: {
