@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { addLinkDataAPI, delLinkDataAPI, editLinkDataAPI, getLinkListAPI } from '@/api/Link'
 import { Search } from '@element-plus/icons-vue'
-import { FormInstance } from 'element-plus'
+import { FormInstance, ElNotification } from 'element-plus'
+import { svg, whetherToDelete } from '@/utils'
 
 const loading = ref(false)
-import { svg } from '@/utils'
 
 // 选项卡选中
 const tab = ref<string>("list")
 
 // 网站列表
 const list = ref<Link[]>([])
+// 临时列表，用于搜索网站
 const listTemp = ref<Link[]>(list.value)
 
 // 获取网站列表数据
@@ -28,13 +29,7 @@ getLinkList()
 // 搜索的数据
 const search = ref<string>("")
 // 监听搜索数据的变化
-watch(search, data => {
-    console.log(data, 222);
-
-    listTemp.value = list.value.filter(item => {
-        return item.title.includes(data) || item.description.includes(data)
-    })
-})
+watch(search, data => listTemp.value = list.value.filter(item => item.title.includes(data) || item.description.includes(data)))
 
 // 跳转页面
 const toHref = (url: string) => {
@@ -77,6 +72,32 @@ const rules = {
     ]
 }
 
+// 删除网站
+const deleteLink = async (id: number) => {
+    const fn = async () => {
+        await delLinkDataAPI(id)
+
+        ElNotification({
+            title: '成功',
+            message: "删除网站成功",
+            type: 'success',
+        })
+
+        getLinkList()
+    }
+
+    // 确认是否删除
+    whetherToDelete(fn, "网站")
+}
+
+// 修改网站
+const editLink = async (item: Link) => {
+    // 将选项卡切换到编辑网站
+    tab.value = "operate"
+
+    link.value = item
+}
+
 const form = ref<FormInstance>()
 
 // 提交表单
@@ -84,7 +105,35 @@ const submit = () => {
     // 新增之前先校验一下数据是否合法
     form.value?.validate(async valid => {
         if (valid) {
-           
+            // 有ID就是编辑，没有就是新增
+            if (link.value.id) {
+                // 编辑网站
+                await editLinkDataAPI(link.value)
+
+                ElNotification({
+                    title: '成功',
+                    message: "🎉编辑网站成功",
+                    type: 'success',
+                })
+            } else {
+                // 新增网站
+                await addLinkDataAPI(link.value)
+
+                ElNotification({
+                    title: '成功',
+                    message: "🎉新增网站成功",
+                    type: 'success',
+                })
+            }
+
+            // 重置校验并初始化数据
+            form.value?.resetFields()
+
+            // 获取最新数据
+            getLinkList()
+
+            // 将选项卡切换到列表
+            tab.value = "list"
         }
     })
 }
@@ -235,7 +284,7 @@ const submit = () => {
             margin-top: 30px;
             border-radius: 50%;
             background-color: #fff;
-            z-index: 999;
+            z-index: 2;
 
             img {
                 width: 93%;

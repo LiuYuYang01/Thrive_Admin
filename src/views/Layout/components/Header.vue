@@ -37,7 +37,7 @@ const router = useRouter()
 .header {
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 2;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -122,7 +122,7 @@ const router = useRouter()
                 background-color: #fff;
                 box-shadow: 0px 0px 15px -3px rgba(0, 0, 0, 0.1);
                 transition: height $move;
-                z-index: 999;
+                z-index: 3;
 
                 dl {
                     padding: 10px 0;
