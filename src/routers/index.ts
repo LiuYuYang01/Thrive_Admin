@@ -1,15 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useUserStore } from "@/stores";
 
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-
-// NProgress配置信息
-NProgress.configure({
-  // 取消圆形加载图标
-  showSpinner: false,
-});
-
 // meta字段说明
 // title：路由标题
 // icon：路由图标
@@ -130,9 +121,6 @@ router.beforeEach((to, form) => {
   // 刚刚离开的路由：form
   const store = useUserStore();
 
-  // 开启进度条
-  NProgress.start();
-
   // 处理页面标题
   document.title = `Thrive - ${to.meta.title || ""}`;
 
@@ -144,9 +132,6 @@ router.beforeEach((to, form) => {
 
   // 如果有token，就不让他跳转到登录页了
   if (store.token && to.path === "/login") return form.path
-
-  // 关闭进度条
-  NProgress.done();
 
   // 如果已登录，则跳转到指定的页面
   return true

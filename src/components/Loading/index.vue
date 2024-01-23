@@ -1,22 +1,41 @@
 <script setup lang="ts">
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+// NProgress配置信息
+NProgress.configure({
+    // 取消圆形加载图标
+    showSpinner: false,
+});
+
 import { useRouter } from 'vue-router';
 const router = useRouter()
 
 const loading = ref<boolean>(true)
 
 // 页面开始进入
-router.beforeEach(_ => loading.value = true)
+router.beforeEach(_ => {
+    // 开启进度条
+    NProgress.start();
+
+    loading.value = true
+})
+
 // 页面进入完毕
 router.afterEach(_ => {
+    // 关闭进度条
+    NProgress.done();
+    
     setTimeout(() => {
+
         loading.value = false
     }, 500)
 })
 </script>
 
 <template>
-    <div class="mask" v-if="loading">
-        <div class="loading">
+    <div class="th_mask" v-if="loading">
+        <div class="th_loading">
             <div></div>
             <div></div>
             <div></div>
@@ -35,12 +54,20 @@ router.afterEach(_ => {
             <div></div>
         </div>
 
-        <p class="text" style="top: 55%; font-size: 30px;">加载中，请稍后~</p>
+        <p class="th_text" style="top: 55%; font-size: 30px;">加载中，请稍后~</p>
     </div>
 </template>
 
-<style scoped lang="scss">
-.mask {
+<style>
+/* 路由进度条颜色 */
+#nprogress .bar {
+    height: 5px;
+    background: #727cf5;
+    box-shadow: 0px 22px 15px -3px rgba(121, 122, 243, 0.1);
+    z-index: 99999;
+}
+
+.th_mask {
     position: absolute;
     top: 0;
     right: 0;
@@ -48,193 +75,192 @@ router.afterEach(_ => {
     left: 0;
     margin: auto;
     background-color: rgb(255, 255, 255, 1);
-    z-index: 99999;
+    z-index: 99998;
 }
 
-.loading,
-.loading>div,
-.text {
+.th_loading,
+.th_loading>div,
+.th_text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%);
     box-sizing: border-box;
-    z-index: 99998;
+    z-index: 99997;
 }
 
-.loading {
+.th_loading {
     display: block;
     font-size: 0;
     color: #727cf5;
     transform: translateY(-200%);
 }
 
-.loading.la-dark {
+.th_loading.la-dark {
     color: #333;
 }
 
-.loading>div {
+.th_loading>div {
     display: inline-block;
     float: none;
     background-color: currentColor;
     border: 0 solid currentColor;
 }
 
-.loading {
+.th_loading {
     width: 40px;
     height: 40px;
 }
 
-.loading>div {
+.th_loading>div {
     position: absolute;
     width: 15px;
     height: 15px;
     border-radius: 0;
     opacity: 0;
-    // transform: translate(-100%);
     animation: ball-8bits 1s 0s ease infinite;
 }
 
-.loading>div:nth-child(1) {
+.th_loading>div:nth-child(1) {
     animation-delay: -0.9375s;
 }
 
-.loading>div:nth-child(2) {
+.th_loading>div:nth-child(2) {
     animation-delay: -0.875s;
 }
 
-.loading>div:nth-child(3) {
+.th_loading>div:nth-child(3) {
     animation-delay: -0.8125s;
 }
 
-.loading>div:nth-child(4) {
+.th_loading>div:nth-child(4) {
     animation-delay: -0.75s;
 }
 
-.loading>div:nth-child(5) {
+.th_loading>div:nth-child(5) {
     animation-delay: -0.6875s;
 }
 
-.loading>div:nth-child(6) {
+.th_loading>div:nth-child(6) {
     animation-delay: -0.625s;
 }
 
-.loading>div:nth-child(7) {
+.th_loading>div:nth-child(7) {
     animation-delay: -0.5625s;
 }
 
-.loading>div:nth-child(8) {
+.th_loading>div:nth-child(8) {
     animation-delay: -0.5s;
 }
 
-.loading>div:nth-child(9) {
+.th_loading>div:nth-child(9) {
     animation-delay: -0.4375s;
 }
 
-.loading>div:nth-child(10) {
+.th_loading>div:nth-child(10) {
     animation-delay: -0.375s;
 }
 
-.loading>div:nth-child(11) {
+.th_loading>div:nth-child(11) {
     animation-delay: -0.3125s;
 }
 
-.loading>div:nth-child(12) {
+.th_loading>div:nth-child(12) {
     animation-delay: -0.25s;
 }
 
-.loading>div:nth-child(13) {
+.th_loading>div:nth-child(13) {
     animation-delay: -0.1875s;
 }
 
-.loading>div:nth-child(14) {
+.th_loading>div:nth-child(14) {
     animation-delay: -0.125s;
 }
 
-.loading>div:nth-child(15) {
+.th_loading>div:nth-child(15) {
     animation-delay: -0.0625s;
 }
 
-.loading>div:nth-child(16) {
+.th_loading>div:nth-child(16) {
     animation-delay: 0s;
 }
 
-.loading>div:nth-child(1) {
+.th_loading>div:nth-child(1) {
     top: -100%;
     left: 0;
 }
 
-.loading>div:nth-child(2) {
+.th_loading>div:nth-child(2) {
     top: -100%;
     left: 33.3333333333%;
 }
 
-.loading>div:nth-child(3) {
+.th_loading>div:nth-child(3) {
     top: -66.6666666667%;
     left: 66.6666666667%;
 }
 
-.loading>div:nth-child(4) {
+.th_loading>div:nth-child(4) {
     top: -33.3333333333%;
     left: 100%;
 }
 
-.loading>div:nth-child(5) {
+.th_loading>div:nth-child(5) {
     top: 0;
     left: 100%;
 }
 
-.loading>div:nth-child(6) {
+.th_loading>div:nth-child(6) {
     top: 33.3333333333%;
     left: 100%;
 }
 
-.loading>div:nth-child(7) {
+.th_loading>div:nth-child(7) {
     top: 66.6666666667%;
     left: 66.6666666667%;
 }
 
-.loading>div:nth-child(8) {
+.th_loading>div:nth-child(8) {
     top: 100%;
     left: 33.3333333333%;
 }
 
-.loading>div:nth-child(9) {
+.th_loading>div:nth-child(9) {
     top: 100%;
     left: 0;
 }
 
-.loading>div:nth-child(10) {
+.th_loading>div:nth-child(10) {
     top: 100%;
     left: -33.3333333333%;
 }
 
-.loading>div:nth-child(11) {
+.th_loading>div:nth-child(11) {
     top: 66.6666666667%;
     left: -66.6666666667%;
 }
 
-.loading>div:nth-child(12) {
+.th_loading>div:nth-child(12) {
     top: 33.3333333333%;
     left: -100%;
 }
 
-.loading>div:nth-child(13) {
+.th_loading>div:nth-child(13) {
     top: 0;
     left: -100%;
 }
 
-.loading>div:nth-child(14) {
+.th_loading>div:nth-child(14) {
     top: -33.3333333333%;
     left: -100%;
 }
 
-.loading>div:nth-child(15) {
+.th_loading>div:nth-child(15) {
     top: -66.6666666667%;
     left: -66.6666666667%;
 }
 
-.loading>div:nth-child(16) {
+.th_loading>div:nth-child(16) {
     top: -100%;
     left: -33.3333333333%;
 }
