@@ -63,18 +63,6 @@ onMounted(() => {
     }
 
     const option = {
-        //backgroundColor: "#141f56",
-        // legend: {
-        //     top: 20,
-        //     right: 80,
-        //         itemGap:5,
-        //         itemWidth:5,
-        //         textStyle: {
-        //             color: '#ff0000',
-        //             fontSize: '13'
-        //         },
-        //         data: name
-        // },
         title: {
             left: 350,
             textStyle: {
@@ -146,6 +134,11 @@ onMounted(() => {
     }
 
     option && myChart.setOption(option);
+
+    // 适配方法
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
 })
 </script>
 

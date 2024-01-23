@@ -51,7 +51,7 @@ const submit = async () => {
     // 编辑文章
     if (id.value) {
         // 编辑数据
-        const { code, message } = await editArticleDataAPI(article.value)
+        await editArticleDataAPI(article.value)
 
         ElNotification({
             title: '成功',

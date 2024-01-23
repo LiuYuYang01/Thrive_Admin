@@ -61,7 +61,7 @@ const router = useRouter()
     .nav {
         display: flex;
         justify-content: space-between;
-        width: 350px;
+        // width: 350px;
         margin-right: 60px;
 
         .list {
