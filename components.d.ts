@@ -75,6 +75,7 @@ declare module 'vue' {
     Swiper: typeof import('./src/views/Swiper/index.vue')['default']
     System: typeof import('./src/views/Setup/components/System.vue')['default']
     SystemInfo: typeof import('./src/views/Home/components/SystemInfo.vue')['default']
+    TabPage: typeof import('./src/views/Layout/components/TabPage.vue')['default']
     Tag: typeof import('./src/views/Tag/index.vue')['default']
     Tags3D: typeof import('./src/views/Tag/components/Tags3D.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']

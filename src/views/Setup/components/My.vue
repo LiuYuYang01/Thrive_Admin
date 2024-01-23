@@ -11,8 +11,8 @@ const My = ref<UserInfo>({
 const form = ref<FormInstance>()
 
 // 从pinia中获取用户信息
-// import { useUserStore } from '@/stores'
-// const store = useUserStore()
+import { useUserStore } from '@/stores'
+const store = useUserStore()
 
 // 数据校验
 const rules = reactive<FormRules<User>>({

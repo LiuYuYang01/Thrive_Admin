@@ -19,6 +19,9 @@
       <!-- 顶部 -->
       <Header />
 
+      <!-- 标签页 -->
+      <TabPage />
+
       <RouterView></RouterView>
     </div>
   </div>

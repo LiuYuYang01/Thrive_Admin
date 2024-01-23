@@ -12,7 +12,7 @@ const router = useRouter()
             <div class="list">
                 <a href="http://liuyuyang.net" target="_blank"><i class='bx bx-globe icon'></i>作者博客</a>
                 <a href="/"><i class='bx bxl-github icon'></i>GitHub</a>
-                <!-- <a href="/"><i class='bx bx-message-square-dots icon'></i>消息</a> -->
+                <a href="/"><i class='bx bx-message-square-dots icon'></i>消息</a>
             </div>
 
             <div class="my">
@@ -44,7 +44,8 @@ const router = useRouter()
     height: 60px;
     padding: 0 20px;
     background-color: #fff;
-    box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
+    border-bottom: 1px solid #eee;
+    // box-shadow: 0px 2px 15px -3px rgba(121, 122, 243, 0.1);
 
     .info {
         display: flex;
