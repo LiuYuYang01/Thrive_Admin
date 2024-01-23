@@ -13,23 +13,17 @@ interface Item {
 }
 
 const list = ref<Item[]>([
-    { id: 0, name: "仪表盘", path: "/home" }
+    { id: 1, name: "仪表盘", path: "/home" }
 ])
 
 // 跳转标签页
-const go = (item: Item, e: any) => {
+const operate = (item: Item, e: any) => {
     const domName: string = e.target!.nodeName
-    console.log(item.id, active.value, 333);
-    if (domName !== "LI") {
-        list.value = list.value.filter(k => k.id !== item.id)
-        console.log(list.value, 888);
 
-        return
-    }
+    if (domName !== "LI") list.value = list.value.filter(k => k.id !== item.id)
 
     active.value = item.id
     router.push(item.path)
-    console.log(item.id, active.value, 444);
 }
 
 // 监听当前页面路由变化，根据当前路由选中对应的标签页
@@ -50,7 +44,7 @@ watch(() => router.currentRoute.value, r => {
 <template>
     <div class="tabPage">
         <ul>
-            <li v-for="item in list" @click="go(item, $event)" :class="active === item.id ? 'item active' : 'item'">
+            <li v-for="item in list" @click="operate(item, $event)" :class="active === item.id ? 'item active' : 'item'">
                 {{ item.name }}
                 <el-icon class="close">
                     <CircleCloseFilled />
