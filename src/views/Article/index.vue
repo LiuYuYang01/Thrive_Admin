@@ -20,6 +20,11 @@ const getArticleList = async (page?: Page) => {
 }
 getArticleList()
 
+// 监听分页变化
+const pageChange = (page: number) => {
+    getArticleList({ page, size: paginate.value?.size! })
+}
+
 // 删除文章
 const delArticleData = async (id: number) => {
     async function fn() {
@@ -43,11 +48,6 @@ const delArticleData = async (id: number) => {
 
 // 标签颜色
 const colors = ref<string[]>(['info', '', 'success', 'danger', 'warning'])
-
-// 监听分页变化
-const pageChange = (page: number) => {
-    getArticleList({ page, size: paginate.value?.size! })
-}
 </script>
 
 <template>
