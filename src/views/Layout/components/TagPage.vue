@@ -22,8 +22,6 @@ const list = ref<Item[]>([
 const operate = (item: Item, e: any) => {
     const domName: string = e.target!.nodeName
     store.tagPageName = item.name
-    console.log(domName,33);
-    
 
     if (domName !== "LI") return list.value = list.value.filter(k => k.id !== item.id)
 

@@ -163,8 +163,8 @@ const viewImageModel = ref(false)
         </el-table>
 
         <!-- 分页 -->
-        <div class="pagination">
-          <el-pagination background layout="prev, pager, next" :page-size="paginate?.size" :total="paginate?.total"
+        <div class="pagination" v-if="paginate?.result?.length">
+          <el-pagination background layout="prev, pager, next" :total="paginate?.total" :page-size="paginate?.size"
             @current-change="pageChange" />
         </div>
 
