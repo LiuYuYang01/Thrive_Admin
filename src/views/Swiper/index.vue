@@ -5,7 +5,7 @@ import { whetherToDelete } from '@/utils'
 import { svg } from '@/utils'
 
 const tab = ref("list")
-const loading = ref(true)
+const loading = ref(false)
 const form = ref<FormInstance>()
 
 const swiper = ref<Swiper>({
@@ -73,7 +73,7 @@ const delSwiperData = async (id: number) => {
       type: 'success',
     })
 
-    getSwiperList()
+    getSwiperList({ page: paginate.value?.page!, size: paginate.value?.size! })
   }
 
   whetherToDelete(fn, "轮播图")

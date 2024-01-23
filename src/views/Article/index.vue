@@ -38,7 +38,7 @@ const delArticleData = async (id: number) => {
             type: 'success'
         })
 
-        getArticleList()
+        getArticleList({ page: paginate.value?.page!, size: paginate.value?.size! })
 
         loading.value = false
     }
