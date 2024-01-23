@@ -20,7 +20,7 @@
       <Header />
 
       <!-- 标签页 -->
-      <TabPage />
+      <TagPage />
 
       <RouterView></RouterView>
     </div>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { CircleCloseFilled } from '@element-plus/icons-vue'
+import { useMixStore } from '@/stores'
+const store = useMixStore()
 
 const router = useRouter()
 
@@ -19,8 +21,11 @@ const list = ref<Item[]>([
 // 跳转标签页
 const operate = (item: Item, e: any) => {
     const domName: string = e.target!.nodeName
+    store.tagPageName = item.name
+    console.log(domName,33);
+    
 
-    if (domName !== "LI") list.value = list.value.filter(k => k.id !== item.id)
+    if (domName !== "LI") return list.value = list.value.filter(k => k.id !== item.id)
 
     active.value = item.id
     router.push(item.path)
@@ -42,7 +47,7 @@ watch(() => router.currentRoute.value, r => {
 </script>
 
 <template>
-    <div class="tabPage">
+    <div class="tagPage">
         <ul>
             <li v-for="item in list" @click="operate(item, $event)" :class="active === item.id ? 'item active' : 'item'">
                 {{ item.name }}
@@ -55,7 +60,7 @@ watch(() => router.currentRoute.value, r => {
 </template>
 
 <style scoped lang="scss">
-.tabPage {
+.tagPage {
     height: 40px;
     background-color: #fff;
 

@@ -77,6 +77,7 @@ declare module 'vue' {
     SystemInfo: typeof import('./src/views/Home/components/SystemInfo.vue')['default']
     TabPage: typeof import('./src/views/Layout/components/TabPage.vue')['default']
     Tag: typeof import('./src/views/Tag/index.vue')['default']
+    TagPage: typeof import('./src/views/Layout/components/TagPage.vue')['default']
     Tags3D: typeof import('./src/views/Tag/components/Tags3D.vue')['default']
     Title: typeof import('./src/components/Title/index.vue')['default']
     Web: typeof import('./src/views/Setup/components/Web.vue')['default']
