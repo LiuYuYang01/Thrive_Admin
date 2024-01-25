@@ -184,7 +184,7 @@ const submit = () => {
                         </el-form-item>
 
                         <el-form-item label="描述" prop="description">
-                            <el-input v-model="link.description" placeholder="Thrive" />
+                            <el-input v-model="link.description" placeholder="记录前端、Python、Java点点滴滴" />
                         </el-form-item>
 
                         <el-form-item label="邮箱" prop="email">
@@ -192,7 +192,7 @@ const submit = () => {
                         </el-form-item>
 
                         <el-form-item label="头像" prop="image">
-                            <el-input v-model="link.image" placeholder="https://q1.qlogo.cn/g?b=qq&nk=3311118881&s=640" />
+                            <el-input v-model="link.image" placeholder="https://liuyuyang.net/logo.png" />
                         </el-form-item>
 
                         <el-form-item label="链接" prop="url">

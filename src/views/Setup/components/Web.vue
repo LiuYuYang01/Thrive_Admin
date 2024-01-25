@@ -3,6 +3,7 @@ import { FormInstance, FormRules, ElNotification } from 'element-plus';
 
 const web = ref<SetupWeb>({
   title: '',
+  subhead: '',
   logo: '',
   info: '',
   keyword: '',
@@ -14,7 +15,11 @@ const form = ref<FormInstance>()
 const rules = reactive<FormRules<SetupWeb>>({
   title: [
     { required: true, message: "网站名称不能为空", trigger: "blur" },
-    { min: 1, max: 10, message: "名称限制在1 ~ 10个字符", trigger: "blur" }
+    { min: 1, max: 10, message: "网站名称限制在1 ~ 10个字符", trigger: "blur" }
+  ],
+  subhead: [
+    { required: true, message: "网站副标题不能为空", trigger: "blur" },
+    { min: 1, max: 10, message: "网站副标题限制在1 ~ 10个字符", trigger: "blur" }
   ],
   logo: [
     { required: true, message: "网站LOGO不能为空", trigger: "blur" },
@@ -45,24 +50,28 @@ const submit = async (formEl: FormInstance | undefined) => {
     <Title title="网站设置" icon="user" />
 
     <el-form ref="form" label-position="top" :model="web" :rules="rules" size="large" style="min-width: 500px;">
-      <el-form-item label="站点名称" prop="title">
-        <el-input v-model="web.title" placeholder="你的网站名称" />
+      <el-form-item label="网站名称" prop="title">
+        <el-input v-model="web.title" placeholder="Thrive" />
       </el-form-item>
 
-      <el-form-item label="站点图标" prop="logo">
-        <el-input v-model="web.logo" placeholder="你的站点LOGO" />
+      <el-form-item label="网站副标题" prop="title">
+        <el-input v-model="web.title" placeholder="花有重开日, 人无再少年" />
       </el-form-item>
 
-      <el-form-item label="站点描述" prop="info">
-        <el-input v-model="web.info" placeholder="介绍一下自己的网站" />
+      <el-form-item label="网站图标" prop="logo">
+        <el-input v-model="web.logo" placeholder="https://liuyuyang.net/logo.png" />
       </el-form-item>
-      
-      <el-form-item label="站点关键词" prop="keyword">
+
+      <el-form-item label="网站描述" prop="info">
+        <el-input v-model="web.info" placeholder="记录前端、Python、Java点点滴滴" />
+      </el-form-item>
+
+      <el-form-item label="网站关键词" prop="keyword">
         <el-input v-model="web.keyword" placeholder="以英文逗号分隔，如：Java,前端,Python" />
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submit(form)" style="width: 100%;">保存</el-button>
+        <el-button type="primary" @click="submit(form)" style="width: 100%;">编辑网站</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -191,7 +191,7 @@ const viewImageModel = ref(false)
           </el-form-item>
 
           <el-form-item label="图片" prop="image">
-            <el-input v-model="swiper.image" placeholder="http://blog.liuyuyang.net/img/63adb5eb87f9b.jpg" />
+            <el-input v-model="swiper.image" placeholder="https://liuyuyang.net/swiper.jpg" />
           </el-form-item>
 
           <el-form-item>

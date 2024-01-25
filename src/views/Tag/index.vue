@@ -97,7 +97,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 
                         <el-form ref="form" :rules="rules" label-position="top" label-width="100px" :model="tag">
                             <el-form-item label="标签名称" prop="name">
-                                <el-input v-model="tag.name" size="large" placeholder="新增标签" />
+                                <el-input v-model="tag.name" size="large" placeholder="大前端" />
                             </el-form-item>
 
                             <el-form-item>

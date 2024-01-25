@@ -40,23 +40,23 @@ const rules = reactive<FormRules<User>>({
 
     <el-form ref="form" label-position="top" :model="My" :rules="rules" size="large" style="min-width: 500px;">
       <el-form-item label="名称" prop="name">
-        <el-input v-model="My.name" placeholder="请输入名称" />
+        <el-input v-model="My.name" placeholder="宇阳" />
       </el-form-item>
 
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="My.email" placeholder="请输入邮箱" />
+        <el-input v-model="My.email" placeholder="liuyuyang1024@yeah.net" />
       </el-form-item>
 
       <el-form-item label="头像" prop="avatar">
-        <el-input v-model="My.avatar" placeholder="请输入头像的地址" />
+        <el-input v-model="My.avatar" placeholder="https://liuyuyang.net/logo.png" />
       </el-form-item>
 
       <el-form-item label="介绍" prop="introduce">
-        <el-input v-model="My.info" placeholder="请介绍一下自己" />
+        <el-input v-model="My.info" placeholder="互联网从不缺乏天才, 而努力才是最终的入场劵" />
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" style="width: 100%;">保存</el-button>
+        <el-button type="primary" style="width: 100%;">编辑信息</el-button>
       </el-form-item>
     </el-form>
   </div>
