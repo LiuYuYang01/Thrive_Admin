@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { preview, vPreview, Vue3ImagePreview } from 'vue3-image-preview';
 import { getFileListAPI } from '@/api/File'
 import { baseURL } from '@/utils/Request'
 import { svg } from '@/utils'
@@ -29,10 +30,10 @@ const getFile = (name: string) => {
 }
 
 // 预览图片
-const go = (name: string) => {
-  // 在新窗口跳转
-  open(url.value + name, "_blank")
-}
+// const go = (name: string) => {
+//   // 在新窗口跳转
+//   open(url.value + name, "_blank")
+// }
 
 // 缓存，用于回退
 const temp1 = ref<File[]>([])
@@ -45,7 +46,6 @@ const access = (data: File) => {
 
   // 拼接文件地址
   url.value += data.name + "/"
-  console.log(url.value, 222);
 
   fileList.value = data.list
   construction.value = data.children
@@ -79,21 +79,16 @@ const access = (data: File) => {
 
         <!-- 文件列表 -->
         <div class="list">
-          <div class="item" v-for="url in fileList" :key="url">
-            <div class="preview" @click="go(url)">
-              <img :src="getFile(url)" alt="">
+          <Vue3ImagePreview>
+            <div class="item" v-for="url in fileList" :key="url">
+              <!-- <div class="preview" @click="go(url)"> -->
+              <div class="preview">
+                <img :src="getFile(url)" alt="">
+              </div>
+
+              <p>{{ url }}</p>
             </div>
-
-            <p>{{ url }}</p>
-          </div>
-
-          <!-- <div class="item" v-for="url in 30" :key="url">
-            <div class="preview">
-              <img src="https://bu.dusays.com/2023/12/16/657d5343a8f99.png" alt="">
-            </div>
-
-            <p>图片.jpg</p>
-          </div> -->
+          </Vue3ImagePreview>
         </div>
       </div>
     </el-scrollbar>
@@ -109,7 +104,7 @@ const access = (data: File) => {
   .dir {
     display: flex;
     flex-wrap: wrap;
-    
+
     .item {
       width: 100px;
       text-align: center;
@@ -123,48 +118,50 @@ const access = (data: File) => {
   }
 
   .list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    .image-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
 
-    .item {
-      width: 18%;
-      padding: 10px;
-      margin-right: 20px;
-      margin-bottom: 20px;
-      border-radius: $round;
-      border: 2px solid #f6f6f6;
-      text-align: center;
-      transition: border $move;
-
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:hover {
-        border: 2px solid #727cf5;
-
-        .preview img {
-          transform: scale(2);
-        }
-      }
-
-      .preview {
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
+      .item {
+        width: 18%;
+        padding: 10px;
+        margin-right: 20px;
+        margin-bottom: 20px;
         border-radius: $round;
-        cursor: pointer;
+        border: 2px solid #f6f6f6;
+        text-align: center;
+        transition: border $move;
 
-        img {
-          height: 150px;
-          border-radius: $round;
-          transition: transform 10s;
+        &:first-child {
+          margin-left: 0;
         }
-      }
 
-      p {
-        margin-top: 10px;
+        &:hover {
+          border: 2px solid #727cf5;
+
+          .preview img {
+            transform: scale(2);
+          }
+        }
+
+        .preview {
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          border-radius: $round;
+          cursor: pointer;
+
+          img {
+            height: 150px;
+            border-radius: $round;
+            transition: transform 10s;
+          }
+        }
+
+        p {
+          margin-top: 10px;
+        }
       }
     }
   }
