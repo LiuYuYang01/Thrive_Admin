@@ -4,7 +4,7 @@ import Request from '@/utils/Request'
 export const getSystemDataAPI = () => Request<System>("GET", "/project/system")
 
 // 获取网站配置信息
-export const getWebParameAPI = () => Request<Web>("GET", "/project/web")
+export const getWebDataAPI = () => Request<Web>("GET", "/project/web")
 
 // 修改网站配置信息
-export const editWebParameAPI = (data: Web) => Request<Web>("GET", "/project/web", data)
+export const editWebDataAPI = (data: Web) => Request<Web>("PATCH", "/project/web", data)

@@ -16,6 +16,7 @@ declare module 'vue' {
     Comment: typeof import('./src/views/Comment/index.vue')['default']
     CommentList: typeof import('./src/views/Comment/components/CommentList.vue')['default']
     copy: typeof import('./src/views/Link/index copy.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']

@@ -28,7 +28,7 @@ interface System {
 // 网站信息
 interface Web {
     description: string
-    keyword: string[]
+    keyword: string
     logo: string
     subhead: string
     title: string
