@@ -92,7 +92,7 @@ const access = (data: File) => {
 
 <style scoped lang="scss">
 :deep(.el-scrollbar) {
-  height: 94%;
+  height: 82%;
 }
 
 .construction {
