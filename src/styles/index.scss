@@ -23,3 +23,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
+// 调整图片预览选中的边框颜色
+.img-preview .imgs .img.selected {
+    background-color: $color !important;
+}
+
+// 调整默认图片预览的尺寸
+.img-preview .image-view{
+    max-width: 50% !important;
+}
