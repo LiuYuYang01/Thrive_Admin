@@ -54,6 +54,7 @@ declare module 'vue' {
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
+    File: typeof import('./src/views/File/index.vue')['default']
     Header: typeof import('./src/views/Layout/components/Header.vue')['default']
     HeaderInfo: typeof import('./src/views/Home/components/HeaderInfo.vue')['default']
     Hello: typeof import('./src/components/Hello.vue')['default']

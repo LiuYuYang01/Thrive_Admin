@@ -85,6 +85,8 @@ const submit = async (formEl: FormInstance | undefined) => {
 
 <template>
     <div class="page">
+        <Title title="标签管理" icon="purchase-tag" />
+
         <el-tabs tab-position="left" class="tabs">
             <el-tab-pane label="标签墙">
                 <Tags3D />

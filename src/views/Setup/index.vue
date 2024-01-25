@@ -41,7 +41,7 @@ onBeforeRouteUpdate(to => {
 
 <template>
   <div class="page">
-    <Title title="系统配置" icon="shield-quarter" />
+    <Title title="全局配置" icon="shield-quarter" />
 
     <div class="main">
       <ul class="options">
