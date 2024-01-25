@@ -12,7 +12,7 @@ const tab = ref<string>("list")
 // 网站列表
 const list = ref<Link[]>([])
 // 临时列表，用于搜索网站
-const listTemp = ref<Link[]>(list.value)
+const listTemp = ref<Link[]>()
 
 // 获取网站列表数据
 const getLinkList = async () => {
@@ -146,7 +146,7 @@ const submit = () => {
         <el-tabs tab-position="left" v-model="tab">
             <el-tab-pane label="网站列表" name="list">
                 <div class="search">
-                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="通过网站名称或描述信息进行查询"
+                    <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入网站名称或描述信息进行查询"
                         :prefix-icon="Search" />
                 </div>
 

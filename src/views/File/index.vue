@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import { preview, vPreview, Vue3ImagePreview } from 'vue3-image-preview';
+import { Search } from '@element-plus/icons-vue'
 import { getFileListAPI } from '@/api/File'
 import { baseURL } from '@/utils/Request'
 import { svg } from '@/utils'
 
 const loading = ref<boolean>(false)
 
+// 搜索
+const search = ref<string>("")
 // 文件请求URL
 const url = ref<string>(baseURL.replace("api", ""))
 // 获取文件结构
 const construction = ref<File[]>([])
 // 文件列表
 const fileList = ref<string[]>([])
+// 临时列表，用于搜索网站
+const fileListTemp = ref<string[]>()
+// 监听搜索数据的变化
+watch(search, data => fileListTemp.value = fileList.value.filter(item => item.includes(data)))
 
 // 获取文件列表
 const getFileList = async () => {
@@ -29,17 +36,6 @@ const getFile = (name: string) => {
   return new URL(`${url.value + name}`, import.meta.url).href
 }
 
-// 预览图片
-// const go = (name: string) => {
-//   // 在新窗口跳转
-//   open(url.value + name, "_blank")
-// }
-
-// 缓存，用于回退
-const temp1 = ref<File[]>([])
-const temp2 = ref<File[]>([])
-const temp3 = ref<File[]>([])
-
 // 进入文件
 const access = (data: File) => {
   loading.value = true
@@ -48,6 +44,8 @@ const access = (data: File) => {
   url.value += data.name + "/"
 
   fileList.value = data.list
+  fileListTemp.value = data.list
+
   construction.value = data.children
 
   setTimeout(() => {
@@ -60,11 +58,9 @@ const access = (data: File) => {
   <div class="page">
     <Title title="文件管理" icon="folder-open" />
 
-    <!-- {{ url }} -->
-    <!-- <div>{{ construction }}</div>
-    <div>{{ temp1 }}</div>
-    <div>{{ temp2 }}</div>
-    <div>{{ temp3 }}</div> -->
+    <div class="search" v-if="fileList.length">
+      <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入文件名称进行查询" :prefix-icon="Search" />
+    </div>
 
     <el-scrollbar max-height="90%">
       <div class="construction" v-loading="loading" :element-loading-svg="svg"
@@ -80,8 +76,7 @@ const access = (data: File) => {
         <!-- 文件列表 -->
         <div class="list">
           <Vue3ImagePreview>
-            <div class="item" v-for="url in fileList" :key="url">
-              <!-- <div class="preview" @click="go(url)"> -->
+            <div class="item" v-for="url in fileListTemp" :key="url">
               <div class="preview">
                 <img :src="getFile(url)" alt="">
               </div>
@@ -164,6 +159,17 @@ const access = (data: File) => {
         }
       }
     }
+  }
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 30px 0 50px;
+
+  .el-input {
+    width: 500px;
   }
 }
 </style>
