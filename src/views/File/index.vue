@@ -4,6 +4,7 @@ import { Search } from '@element-plus/icons-vue'
 import { getFileListAPI } from '@/api/File'
 import { baseURL } from '@/utils/Request'
 import { svg } from '@/utils'
+import axios from 'axios';
 
 const loading = ref<boolean>(false)
 
@@ -11,6 +12,8 @@ const loading = ref<boolean>(false)
 const search = ref<string>("")
 // 文件请求URL
 const url = ref<string>(baseURL.replace("api", ""))
+// 目录路径
+const path = ref<string>("")
 // 获取文件结构
 const construction = ref<File[]>([])
 // 文件列表
@@ -33,7 +36,7 @@ getFileList()
 
 // 动态拼接资源路径
 const getFile = (name: string) => {
-  return new URL(`${url.value + name}`, import.meta.url).href
+  return new URL(`${url.value + path.value + name}`, import.meta.url).href
 }
 
 // 进入文件
@@ -41,17 +44,20 @@ const access = (data: File) => {
   loading.value = true
 
   // 拼接文件地址
-  url.value += data.name + "/"
+  path.value += data.name + "/"
 
   fileList.value = data.list
   fileListTemp.value = data.list
 
   construction.value = data.children
 
-  setTimeout(() => {
-    loading.value = false
-  }, 500)
+  setTimeout(() => loading.value = false, 500)
 }
+
+
+
+
+
 
 // 是否拖拽
 const isDrop = ref<boolean>(false)
@@ -67,25 +73,58 @@ const onDrop = (e: Event) => {
 }
 
 // 进入拖拽区
-const onDragEnter = (e: Event) => {
-  isDrop.value = true
-}
-
+const onDragEnter = (e: Event) => isDrop.value = true
 // 离开拖拽区
-const onDragLeave = (e: Event) => {
-  isDrop.value = false
-};
+const onDragLeave = () => isDrop.value = false;
+
+// 文件对象
+const fileData = ref()
+const fileInput = ref()
+// 文件上传
+const FileUpload = async (e: Event) => {
+  const file = e.target!.files[0]
+
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("target", path.value.split("/")[0])
+
+  const { data: { code, message } } = await axios.post("http://localhost:5000/api/file", formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }) as any
+
+  if (code !== 200) return ElNotification({
+    title: '文件上传失败',
+    message,
+    type: 'success',
+  })
+
+  ElNotification({
+    title: '成功',
+    message: "🎉文件上传成功",
+    type: 'success',
+  })
+
+  path.value = ""
+  fileList.value = []
+  fileListTemp.value = []
+
+  getFileList()
+}
 </script>
 
 <template>
   <div class="page" @drop="onDrop" @dragenter="onDragEnter" @dragleave="onDragLeave" @dragover.prevent @dragenter.prevent>
     <div :class="isDrop ? 'drop' : ''" v-if="!isDrop">
       <Title title="文件管理" icon="folder-open" />
-
+      
       <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
         <!-- 操作 -->
         <el-col :span="10">
-          <el-button>上传图片</el-button>
+          <input type="file" ref="fileInput" style="display: none" @change="FileUpload" />
+          <el-button @click="fileInput.click()">上传图片</el-button>
+
           <el-button type="danger">删除图片</el-button>
         </el-col>
 
@@ -125,7 +164,6 @@ const onDragLeave = (e: Event) => {
 
   <!-- 遮罩层 -->
   <div class="mark" v-if="isDrop">
-  <!-- <div class="mark" v-if="true"> -->
     <h3>将图片拖拽到此处即可上传</h3>
   </div>
 </template>

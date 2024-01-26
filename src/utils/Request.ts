@@ -7,7 +7,7 @@ export const baseURL = "http://localhost:5000/api";
 // export const baseURL = "http://139.196.43.147:5000/api"
 
 // 创建 axios 实例
-const instance = axios.create({
+export const instance = axios.create({
   // 项目API根路径
   baseURL,
   // 请求超时的时间
