@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { preview, vPreview, Vue3ImagePreview } from 'vue3-image-preview';
+import { Vue3ImagePreview } from 'vue3-image-preview';
 import { Search } from '@element-plus/icons-vue'
 import { getFileListAPI } from '@/api/File'
 import { baseURL } from '@/utils/Request'
@@ -52,50 +52,81 @@ const access = (data: File) => {
     loading.value = false
   }, 500)
 }
+
+// 是否拖拽
+const isDrop = ref<boolean>(false)
+
+// 获取拖拽上传的文件
+const onDrop = (e: Event) => {
+  e.preventDefault()
+
+  isDrop.value = false
+
+  const files = e.dataTransfer.files;
+  console.log(files, 666);
+}
+
+// 进入拖拽区
+const onDragEnter = (e: Event) => {
+  isDrop.value = true
+}
+
+// 离开拖拽区
+const onDragLeave = (e: Event) => {
+  isDrop.value = false
+};
 </script>
 
 <template>
-  <div class="page">
-    <Title title="文件管理" icon="folder-open" />
+  <div class="page" @drop="onDrop" @dragenter="onDragEnter" @dragleave="onDragLeave" @dragover.prevent @dragenter.prevent>
+    <div :class="isDrop ? 'drop' : ''" v-if="!isDrop">
+      <Title title="文件管理" icon="folder-open" />
 
-    <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
-      <!-- 操作 -->
-      <el-col :span="10">
-        <el-button>上传图片</el-button>
-        <el-button type="danger">删除图片</el-button>
-      </el-col>
+      <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
+        <!-- 操作 -->
+        <el-col :span="10">
+          <el-button>上传图片</el-button>
+          <el-button type="danger">删除图片</el-button>
+        </el-col>
 
-      <!-- 搜索框 -->
-      <el-col :span="6">
-        <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入文件名称进行查询" :prefix-icon="Search" />
-      </el-col>
-    </el-row>
+        <!-- 搜索框 -->
+        <el-col :span="6">
+          <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入文件名称进行查询" :prefix-icon="Search" />
+        </el-col>
+      </el-row>
 
-    <el-scrollbar max-height="90%">
-      <div class="construction" v-loading="loading" :element-loading-svg="svg"
-        element-loading-svg-view-box="-10, -10, 50, 50">
-        <!-- 目录列表 -->
-        <div class="dir" v-if="construction.length">
-          <div class="item" v-for="item in construction" :key="item.name" @click="access(item)">
-            <img src="@/assets/svg/file.svg" alt="">
-            <p>{{ item.name }}</p>
+      <el-scrollbar max-height="90%">
+        <div class="construction" v-loading="loading" :element-loading-svg="svg"
+          element-loading-svg-view-box="-10, -10, 50, 50">
+          <!-- 目录列表 -->
+          <div class="dir" v-if="construction.length">
+            <div class="item" v-for="item in construction" :key="item.name" @click="access(item)">
+              <img src="@/assets/svg/file.svg" alt="">
+              <p>{{ item.name }}</p>
+            </div>
+          </div>
+
+          <!-- 文件列表 -->
+          <div class="list">
+            <Vue3ImagePreview>
+              <div class="item" v-for="url in fileListTemp" :key="url">
+                <div class="preview">
+                  <img :src="getFile(url)" alt="">
+                </div>
+
+                <p>{{ url }}</p>
+              </div>
+            </Vue3ImagePreview>
           </div>
         </div>
+      </el-scrollbar>
+    </div>
+  </div>
 
-        <!-- 文件列表 -->
-        <div class="list">
-          <Vue3ImagePreview>
-            <div class="item" v-for="url in fileListTemp" :key="url">
-              <div class="preview">
-                <img :src="getFile(url)" alt="">
-              </div>
-
-              <p>{{ url }}</p>
-            </div>
-          </Vue3ImagePreview>
-        </div>
-      </div>
-    </el-scrollbar>
+  <!-- 遮罩层 -->
+  <div class="mark" v-if="isDrop">
+  <!-- <div class="mark" v-if="true"> -->
+    <h3>将图片拖拽到此处即可上传</h3>
   </div>
 </template>
 
@@ -173,6 +204,29 @@ const access = (data: File) => {
         }
       }
     }
+  }
+}
+
+.drop * {
+  pointer-events: none !important;
+}
+
+.mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(121, 128, 237, 0.1);
+  z-index: 999;
+  pointer-events: none;
+
+  h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 50px;
   }
 }
 </style>
