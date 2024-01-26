@@ -58,9 +58,18 @@ const access = (data: File) => {
   <div class="page">
     <Title title="文件管理" icon="folder-open" />
 
-    <div class="search" v-if="fileList.length">
-      <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入文件名称进行查询" :prefix-icon="Search" />
-    </div>
+    <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
+      <!-- 操作 -->
+      <el-col :span="10">
+        <el-button>上传图片</el-button>
+        <el-button type="danger">删除图片</el-button>
+      </el-col>
+
+      <!-- 搜索框 -->
+      <el-col :span="6">
+        <el-input v-model="search" class="w-50 m-2" size="large" placeholder="请输入文件名称进行查询" :prefix-icon="Search" />
+      </el-col>
+    </el-row>
 
     <el-scrollbar max-height="90%">
       <div class="construction" v-loading="loading" :element-loading-svg="svg"
@@ -138,6 +147,10 @@ const access = (data: File) => {
           .preview img {
             transform: scale(2);
           }
+
+          p {
+            color: $color;
+          }
         }
 
         .preview {
@@ -156,20 +169,10 @@ const access = (data: File) => {
 
         p {
           margin-top: 10px;
+          transition: $move;
         }
       }
     }
-  }
-}
-
-.search {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: 30px 0 50px;
-
-  .el-input {
-    width: 500px;
   }
 }
 </style>
