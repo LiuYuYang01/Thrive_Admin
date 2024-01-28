@@ -24,11 +24,9 @@ const delTagData = async (id: number) => {
     async function fn() {
         const { code, message } = await delTagDataAPI(id)
 
-        if (code !== 200) return
-
         ElNotification({
             title: '成功',
-            message: message,
+            message: "🎉删除标签成功",
             type: 'success',
         })
 

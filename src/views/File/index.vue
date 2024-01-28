@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Vue3ImagePreview } from 'vue3-image-preview';
+import { ElNotification } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
-import { getFileListAPI } from '@/api/File'
+import { delFileDataAPI, getFileListAPI } from '@/api/File'
 import { baseURL } from '@/utils/Request'
-import { svg } from '@/utils'
+import { svg, whetherToDelete } from '@/utils'
 import axios from 'axios';
 
 const loading = ref<boolean>(false)
@@ -112,20 +113,49 @@ const FileUpload = async (e: Event) => {
 
   getFileList()
 }
+
+// 选中的文件
+const fileSelectList = ref<string[]>([])
+// 删除文件
+const delFileData = async () => {
+  async function fn() {
+    const data = fileSelectList.value.map(url => `/${path.value}${url}`)
+    console.log(data, 555);
+
+    await delFileDataAPI(data)
+
+    ElNotification({
+      title: '成功',
+      message: "🎉删除文件成功",
+      type: 'success',
+    })
+
+    path.value = ""
+    fileList.value = []
+    fileListTemp.value = []
+    fileSelectList.value = []
+
+    getFileList()
+  }
+
+  // 确认是否删除
+  whetherToDelete(fn, "文件")
+}
 </script>
 
 <template>
+  {{ fileSelectList }}
   <div class="page" @drop="onDrop" @dragenter="onDragEnter" @dragleave="onDragLeave" @dragover.prevent @dragenter.prevent>
     <div :class="isDrop ? 'drop' : ''" v-if="!isDrop">
       <Title title="文件管理" icon="folder-open" />
-      
+
       <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
         <!-- 操作 -->
         <el-col :span="10">
           <input type="file" ref="fileInput" style="display: none" @change="FileUpload" />
           <el-button @click="fileInput.click()">上传图片</el-button>
 
-          <el-button type="danger">删除图片</el-button>
+          <el-button type="danger" @click="delFileData">删除图片</el-button>
         </el-col>
 
         <!-- 搜索框 -->
@@ -148,13 +178,17 @@ const FileUpload = async (e: Event) => {
           <!-- 文件列表 -->
           <div class="list">
             <Vue3ImagePreview>
-              <div class="item" v-for="url in fileListTemp" :key="url">
-                <div class="preview">
-                  <img :src="getFile(url)" alt="">
-                </div>
+              <el-checkbox-group v-model="fileSelectList">
+                <div class="item" v-for="url in fileListTemp" :key="url">
+                  <div class="preview">
+                    <img :src="getFile(url)" alt="">
+                  </div>
 
-                <p>{{ url }}</p>
-              </div>
+                  <p>{{ url }}</p>
+
+                  <el-checkbox :label="url" />
+                </div>
+              </el-checkbox-group>
             </Vue3ImagePreview>
           </div>
         </div>
@@ -191,7 +225,7 @@ const FileUpload = async (e: Event) => {
   }
 
   .list {
-    .image-wrapper {
+    .el-checkbox-group {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;

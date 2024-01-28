@@ -1,11 +1,7 @@
-import { instance } from '@/utils/Request'
 import Request from '@/utils/Request'
 
-// 新增文件
-// export const addFileDataAPI = (data: File) => Request<File>("POST", "/file", data)
-
 // 删除文件
-export const delFileDataAPI = (id: number) => Request<File>("DELETE", `/file/${id}`)
+export const delFileDataAPI = (data: string[]) => Request<File>("DELETE", "/file", { files: data })
 
 // 修改文件
 export const editFileDataAPI = (data: File) => Request<File>("PATCH", "/file", data)
