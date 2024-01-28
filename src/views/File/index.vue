@@ -59,35 +59,43 @@ const access = (data: File) => {
 
 
 
+// 文件列表
+const files = ref()
+// 文件对象
+const fileInput = ref()
 
 // 是否拖拽
 const isDrop = ref<boolean>(false)
-
+// 进入拖拽区
+const onDragEnter = (e: Event) => isDrop.value = true
+// 离开拖拽区
+const onDragLeave = () => isDrop.value = false;
 // 获取拖拽上传的文件
 const onDrop = (e: Event) => {
   e.preventDefault()
 
   isDrop.value = false
 
-  const files = e.dataTransfer.files;
-  console.log(files, 666);
+  files.value = e.dataTransfer.files
+
+  upload()
 }
 
-// 进入拖拽区
-const onDragEnter = (e: Event) => isDrop.value = true
-// 离开拖拽区
-const onDragLeave = () => isDrop.value = false;
-
-// 文件对象
-const fileData = ref()
-const fileInput = ref()
-// 文件上传
+// 手动上传
 const FileUpload = async (e: Event) => {
-  const file = e.target!.files[0]
+  files.value = e.target!.files
 
+  upload()
+}
+
+// 上传文件
+const upload = async () => {
   const formData = new FormData()
-  formData.append("file", file)
   formData.append("target", path.value.split("/")[0])
+
+  for (let i = 0; i < files.value.length; i++) {
+    formData.append("file", files.value[i])
+  }
 
   const { data: { code, message } } = await axios.post("http://localhost:5000/api/file", formData, {
     headers: {
@@ -98,7 +106,7 @@ const FileUpload = async (e: Event) => {
   if (code !== 200) return ElNotification({
     title: '文件上传失败',
     message,
-    type: 'success',
+    type: 'error',
   })
 
   ElNotification({
@@ -144,15 +152,14 @@ const delFileData = async () => {
 </script>
 
 <template>
-  {{ fileSelectList }}
   <div class="page" @drop="onDrop" @dragenter="onDragEnter" @dragleave="onDragLeave" @dragover.prevent @dragenter.prevent>
-    <div :class="isDrop ? 'drop' : ''" v-if="!isDrop">
+    <div :class="isDrop ? 'drop' : ''" v-if="!isDrop" style="height: 100%;">
       <Title title="文件管理" icon="folder-open" />
 
       <el-row justify="center" style="margin-bottom: 20px;" v-if="fileList.length">
         <!-- 操作 -->
         <el-col :span="10">
-          <input type="file" ref="fileInput" style="display: none" @change="FileUpload" />
+          <input type="file" ref="fileInput" style="display: none" @change="FileUpload" multiple />
           <el-button @click="fileInput.click()">上传图片</el-button>
 
           <el-button type="danger" @click="delFileData">删除图片</el-button>
@@ -203,6 +210,10 @@ const delFileData = async () => {
 </template>
 
 <style scoped lang="scss">
+// .page{
+//   position: relative;
+// }
+
 :deep(.el-scrollbar) {
   height: 82%;
 }
@@ -225,6 +236,10 @@ const delFileData = async () => {
   }
 
   .list {
+    .image-wrapper{
+      width: 100%;
+    }
+    
     .el-checkbox-group {
       display: flex;
       flex-wrap: wrap;
