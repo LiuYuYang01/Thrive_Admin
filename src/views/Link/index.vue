@@ -67,8 +67,8 @@ const rules = {
         { required: true, message: "网站链接不能为空", trigger: "blur" }
     ],
     type: [
-        { min: 2, max: 10, message: "网站类型限制在2 ~ 10个字符", trigger: "blur" },
-        { required: true, message: "网站类型不能为空", trigger: "blur" }
+        { required: true, message: "网站类型不能为空", trigger: "blur" },
+        { min: 2, max: 10, message: "网站类型限制在2 ~ 10个字符", trigger: "blur" }
     ]
 }
 

@@ -20,6 +20,6 @@ export const getArticleListAPI = (page?: Page) => {
   if (page) {
     return Request<Paginate<Article[]>>("GET", `/article?page=${page.page}&size=${page.size}`);
   } else {
-    return Request<Paginate<Article[]>>("GET", `/article`);
+    return Request<Article[]>("GET", `/article`);
   }
 };

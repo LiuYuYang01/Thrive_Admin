@@ -6,7 +6,7 @@ import { addCateDataAPI, delCateDataAPI, editCateDataAPI, getCateDataAPI, getCat
 const loading = ref(false)
 
 // 控制新增分类的表单是否显示
-const cateModel = ref(false)
+const model = ref(false)
 
 // 新增表单框实例
 const form = ref<FormInstance>()
@@ -52,7 +52,7 @@ getCateList()
 
 // 新增分类
 const addCateData = async (id: number) => {
-  cateModel.value = true
+  model.value = true
 
   // 新增二级分类
   cate.value.level = id
@@ -60,7 +60,7 @@ const addCateData = async (id: number) => {
 
 // 编辑分类
 const editCateData = async (id: number) => {
-  cateModel.value = true
+  model.value = true
 
   const { data } = await getCateDataAPI(id)
   cate.value = data
@@ -102,7 +102,7 @@ const submit = async (formEl: FormInstance | undefined) => {
     cate.value.level = 0
 
     // 关闭新增分类表单框
-    cateModel.value = false
+    model.value = false
 
     // 获取最新数据
     getCateList()
@@ -130,7 +130,7 @@ const delCateData = async (id: number) => {
 // 关闭弹框时处理的逻辑
 const close = () => {
   // 关闭新增分类弹框
-  cateModel.value = false
+  model.value = false
 
   // 将表单校验初始化
   form.value?.resetFields()
@@ -140,9 +140,9 @@ const close = () => {
 <template>
   <div class="page">
     <Title title="分类管理" icon="category-alt" />
-    {{ cate }}
+
     <el-row justify="center" style="margin-bottom: 10px;">
-      <el-button key="primary" type="primary" text @click="cateModel = true">新增一级分类</el-button>
+      <el-button key="primary" type="primary" text @click="model = true">新增一级分类</el-button>
     </el-row>
 
     <!-- 分类列表 -->
@@ -172,7 +172,7 @@ const close = () => {
     </el-tree>
 
     <!-- 新增分类 -->
-    <el-dialog v-model="cateModel" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
+    <el-dialog v-model="model" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
       <el-form ref="form" :rules="rules" label-position="top" :model="cate" size="large">
         <el-form-item label="名称" prop="name">
           <el-input v-model="cate.name" placeholder="大前端" />
