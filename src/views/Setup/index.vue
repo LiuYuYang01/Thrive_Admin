@@ -9,19 +9,25 @@ const active = ref<string>(path)
 const list = [
   {
     title: "系统配置",
-    description: "系统配置描述信息",
+    description: "配置管理员账号、登录时间等",
     icon: "shield-quarter",
     path: "/setup/system"
   },
   {
-    title: "网站设置",
-    description: "网站设置描述信息",
+    title: "网站配置",
+    description: "配置网站标题、LOGO、描述、SEO等",
     icon: "globe",
     path: "/setup/web"
   },
   {
+    title: "布局配置",
+    description: "配置网站布局及代码高亮等",
+    icon: "layout",
+    path: "/setup/layout"
+  },
+  {
     title: "个人设置",
-    description: "个人设置描述信息",
+    description: "配置个人信息等",
     icon: "user",
     path: "/setup/my"
   }
@@ -45,7 +51,8 @@ onBeforeRouteUpdate(to => {
 
     <div class="main">
       <ul class="options">
-        <li class="item" :class="{ active: item.path === active }" @click="toPath(item.path)" v-for="item, index in list">
+        <li class="item" :class="{ active: item.path === active }" @click="toPath(item.path)"
+          v-for="item, index in list">
           <h3><box-icon :name="item.icon" />{{ item.title }}</h3>
           <p>{{ item.description }}</p>
         </li>
@@ -69,7 +76,8 @@ onBeforeRouteUpdate(to => {
 
     .item {
       position: relative;
-      padding: 10px 0;
+      width: 210px;
+      padding: 10px;
       padding-left: 20px;
       margin: 5px 0;
       transition: all $move;
@@ -88,8 +96,8 @@ onBeforeRouteUpdate(to => {
       }
 
       p {
-        font-size: 14px;
-        margin-top: 10px;
+        font-size: 13px;
+        margin-top: 5px;
         color: #858585;
       }
 

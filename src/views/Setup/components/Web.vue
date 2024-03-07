@@ -71,7 +71,7 @@ const submit = async (formEl: FormInstance | undefined) => {
 
 <template>
   <div class="size">
-    <Title title="网站设置" icon="user" />
+    <Title title="网站配置" icon="user" />
 
     <el-form ref="form" label-position="top" :model="web" :rules="rules" size="large" style="min-width: 500px;"
       v-loading="loading" :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50">

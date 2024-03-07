@@ -3,8 +3,8 @@ import { Action, ElMessageBox, ElNotification } from "element-plus";
 import { useUserStore } from "@/stores";
 
 // 配置项目API域名
-export const baseURL = "http://localhost:5000/api";
-// export const baseURL = "http://139.196.43.147:5000/api"
+// export const baseURL = "http://localhost:5000/api";
+export const baseURL = "http://114.115.174.207:5000/api"
 
 // 创建 axios 实例
 export const instance = axios.create({

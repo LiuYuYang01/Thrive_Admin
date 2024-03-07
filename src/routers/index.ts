@@ -81,7 +81,12 @@ export const routes = [
           {
             path: "web",
             component: () => import("@/views/Setup/components/Web.vue"),
-            meta: { title: "网站管理" },
+            meta: { title: "网站配置" },
+          },
+          {
+            path: "layout",
+            component: () => import("@/views/Setup/components/Layout.vue"),
+            meta: { title: "布局配置" },
           },
           {
             path: "my",

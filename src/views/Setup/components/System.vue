@@ -29,7 +29,7 @@ const rules = reactive<FormRules<editUser>>({
 
 <template>
   <div class="setup">
-    <Title title="系统设置" icon="user" />
+    <Title title="系统配置" icon="user" />
 
     <el-form ref="form" label-position="top" :model="my" :rules="rules" size="large" style="min-width: 500px;">
       <el-form-item label="管理员账号" prop="username">
