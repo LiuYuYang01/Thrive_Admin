@@ -9,17 +9,17 @@ const article = ref(1)
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 文章布局</el-divider>
 
         <div class="article">
-            <div class="item">
+            <div :class="['item', article === 1 ? 'active' : '']" @click="article = 1">
                 <img src="@/assets/img/layout/classics.png" alt="">
                 <p>经典布局</p>
             </div>
 
-            <div class="item">
+            <div :class="['item', article === 2 ? 'active' : '']" @click="article = 2">
                 <img src="@/assets/img/layout/card.png" alt="">
                 <p>卡片布局</p>
             </div>
 
-            <div class="item">
+            <div :class="['item', article === 3 ? 'active' : '']" @click="article = 3">
                 <img src="@/assets/img/layout/waterfall.png" alt="">
                 <p>瀑布流布局</p>
             </div>
@@ -61,6 +61,10 @@ const article = ref(1)
             &:hover {
                 border: 2px solid $color;
             }
+        }
+
+        .active {
+            border: 2px solid $color;
         }
 
         img {
