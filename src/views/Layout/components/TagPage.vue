@@ -20,6 +20,8 @@ const list = ref<Item[]>([
 
 // 跳转标签页
 const operate = (item: Item, e: any) => {
+    console.log(item,111);
+    
     const domName: string = e.target!.nodeName
     store.tagPageName = item.name
 
