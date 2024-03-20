@@ -7,7 +7,7 @@ export const addCommentDataAPI = (data: Comment) => Request<Comment>("POST", "/c
 export const delCommentDataAPI = (id: number) => Request<Comment>("DELETE", `/comment/${id}`)
 
 // 审核评论
-export const auditCommentDataAPI = (id: number) => Request<Comment>("POST", `/comment/${id}`)
+export const auditCommentDataAPI = (id: number) => Request<Comment>("PATCH", `/comment/audit/${id}`)
 
 // 修改评论
 export const editCommentDataAPI = (data: Comment) => Request<Comment>("PATCH", "/comment", data)

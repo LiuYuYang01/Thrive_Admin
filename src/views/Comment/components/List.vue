@@ -1,22 +1,40 @@
 <script setup lang="ts">
 import moment from 'moment';
-import { svg } from '@/utils'
-import { auditCommentDataAPI } from '@/api/Comment';
+import { svg, whetherToDelete } from '@/utils'
+import {ElMessage} from 'element-plus'
+import { auditCommentDataAPI, delCommentDataAPI } from '@/api/Comment';
 
 const props = defineProps<{ data: Info }>()
 const emit = defineEmits<(e: "get", tab: string) => void>()
 
 // 审核评论
 const auditComment = async (id: number) => {
-    const { code } = await auditCommentDataAPI(id)
+    await auditCommentDataAPI(id)
     
     // 获取最新数据
     emit("get", "list")
 
-    // ElMessage({
-    //     message: '评论审核成功',
-    //     type: 'success',
-    // })
+    ElMessage({
+        message: '🎉 审核评论成功',
+        type: 'success',
+    })
+}
+
+// 删除评论
+const delComment = async (id: number) => {
+    const fn = async ()=>{
+        await delCommentDataAPI(id)
+    
+        // 获取最新数据
+        emit("get", "list")
+
+        ElMessage({
+            message: '🎉 删除评论成功',
+            type: 'success',
+        })
+    }
+
+    whetherToDelete(fn,"评论")
 }
 
 // 监听页码变化
@@ -60,7 +78,7 @@ const auditComment = async (id: number) => {
             <el-table-column fixed="right" label="操作" :width="data.tab === 'audit' ? 120 : 80" align="center">
                 <template #default="scope">
                     <el-button link type="primary" size="small" v-if="data.tab === 'audit'" @click="auditComment(scope.row.id)"><b>通过</b></el-button>
-                    <el-button link type="danger" size="small"><b>删除</b></el-button>
+                    <el-button link type="danger" size="small" @click="delComment(scope.row.id)"><b>删除</b></el-button>
                 </template>
             </el-table-column>
         </el-table>
