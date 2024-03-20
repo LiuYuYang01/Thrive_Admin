@@ -12,7 +12,7 @@ const router = useRouter()
             <div class="list">
                 <a href="http://liuyuyang.net" target="_blank"><i class='bx bx-globe icon'></i>作者博客</a>
                 <a href="/"><i class='bx bxl-github icon'></i>GitHub</a>
-                <a href="/"><i class='bx bx-message-square-dots icon'></i>消息</a>
+                <!-- <a href="/"><i class='bx bx-message-square-dots icon'></i>消息</a> -->
             </div>
 
             <div class="my">

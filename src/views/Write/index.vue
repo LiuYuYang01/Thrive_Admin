@@ -118,7 +118,6 @@ onMounted(async () => {
             <div class="edit">
                 <el-form :rules="rules" :model="article">
                     <el-form-item prop="title">
-                        {{ article }}
                         <el-col class="text-gradient" style="text-align: end;">已在 2024-01-22 15:54:34秒 保存为草稿</el-col>
 
                         <!-- 文章标题 -->

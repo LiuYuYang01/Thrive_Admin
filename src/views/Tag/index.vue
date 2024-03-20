@@ -112,7 +112,7 @@ const submit = async (formEl: FormInstance | undefined) => {
                     <el-row style="display: flex; flex-direction: column; width: 40%;">
                         <div class="title"><i class='bx bx-purchase-tag icon' />标签列表</div>
 
-                        <el-table :data="list" width="100%" height="80%" style="height: 800px;">
+                        <el-table :data="list" width="100%">
                             <el-table-column prop="id" label="ID" width="100" />
                             <el-table-column prop="name" label="名称" width="180" align="center" />
 
@@ -151,6 +151,14 @@ const submit = async (formEl: FormInstance | undefined) => {
         .from {
             display: flex;
             justify-content: space-between;
+        }
+
+        .el-tabs__header.is-left{
+            height: 60%;
+        }
+        
+        .el-table--fit{
+            height: 40%;
         }
     }
 
