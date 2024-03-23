@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 // 导出共享状态管理
 export const useUserStore = defineStore("user", () => {
   const token = ref<string>("")
-  const user = ref<User>()
+  const user = ref<UserInfo>()
 
   // 退出登录
   const quitLogin = () => {

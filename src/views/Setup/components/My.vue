@@ -12,7 +12,28 @@ const form = ref<FormInstance>()
 
 // 从pinia中获取用户信息
 import { useUserStore } from '@/stores'
+import { editUserDataAPI, getUserDataAPI } from '@/api/User';
 const store = useUserStore()
+
+// 获取用户信息
+const getUserInfo = async () => {
+  const { data } = await getUserDataAPI(store.user?.id)
+  My.value = data
+}
+getUserInfo()
+
+// 修改用户信息
+const editUserData = async () => {
+  await editUserDataAPI(My.value)
+
+  ElNotification({
+    title: '成功',
+    message: "🎉修改用户信息成功",
+    type: 'success'
+  })
+
+  getUserInfo()
+}
 
 // 数据校验
 const rules = reactive<FormRules<User>>({
@@ -56,7 +77,7 @@ const rules = reactive<FormRules<User>>({
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" style="width: 100%;">编辑信息</el-button>
+        <el-button type="primary" style="width: 100%;" @click="editUserData">编辑信息</el-button>
       </el-form-item>
     </el-form>
   </div>
