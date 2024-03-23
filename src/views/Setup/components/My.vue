@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { FormInstance, FormRules, ElNotification } from 'element-plus';
 
+const loading = ref<boolean>(false)
+
 const My = ref<UserInfo>({
   name: '',
   email: '',
@@ -17,8 +19,12 @@ const store = useUserStore()
 
 // 获取用户信息
 const getUserInfo = async () => {
+  loading.value = true
+
   const { data } = await getUserDataAPI(store.user?.id)
   My.value = data
+
+  loading.value = false
 }
 getUserInfo()
 
@@ -59,7 +65,8 @@ const rules = reactive<FormRules<User>>({
   <div class="my">
     <Title title="个人设置" icon="user" />
 
-    <el-form ref="form" label-position="top" :model="My" :rules="rules" size="large" style="min-width: 500px;">
+    <el-form ref="form" label-position="top" :model="My" :rules="rules" size="large" style="min-width: 500px;"
+      v-loading="loading">
       <el-form-item label="名称" prop="name">
         <el-input v-model="My.name" placeholder="宇阳" />
       </el-form-item>
