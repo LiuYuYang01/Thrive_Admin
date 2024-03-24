@@ -7,6 +7,8 @@ import { baseURL } from '@/utils/Request'
 import { svg, whetherToDelete } from '@/utils'
 import axios from 'axios';
 
+const centerDialogVisible = ref(true)
+
 const loading = ref<boolean>(false)
 
 // 搜索
@@ -207,6 +209,16 @@ const delFileData = async () => {
   <div class="mark" v-if="isDrop">
     <h3>将图片拖拽到此处即可上传</h3>
   </div>
+
+  <el-dialog v-model="centerDialogVisible" title="提示" width="30%" center>
+    <span style="font-size: 30px;">等待开发，敬请期待！</span>
+
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="centerDialogVisible = false">好的</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <style scoped lang="scss">
@@ -236,10 +248,10 @@ const delFileData = async () => {
   }
 
   .list {
-    .image-wrapper{
+    .image-wrapper {
       width: 100%;
     }
-    
+
     .el-checkbox-group {
       display: flex;
       flex-wrap: wrap;

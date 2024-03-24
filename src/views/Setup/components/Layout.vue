@@ -2,6 +2,8 @@
 type ArticleLayout = "classics" | "card" | "waterfall"
 type RightSidebar = "author" | "hotArticle" | "randomArticle" | "newComments"
 
+const centerDialogVisible = ref(true)
+
 // 选择文章布局方式
 const article = ref<ArticleLayout>("classics")
 
@@ -23,7 +25,7 @@ const onSidebar = (select: RightSidebar) => {
 <template>
     <div class="layout">
         <Title title="布局配置" icon="user" />
-        
+
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 侧边栏</el-divider>
         <div class="sidebar">
             <div :class="['item', sidebar.includes('author') ? 'active' : '']" @click="onSidebar('author')">
@@ -36,8 +38,7 @@ const onSidebar = (select: RightSidebar) => {
                 <p>文章推荐模块</p>
             </div>
 
-            <div :class="['item', sidebar.includes('randomArticle') ? 'active' : '']"
-                @click="onSidebar('randomArticle')">
+            <div :class="['item', sidebar.includes('randomArticle') ? 'active' : '']" @click="onSidebar('randomArticle')">
                 <img src="@/assets/img/layout/randomArticle.png" alt="">
                 <p>随机文章模块</p>
             </div>
@@ -66,6 +67,16 @@ const onSidebar = (select: RightSidebar) => {
             </div>
         </div>
     </div>
+
+    <el-dialog v-model="centerDialogVisible" title="提示" width="30%" center>
+        <span style="font-size: 30px;">等待开发，敬请期待！</span>
+
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button type="primary" @click="centerDialogVisible = false">好的</el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <style scoped lang="scss">

@@ -33,3 +33,12 @@ interface Web {
     subhead: string
     title: string
 }
+
+// 布局配置
+interface Layout {
+    isTheme: boolean,
+    isArticleLayout: "classics" | "card" | "waterfall",
+    rightSidebar: "author" | "hotArticle" | "randomArticle" | "newComments",
+    swiperImage: string,
+    swiperText: string[]
+}

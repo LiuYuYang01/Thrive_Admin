@@ -95,11 +95,11 @@ export const routes = [
           },
         ],
       },
-      // {
-      //   path: "/file",
-      //   component: () => import("@/views/File/index.vue"),
-      //   meta: { title: "文件系统", icon: "folder-open" },
-      // },
+      {
+        path: "/file",
+        component: () => import("@/views/File/index.vue"),
+        meta: { title: "文件系统", icon: "folder-open" },
+      },
       {
         path: "/work",
         component: () => import("@/views/Work/index.vue"),
