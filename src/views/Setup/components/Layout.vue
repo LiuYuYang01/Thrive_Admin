@@ -1,35 +1,48 @@
 <script setup lang="ts">
+import { getLayoutDataAPI } from '@/api/System';
 import { Picture } from '@element-plus/icons-vue'
+import { svg } from '@/utils'
 
-const layout = reactive({
+const loading = ref<boolean>(false)
+
+const layout = ref<Layout>({
     // 选择文章布局方式
-    isArticleLayout: "classics",
+    isArticleLayout: "",
     // 选择显示的侧边栏模块
-    rightSidebar: ["author", "hotArticle", "randomArticle", "newComments"],
+    rightSidebar: [],
     // 首页背景图
-    swiperImage: "https://bu.dusays.com/2023/11/10/654e2cf6055b0.jpg",
+    swiperImage: "",
     // 打字机文本
-    swiperText: `['System.out.print("有些梦虽然遥不可及，但并不是不可能实现!");',
-        'print(" 互联网从不缺乏天才, 而努力才是最终的入场券!")',
-        'console.log("再渺小的星光，也有属于他的光芒!")']`
+    swiperText: ``,
 })
 
 // 选择显示的侧边栏模块
 const onSidebar = (select: RightSidebar) => {
-    const is = layout.rightSidebar.includes(select)
+    const is = layout.value.rightSidebar.includes(select)
 
     // 判断是否存在，如果存在就去掉，反之新增
     if (is) {
-        const index = layout.rightSidebar.indexOf(select)
-        layout.rightSidebar.splice(index, 1)
+        const index = layout.value.rightSidebar.indexOf(select)
+        layout.value.rightSidebar.splice(index, 1)
     } else {
-        layout.rightSidebar.push(select)
+        layout.value.rightSidebar.push(select)
     }
 }
+
+// 获取布局配置
+const getLayoutData = async () => {
+    loading.value = true
+
+    const { data } = await getLayoutDataAPI()
+    layout.value = data
+
+    loading.value = false
+}
+getLayoutData()
 </script>
 
 <template>
-    <div class="layout">
+    <div class="layout" v-loading="loading" :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50">
         <Title title="布局配置" icon="user" />
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 首页背景图</el-divider>
@@ -47,8 +60,8 @@ const onSidebar = (select: RightSidebar) => {
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 打字机文本</el-divider>
         <div class="text">
-            <el-input v-model="layout.swiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"
-                placeholder="['第一段文本', '第二段', '...']" />
+            <el-input v-model="layout.swiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
+            <el-alert title="示例：['第一段文本', '第二段', '第四段', '...']" type="info" style="margin-top: 5px;"/>
         </div>
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 侧边栏</el-divider>
