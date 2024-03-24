@@ -6,19 +6,21 @@ import { svg } from '@/utils'
 
 const loading = ref<boolean>(false)
 
+const tempSwiperText = ref<string>("")
 const layout = ref<Layout>({
     // 选择文章布局方式
-    isArticleLayout: "",
+    isArticleLayout: "classics",
     // 选择显示的侧边栏模块
-    rightSidebar: [],
+    rightSidebar: ["author", "hotArticle", "randomArticle", "newComments"],
     // 首页背景图
-    swiperImage: "",
+    swiperImage: "https://bu.dusays.com/2023/11/10/654e2cf6055b0.jpg",
     // 打字机文本
-    swiperText: ``,
+    swiperText: ['这是一段文本', '这是第二段文本']
 })
 
 // 选择显示的侧边栏模块
 const onSidebar = (select: RightSidebar) => {
+
     const is = layout.value.rightSidebar.includes(select)
 
     // 判断是否存在，如果存在就去掉，反之新增
@@ -36,6 +38,7 @@ const getLayoutData = async () => {
 
     const { data } = await getLayoutDataAPI()
     layout.value = data
+    tempSwiperText.value = layout.value.swiperText.join("||")
 
     loading.value = false
 }
@@ -44,6 +47,8 @@ getLayoutData()
 // 修改布局配置
 const editLayoutData = async () => {
     loading.value = true
+
+    layout.value.swiperText = tempSwiperText.value.split("||")
 
     await editLayoutDataAPI(layout.value)
 
@@ -76,8 +81,8 @@ const editLayoutData = async () => {
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 打字机文本</el-divider>
         <div class="text">
-            <el-input v-model="layout.swiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
-            <el-alert title="示例：['第一段文本', '第二段', '第四段', '...']" type="info" style="margin-top: 5px;" />
+            <el-input v-model="tempSwiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
+            <el-alert title="多段文本以||进行分割 示例：这是一段文本||第二段||第三段||..." type="info" style="margin-top: 5px;" />
         </div>
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 侧边栏</el-divider>

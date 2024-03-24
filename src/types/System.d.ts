@@ -42,5 +42,5 @@ interface Layout {
     isArticleLayout: ArticleLayout,
     rightSidebar: RightSidebar[],
     swiperImage: string,
-    swiperText: string
+    swiperText: string[]
 }
