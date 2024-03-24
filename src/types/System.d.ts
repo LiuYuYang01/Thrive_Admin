@@ -34,11 +34,14 @@ interface Web {
     title: string
 }
 
+type ArticleLayout = "classics" | "card" | "waterfall"
+type RightSidebar = "author" | "hotArticle" | "randomArticle" | "newComments"
+
 // 布局配置
 interface Layout {
     isTheme: boolean,
-    isArticleLayout: "classics" | "card" | "waterfall",
-    rightSidebar: "author" | "hotArticle" | "randomArticle" | "newComments",
+    isArticleLayout: ArticleLayout,
+    rightSidebar: RightSidebar,
     swiperImage: string,
-    swiperText: string[]
+    swiperText: string
 }
