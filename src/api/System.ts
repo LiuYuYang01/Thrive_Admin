@@ -13,4 +13,4 @@ export const editWebDataAPI = (data: Web) => Request<Web>("PATCH", "/project/web
 export const getLayoutDataAPI = () => Request<Layout>("GET", "/project/layout")
 
 // 修改布局配置信息
-export const editLayoutDataAPI = (data: Web) => Request<Layout>("PATCH", "/project/layout", data)
+export const editLayoutDataAPI = (data: Layout) => Request<Layout>("PATCH", "/project/layout", data)

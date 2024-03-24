@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { getLayoutDataAPI } from '@/api/System';
+import { ElNotification } from "element-plus"
+import { editLayoutDataAPI, getLayoutDataAPI } from '@/api/System';
 import { Picture } from '@element-plus/icons-vue'
 import { svg } from '@/utils'
 
@@ -39,6 +40,21 @@ const getLayoutData = async () => {
     loading.value = false
 }
 getLayoutData()
+
+// 修改布局配置
+const editLayoutData = async () => {
+    loading.value = true
+
+    await editLayoutDataAPI(layout.value)
+
+    ElNotification({
+        title: '成功',
+        message: "🎉修改布局成功",
+        type: 'success'
+    })
+
+    loading.value = false
+}
 </script>
 
 <template>
@@ -47,7 +63,7 @@ getLayoutData()
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 首页背景图</el-divider>
         <div class="swiper">
-            <el-input v-model="layout.swiperImage" style="max-width: 600px" placeholder="请输入背景图地址">
+            <el-input v-model="layout.swiperImage" placeholder="请输入背景图地址">
                 <template #prepend>
                     <el-icon>
                         <Picture />
@@ -61,7 +77,7 @@ getLayoutData()
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 打字机文本</el-divider>
         <div class="text">
             <el-input v-model="layout.swiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
-            <el-alert title="示例：['第一段文本', '第二段', '第四段', '...']" type="info" style="margin-top: 5px;"/>
+            <el-alert title="示例：['第一段文本', '第二段', '第四段', '...']" type="info" style="margin-top: 5px;" />
         </div>
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 侧边栏</el-divider>
@@ -110,12 +126,14 @@ getLayoutData()
                 <p>瀑布流布局</p>
             </div>
         </div>
+
+        <el-button type="primary" size="large" style="width: 100%;" @click="editLayoutData">修改布局</el-button>
     </div>
 </template>
 
 <style scoped lang="scss">
 .layout {
-    width: 500px;
+    width: 80%;
 
     .title {
         display: flex;
@@ -139,23 +157,16 @@ getLayoutData()
     }
 
     .swiper {
-        margin-bottom: 50px;
-
         img {
-            width: 100%;
+            width: 30%;
             margin-top: 10px;
             border-radius: 5px;
         }
     }
 
-    .text {
-        margin-bottom: 50px;
-    }
-
     .article,
     .sidebar {
         display: flex;
-        margin-bottom: 50px;
 
         .item {
             display: flex;
@@ -187,6 +198,16 @@ getLayoutData()
                 color: $color;
             }
         }
+    }
+
+    .swiper,
+    .text,
+    .sidebar {
+        margin-bottom: 50px;
+    }
+
+    .article {
+        margin-bottom: 10px;
     }
 }
 </style>
