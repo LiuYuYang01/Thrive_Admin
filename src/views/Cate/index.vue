@@ -32,7 +32,7 @@ const rules = reactive<FormRules<Omit<Cate, "id" | "icon" | "children">>>({
   ],
   url: [
     { required: true, message: '分类链接不能为空' },
-    { min: 5, max: 300, message: '分类链接限制为 5 ~ 300个字符' }
+    { min: 1, max: 300, message: '分类链接限制为 1 ~ 300个字符' }
   ],
 })
 
@@ -60,10 +60,14 @@ const addCateData = async (id: number) => {
 
 // 编辑分类
 const editCateData = async (id: number) => {
+  loading.value = true
+
   model.value = true
 
   const { data } = await getCateDataAPI(id)
   cate.value = data
+
+  loading.value = false
 }
 
 // 表单校验
@@ -83,7 +87,7 @@ const submit = async (formEl: FormInstance | undefined) => {
         message: "🎉修改分类成功",
         type: 'success',
       })
-      
+
     } else {
       // 新增分类
       await addCateDataAPI(cate.value)
@@ -147,7 +151,7 @@ const close = () => {
 
     <!-- 分类列表 -->
     <el-tree :data="list" :props="{ children: 'children', label: 'name' }" v-loading="loading" :element-loading-svg="svg"
-      class="cate" :default-expand-all="true">
+      element-loading-svg-view-box="-10, -10, 50, 50" class="cate" :default-expand-all="true">
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span class="name">{{ node.label }}</span>
@@ -173,7 +177,8 @@ const close = () => {
 
     <!-- 新增分类 -->
     <el-dialog v-model="model" title="新增分类导航" width="30%" style="padding-bottom: 0px;" :before-close="close">
-      <el-form ref="form" :rules="rules" label-position="top" :model="cate" size="large">
+      <el-form ref="form" :rules="rules" label-position="top" :model="cate" size="large" v-loading="loading"
+        :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50">
         <el-form-item label="名称" prop="name">
           <el-input v-model="cate.name" placeholder="大前端" />
         </el-form-item>

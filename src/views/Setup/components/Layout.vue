@@ -20,7 +20,6 @@ const layout = ref<Layout>({
 
 // 选择显示的侧边栏模块
 const onSidebar = (select: RightSidebar) => {
-
     const is = layout.value.rightSidebar.includes(select)
 
     // 判断是否存在，如果存在就去掉，反之新增
