@@ -225,7 +225,7 @@ const viewImageModel = ref(false)
   }
 
   .image {
-    height: 100%;
+    width: 170px;
     border-radius: $round;
     background-size: cover;
     cursor: pointer;

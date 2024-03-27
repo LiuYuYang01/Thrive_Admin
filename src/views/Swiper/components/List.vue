@@ -51,7 +51,7 @@ const swiperList = ref<Swiper[]>()
     }
 
     .image {
-        height: 100px;
+        width: 100%;
         border-radius: $round;
         background-size: cover;
         cursor: pointer;
