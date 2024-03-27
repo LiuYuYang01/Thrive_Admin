@@ -19,11 +19,11 @@ const swiper = ref<Swiper>({
 const rules = reactive<FormRules<Swiper>>({
   title: [
     { required: true, message: "轮播图标题不能为空", trigger: "blur" },
-    { min: 3, max: 20, message: "轮播图标题限制在3 ~ 20个字符", trigger: "blur" }
+    { min: 3, max: 30, message: "轮播图标题限制在3 ~ 30个字符", trigger: "blur" }
   ],
   description: [
     { required: true, message: "轮播图描述不能为空", trigger: "blur" },
-    { min: 3, max: 30, message: "轮播图描述限制在3 ~ 30个字符", trigger: "blur" }
+    { min: 3, max: 50, message: "轮播图描述限制在3 ~ 50个字符", trigger: "blur" }
   ],
   url: [
     { required: true, message: "轮播图链接不能为空", trigger: "blur" },
@@ -225,7 +225,7 @@ const viewImageModel = ref(false)
   }
 
   .image {
-    height: 100px;
+    height: 100%;
     border-radius: $round;
     background-size: cover;
     cursor: pointer;

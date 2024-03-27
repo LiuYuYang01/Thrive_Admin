@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { useUserStore } from "@/stores";
 
 // meta字段说明
 // title：路由标题
 // icon：路由图标
 // show：默认是否展开二级导航
-export const routes = [
+export const routes: RouteRecordRaw[] = [
   {
     path: "/",
     component: () => import("@/views/Layout/index.vue"),

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ElNotification, FormInstance, FormRules } from 'element-plus';
-import { addSwiperAPI, editSwiperAPI, getSwiperAPI } from '@/api/Swiper'
+import { FormInstance, FormRules } from 'element-plus';
 
 // 轮播图实例
 const form = ref<FormInstance>()
@@ -11,18 +10,6 @@ const swiper = ref<Swiper>({
     url: '',
     image: ''
 })
-
-// // 数据回显
-// watch(props.data, async swiper => {
-//     if (swiper.title === "修改轮播图") {
-//         const { data } = await getSwiperAPI(swiper.id)
-
-//         swiper.value = data as Swiper
-//     }
-// })
-
-// 轮播图实例
-const SwiperRef = ref<FormInstance>()
 
 // 数据校验
 const rules = reactive<FormRules<Swiper>>({

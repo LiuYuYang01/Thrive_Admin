@@ -14,7 +14,7 @@ const getArticleList = async (page?: Page) => {
     loading.value = true
 
     const { data } = await getArticleListAPI(page)
-    paginate.value = data
+    paginate.value = data as Paginate<Article[]>
 
     loading.value = false
 }

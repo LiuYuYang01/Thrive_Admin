@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { svg } from '@/utils'
-import { FormRules } from 'element-plus';
 
 const loading = ref<boolean>(false)
 
