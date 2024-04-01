@@ -37,7 +37,8 @@ const getLayoutData = async () => {
 
     const { data } = await getLayoutDataAPI()
     layout.value = data
-    tempSwiperText.value = layout.value.swiperText.join("||")
+
+    tempSwiperText.value = layout.value.swiperText.join("\n")
 
     loading.value = false
 }
@@ -47,7 +48,7 @@ getLayoutData()
 const editLayoutData = async () => {
     loading.value = true
 
-    layout.value.swiperText = tempSwiperText.value.split("||")
+    layout.value.swiperText = tempSwiperText.value.split("\n")
 
     await editLayoutDataAPI(layout.value)
 
@@ -81,7 +82,7 @@ const editLayoutData = async () => {
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 打字机文本</el-divider>
         <div class="text">
             <el-input v-model="tempSwiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
-            <el-alert title="多段文本以||进行分割 示例：这是一段文本||第二段||第三段||..." type="info" style="margin-top: 5px;" />
+            <el-alert title="以换行分隔，每行表示一段文本" type="info" style="margin-top: 5px;" />
         </div>
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 侧边栏</el-divider>
