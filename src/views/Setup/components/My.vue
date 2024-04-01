@@ -38,6 +38,9 @@ const editUserData = async () => {
     type: 'success'
   })
 
+  // 同步更新头像
+  store.user = My.value
+
   getUserInfo()
 }
 
