@@ -73,7 +73,7 @@ const onDragEnter = (e: Event) => isDrop.value = true
 // 离开拖拽区
 const onDragLeave = () => isDrop.value = false;
 // 获取拖拽上传的文件
-const onDrop = (e) => {
+const onDrop = (e: any) => {
   e.preventDefault()
 
   isDrop.value = false
@@ -84,7 +84,7 @@ const onDrop = (e) => {
 }
 
 // 手动上传
-const FileUpload = async (e) => {
+const FileUpload = async (e: any) => {
   files.value = e.target!.files
 
   upload()
