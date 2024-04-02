@@ -76,6 +76,8 @@ const editLayoutData = async () => {
                 </template>
             </el-input>
 
+
+
             <img :src="layout.swiperImage" alt="">
         </div>
 

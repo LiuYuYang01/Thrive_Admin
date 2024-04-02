@@ -61,13 +61,14 @@ const delComment = async (id: number) => {
 
             <el-table-column property="url" label="网站" width="250">
                 <template #default="scope">
-                    <a :href="scope.row.url" class="url">{{ scope.row.url }}</a>
+                    <a :href="scope.row.url" class="url" v-if="scope.row.url">{{ scope.row.url }}</a>
+                    <span v-else>无网站</span>
                 </template>
             </el-table-column>
 
-            <el-table-column property="rid" label="所属文章" width="300">
+            <el-table-column property="article" label="所属文章" width="300">
                 <template #default="{ row }">
-                    {{ row.aid }}
+                    {{ row.article }}
                 </template>
             </el-table-column>
 
