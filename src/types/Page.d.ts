@@ -1,4 +1,5 @@
 interface Page {
     page: number,
-    size: number
+    size: number,
+    total?: number
 }

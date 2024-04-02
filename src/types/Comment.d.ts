@@ -14,6 +14,6 @@ interface Comment {
 interface Info {
     tab: string,
     loading: boolean,
-    total: number,
-    list: Comment[]
+    list: Comment[],
+    paginate: Page
 }

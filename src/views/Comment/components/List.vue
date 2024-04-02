@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { svg, whetherToDelete } from '@/utils'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { auditCommentDataAPI, delCommentDataAPI } from '@/api/Comment';
 
 const props = defineProps<{ data: Info }>()
-const emit = defineEmits<(e: "get", tab: string) => void>()
+const emit = defineEmits<(e: "get", page?: Page) => void>()
 
 // 审核评论
 const auditComment = async (id: number) => {
     await auditCommentDataAPI(id)
-    
+
     // 获取最新数据
-    emit("get", "list")
+    emit("get")
 
     ElMessage({
         message: '🎉 审核评论成功',
@@ -22,11 +22,11 @@ const auditComment = async (id: number) => {
 
 // 删除评论
 const delComment = async (id: number) => {
-    const fn = async ()=>{
+    const fn = async () => {
         await delCommentDataAPI(id)
-    
+
         // 获取最新数据
-        emit("get", "list")
+        emit("get")
 
         ElMessage({
             message: '🎉 删除评论成功',
@@ -34,15 +34,13 @@ const delComment = async (id: number) => {
         })
     }
 
-    whetherToDelete(fn,"评论")
+    whetherToDelete(fn, "评论")
 }
 
 // 监听页码变化
-// const pageChange = (value: number) => {
-//     console.log(value,999);
-    
-//     emit("get", { page: value, size: 6 })
-// }
+const pageChange = (value: number) => {
+    emit("get", { page: value, size: 6 })
+}
 </script>
 
 <template>
@@ -78,16 +76,17 @@ const delComment = async (id: number) => {
 
             <el-table-column fixed="right" label="操作" :width="data.tab === 'audit' ? 120 : 80" align="center">
                 <template #default="scope">
-                    <el-button link type="primary" size="small" v-if="data.tab === 'audit'" @click="auditComment(scope.row.id)"><b>通过</b></el-button>
+                    <el-button link type="primary" size="small" v-if="data.tab === 'audit'"
+                        @click="auditComment(scope.row.id)"><b>通过</b></el-button>
                     <el-button link type="danger" size="small" @click="delComment(scope.row.id)"><b>删除</b></el-button>
                 </template>
             </el-table-column>
         </el-table>
 
-        <!-- <el-row justify="end" style="margin-top: 20px;" v-if="data.list?.length && data.list?.length > 3">
-            <el-pagination background layout="prev, pager, next" :page-size="2" :total="data.list?.length"
-                @current-change="pageChange" />
-        </el-row> -->
+        <el-row justify="end" style="margin-top: 20px;" v-if="data.list?.length && data.list?.length > 2">
+            <el-pagination background layout="prev, pager, next" :page-size="data.paginate.size"
+                :total="data.paginate.total" @current-change="pageChange" />
+        </el-row>
     </div>
 </template>
 
