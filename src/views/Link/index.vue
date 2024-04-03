@@ -18,7 +18,7 @@ const listTemp = ref<Link[]>()
 const getLinkList = async () => {
     loading.value = true
 
-    const { data } = await getLinkListAPI();
+    const { data } = await getLinkListAPI({ page: 1, size: 9999 });
     list.value = data.result as Link[]
     listTemp.value = list.value
 
