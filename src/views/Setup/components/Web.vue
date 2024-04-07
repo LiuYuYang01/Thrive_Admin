@@ -8,18 +8,35 @@ const loading = ref<boolean>(false)
 const form = ref<FormInstance>()
 
 const web = ref<Web>({
+  url: '',
   title: '',
   subhead: '',
-  logo: '',
+  light_logo: '',
+  dark_logo: '',
   description: '',
   keyword: '',
+  favicon: '',
+  footer: '',
+  font: '',
+  social: '',
+  covers: []
 })
+
+
+const tempCovers = ref<string>("")
 
 // 获取网站信息
 const getWebData = async () => {
   loading.value = true
 
   const { data } = await getWebDataAPI()
+
+  // 社交账号
+  data.social = JSON.stringify(data.social)
+
+  // 随机封面
+  tempCovers.value = data.covers.join("\n")
+
   web.value = data
 
   loading.value = false
@@ -36,7 +53,10 @@ const rules = reactive<FormRules<Web>>({
     { required: true, message: "网站副标题不能为空", trigger: "blur" },
     { min: 1, max: 50, message: "网站副标题限制在1 ~ 50个字符", trigger: "blur" }
   ],
-  logo: [
+  light_logo: [
+    { required: true, message: "网站LOGO不能为空", trigger: "blur" },
+  ],
+  dark_logo: [
     { required: true, message: "网站LOGO不能为空", trigger: "blur" },
   ],
   description: [
@@ -55,6 +75,8 @@ const submit = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     // 校验不通过，则后续的业务逻辑不再执行
     if (!valid) return
+
+    web.value.covers = tempCovers.value.split("\n")
 
     loading.value = true
     await editWebDataAPI(web.value)
@@ -83,8 +105,20 @@ const submit = async (formEl: FormInstance | undefined) => {
         <el-input v-model="web.subhead" placeholder="花有重开日, 人无再少年" />
       </el-form-item>
 
-      <el-form-item label="网站LOGO" prop="logo">
-        <el-input v-model="web.logo" placeholder="https://liuyuyang.net/logo.png" />
+      <el-form-item label="网站链接" prop="url">
+        <el-input v-model="web.url" placeholder="https://liuyuyang.net/" />
+      </el-form-item>
+
+      <el-form-item label="网站图标" prop="favicon">
+        <el-input v-model="web.favicon" placeholder="https://liuyuyang.net/favicon.ico" />
+      </el-form-item>
+
+      <el-form-item label="光亮主题LOGO" prop="light_logo">
+        <el-input v-model="web.light_logo" placeholder="https://liuyuyang.net/logo.png" />
+      </el-form-item>
+
+      <el-form-item label="暗黑主题LOGO" prop="dark_logo">
+        <el-input v-model="web.dark_logo" placeholder="https://liuyuyang.net/logo.png" />
       </el-form-item>
 
       <el-form-item label="网站描述" prop="info">
@@ -95,6 +129,24 @@ const submit = async (formEl: FormInstance | undefined) => {
         <el-input v-model="web.keyword" placeholder="Java,前端,Python" />
         <el-alert title="注意：一定要以英文逗号分割每一个关键词，示列：Java,前端,Python" type="info" show-icon :closable="false"
           style="height: 40px; margin-top: 10px;" />
+      </el-form-item>
+
+      <el-form-item label="底部信息" prop="footer">
+        <el-input v-model="web.footer" placeholder="记录前端、Python、Java点点滴滴" />
+      </el-form-item>
+
+      <el-form-item label="字体链接" prop="font">
+        <el-input v-model="web.font" placeholder="https://liuyuyang.net/font.ttf" />
+      </el-form-item>
+
+      <el-form-item label="随机文章封面" prop="covers">
+        <el-input v-model="tempCovers" :autosize="{ minRows: 2, maxRows: 10 }" type="textarea"
+          placeholder="Please input" />
+      </el-form-item>
+
+      <el-form-item label="社交网站" prop="social">
+        <el-input v-model="web.social" :autosize="{ minRows: 2, maxRows: 10 }" type="textarea"
+          placeholder="Please input" />
       </el-form-item>
 
       <el-form-item>
