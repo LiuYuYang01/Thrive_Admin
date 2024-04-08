@@ -1,9 +1,13 @@
 <script setup lang="ts">
 const timeline = [
   {
-    content: '优化项目代码，减少代码冗余',
-    timestamp: '2023-04-29',
+    content: '整体功能开发完毕',
+    timestamp: '2024-04-8',
     color: '#0bbd87'
+  },
+  {
+    content: '优化项目代码，减少代码冗余',
+    timestamp: '2023-08-12',
   },
   {
     content: '修复已知BUG',
@@ -11,11 +15,11 @@ const timeline = [
   },
   {
     content: '优化用户交互体验',
-    timestamp: '2023-04-18',
+    timestamp: '2023-01-18',
   },
   {
     content: '新增3D标签功能',
-    timestamp: '2023-04-15',
+    timestamp: '2022-04-15',
   }
 ]
 </script>

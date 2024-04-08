@@ -17,11 +17,10 @@ const web = ref<Web>({
   keyword: '',
   favicon: '',
   footer: '',
-  font: '',
+  // font: '',
   social: '',
   covers: []
 })
-
 
 const tempCovers = ref<string>("")
 
@@ -78,9 +77,9 @@ const rules = reactive<FormRules<Web>>({
   social: [
     { required: true, message: "社交网站不能为空", trigger: "blur" },
   ],
-  font: [
-    { required: true, message: "网站字体链接不能为空", trigger: "blur" },
-  ],
+  // font: [
+  //   { required: true, message: "网站字体链接不能为空", trigger: "blur" },
+  // ],
   footer: [
     { required: true, message: "网站底部信息不能为空", trigger: "blur" },
     { min: 10, max: 300, message: "网站底部信息限制在10 ~ 300个字符", trigger: "blur" }
@@ -168,9 +167,9 @@ const submit = async (formEl: FormInstance | undefined) => {
         <el-input v-model="web.footer" placeholder="记录前端、Python、Java点点滴滴" />
       </el-form-item>
 
-      <el-form-item label="字体链接" prop="font">
+      <!-- <el-form-item label="字体链接" prop="font">
         <el-input v-model="web.font" placeholder="https://liuyuyang.net/font.ttf" />
-      </el-form-item>
+      </el-form-item> -->
 
       <el-form-item>
         <el-button type="primary" @click="submit(form)" style="width: 100%;">编辑网站</el-button>

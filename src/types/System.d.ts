@@ -36,7 +36,7 @@ interface Web {
     description: string,
     keyword: string,
     footer: string,
-    font: string,
+    // font: string,
     social: string,
     covers: string[]
 }
