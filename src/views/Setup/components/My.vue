@@ -39,7 +39,7 @@ const editUserData = async () => {
   })
 
   // 同步更新头像
-  store.user = My.value
+  store.user = My.value as any
 
   getUserInfo()
 }

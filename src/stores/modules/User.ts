@@ -7,7 +7,7 @@ export const useUserStore = defineStore("user", () => {
 
   // 退出登录
   const quitLogin = () => {
-    user.value = {} as User
+    user.value = {} as any
     token.value = ""
     localStorage.clear()
     sessionStorage.clear()
@@ -15,4 +15,5 @@ export const useUserStore = defineStore("user", () => {
   }
 
   return { token, user, quitLogin };
-}, { persist: true });
+});
+// }, { persist: true });
