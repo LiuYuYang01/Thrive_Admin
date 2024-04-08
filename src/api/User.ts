@@ -8,3 +8,6 @@ export const getUserDataAPI = (id?: number) => Request<UserInfo>("GET", `/user/$
 
 // 修改用户信息
 export const editUserDataAPI = (data: UserInfo) => Request<UserInfo>("PATCH", "/user", data)
+
+// 修改管理员密码
+export const editAdminPassAPI = (data: editUser) => Request<UserInfo>("PATCH", "/user/admin", data)

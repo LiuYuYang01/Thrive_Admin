@@ -76,14 +76,13 @@ const editLayoutData = async () => {
                 </template>
             </el-input>
 
-
-
             <img :src="layout.swiperImage" alt="">
         </div>
 
         <el-divider content-position="left"><i :class="['bx', `bx-list-minus`, 'icon']"></i> 打字机文本</el-divider>
         <div class="text">
             <el-input v-model="tempSwiperText" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" />
+            
             <el-alert title="以换行分隔，每行表示一段文本" type="info" style="margin-top: 5px;" />
         </div>
 
