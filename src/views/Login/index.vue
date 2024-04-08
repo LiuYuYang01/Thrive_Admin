@@ -16,8 +16,8 @@ const isPassCut = () => isPass.value === "password" ? isPass.value = "text" : is
 
 // 登录信息
 const login = reactive<Login>({
-  username: 'liuyuyang',
-  password: '123123',
+  username: '',
+  password: '',
 })
 
 // 登录数据校验
