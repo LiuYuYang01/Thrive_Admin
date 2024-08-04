@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 新增评论
 export const addCommentDataAPI = (data: Comment) => Request<Comment>("POST", "/comment", data)

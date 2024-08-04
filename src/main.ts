@@ -17,7 +17,7 @@ import 'element-plus/dist/index.css'
 // 引入全局样式
 import '@/styles/index.scss'
 
-import VueMarkdownEditor from '@/utils/Edit'
+import VueMarkdownEditor from '@/utils/edit'
 
 const app = createApp(App)
 

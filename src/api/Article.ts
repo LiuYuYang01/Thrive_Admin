@@ -1,4 +1,4 @@
-import Request from "@/utils/Request";
+import Request from "@/utils/request";
 
 // 新增文章
 export const addArticleDataAPI = (data: Article) =>

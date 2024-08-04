@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 新增分类
 export const addCateDataAPI = (data: Cate) => Request<Cate>("POST", "/cate", data)

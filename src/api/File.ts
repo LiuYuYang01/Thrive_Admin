@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 删除文件
 export const delFileDataAPI = (data: string[]) => Request<File>("DELETE", "/file", { files: data })

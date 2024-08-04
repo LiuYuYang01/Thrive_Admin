@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 新增网站
 export const addLinkDataAPI = (data: Link) => Request<Link>("POST", "/link", data)

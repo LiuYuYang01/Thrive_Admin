@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 获取系统配置信息
 export const getSystemDataAPI = () => Request<System>("GET", "/project/system")

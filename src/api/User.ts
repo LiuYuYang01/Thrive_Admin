@@ -1,4 +1,4 @@
-import Request from '@/utils/Request'
+import Request from '@/utils/request'
 
 // 登录
 export const loginDataAPI = (data: Login) => Request<account>("POST", "/login", data)

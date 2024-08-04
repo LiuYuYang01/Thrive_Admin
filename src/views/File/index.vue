@@ -3,7 +3,7 @@ import { Vue3ImagePreview } from 'vue3-image-preview';
 import { ElNotification } from 'element-plus'
 import { Search } from '@element-plus/icons-vue'
 import { delFileDataAPI, getFileListAPI } from '@/api/File'
-import { baseURL } from '@/utils/Request'
+import { baseURL } from '@/utils/request'
 import { svg, whetherToDelete } from '@/utils'
 import axios from 'axios';
 
